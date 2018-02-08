@@ -1,0 +1,15 @@
+define(function() {
+    'use strict';
+   var queryServer=queryServer||{
+   		/*获取列表*/
+   		getTableList:function(data){
+   			return $.ajax({
+				type: 'get',
+				url: '/api/v1/artificialPriceUpdate/'+data.city+'/mqRecordsGet',
+				dataType: 'json',
+				data: data
+			});
+   		}
+   }
+   return queryServer; 
+});

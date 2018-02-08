@@ -1,0 +1,87 @@
+<div id="scrollWamp">
+    <div class="wamp-body query-logs">
+        <div class="g-title">估值记录</div>
+		<div class="valuation-body">
+			<div class="layui-form query-condition" id="detail_record">
+
+				<div class="layui-form-item">
+					<div class="layui-inline">
+						<label class="layui-form-label">估值对象</label>
+						<div class="auto-input-inline">
+							<input class="layui-input" placeholder="请输入估值对象" id="com_name" maxlength="40"/>
+						</div>
+					</div>
+					<div class="layui-inline">
+						<label class="layui-form-label">日期范围</label>
+						<div class="auto-input-inline">
+							<input class="layui-input min-input-sm fl" id="begin_date" readonly="readonly"/>
+							<input class="layui-input min-input-sm fr" id="end_date" readonly="readonly"/>
+						</div>
+					</div>
+					<div class="layui-inline">
+						<label class="layui-form-label">面积范围</label>
+						<div class="auto-input-inline">
+							<div class="min-input">
+								<input class="layui-input" id="min_area" placeholder="最小面积"/>
+								<span class="unit">㎡</span>
+							</div>
+							<label class="inline min-label">-</label>
+							<div class="min-input">
+								<input class="layui-input" id="max_area" placeholder="最大面积"/>
+								<span class="unit">㎡</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="layui-form-item clear layui-form-last">
+					<div class="layui-inline big-inline fl">
+						<label class="layui-form-label">估值城市</label>
+						<div class="auto-input-inline" >
+							<input class="layui-input" placeholder="请输入估值城市" id="local_city"/>
+						</div>
+					</div>
+										
+					<div class="layui-form-right">
+						<a class="layui-btn" href="javascript:;" id="detail_search">查询</a>
+						<a class="layui-btn" href="javascript:;" id="detail_reset">重置</a>
+						<a class="layui-btn layui-btn-warm" href="javascript:;" id="detail_export">导出</a>
+					</div>
+				</div>
+			</div>
+			
+			<div class="query-condition top-space">
+				<table class="free-table" id="his_detatil">
+					<!--<tr>
+						<td>
+							北京
+						</td>
+						<td>
+							<p>北京车公庄大街五栋大楼c座10层1202室</p>
+							<p>2016-09-21 14:51:57</p>
+						</td>
+						<td>
+							<p>总价：<span class="c-red">999</span>万元</p>
+							<p>单价：<span class="c-red">888</span>万元</p>
+						</td>
+						<td>
+							<p>面积：<span class="c-red">999</span>㎡</p>
+							<p>朝向：<span>888</span></p>
+						</td>
+						<td>
+							<p>总楼层：23层</p>
+							<p>所在层：7层</p>
+						</td>
+						<td>
+							<a class="c-blue" href="javascript:;">查看详情</a>
+						</td>
+					</tr>-->
+				</table>
+			</div>
+			
+			<!--分页-->
+			<div id='queryLogsPage' class="text-center"></div>
+			
+		</div>       
+    </div>
+</div>

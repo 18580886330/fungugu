@@ -1,0 +1,13 @@
+define(function(){
+	'use strict';
+	var valuationSheetServer = valuationSheetServer || {
+		getValuationDetail:function(data){
+			return $.ajax({
+				type:"get",
+				url:"/api/v1/valuationSheet/valuationDetailedList/"+data.city+"/"+data.comName+"/"+data.area
+				data:data.houseType
+			});
+		}
+	}
+	return valuationSheetServer;
+})

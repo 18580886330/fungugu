@@ -1,0 +1,11 @@
+<!-- 房产估值搜索 -->
+<div class="house-search">
+    <div class="search-box">
+        <b class="icon"></b>
+        <input type="text" placeholder="请输入完整的小区名称或地址进行房产估值..." id="valuationInput" class="search-input" autocomplete="off">
+        <button id="searchHouse" class="layui-btn search-btn">立即查询</button>
+    </div>
+    <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&amp;uin=1569135405&amp;site=qq&amp;menu=yes" class="server-btn"><b class="icon"></b>小区搜不到？<br>点我来帮您！</a>
+    
+    <div id="searchLogs" class="search-logs"></div>
+</div>

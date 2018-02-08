@@ -1,0 +1,35 @@
+﻿components: 所有公共组件
+content: 公共代码库、图片、css文件
+--------------------------------------------------------------
+applicationMarket: 应用市场（主模块）
+  comboBuy: 套餐购买(模块)
+  funExplain: 功能描述（模块）
+
+intelligentSearch: 智能搜索（主模块）
+  liquidityRating: 流动性评级（模块）
+  houseValuation: 房产估值（模块）
+  caseInquire: 案例查询（模块）
+--------------------------------------------------------------
+personalCenter: 个人中心（模块）
+
+
+
+
+/**
+  * 模块入口
+  */
+var main = ({
+    data: {},
+    init: function(){
+
+        return this;
+    }
+}).init();
+
+/**
+  * 美化滚动条
+  */
+yf.scroll({
+    elmId: '#elmId',
+    height: 400
+});

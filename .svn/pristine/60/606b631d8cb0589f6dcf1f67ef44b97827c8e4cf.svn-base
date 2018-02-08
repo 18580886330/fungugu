@@ -1,0 +1,16 @@
+define(function() {
+	'use strict';
+	var taxaTionServer = taxaTionServer || {
+		getTaxation:function(data){
+			return $.ajax({
+				type:"get",
+				url:"/api/v1/taxCalculation/calculation/"+data.city+"/"+data.overYears+"/"+data.houseArea+"/"+data.houseType+"/"+data.assessmentValue+"/"+data.fvId,
+				data:{
+					originalValue:data.originalValue,
+					firstHouse:data.firstHouse
+				}
+			});
+		}
+	}
+	return taxaTionServer;
+})

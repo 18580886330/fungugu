@@ -1,0 +1,1 @@
+define(function(){var t=t||{getCity:function(){return $.ajax({type:"get",url:"/api/v1/authorityCityInfo",dataType:"json"})}};return t});

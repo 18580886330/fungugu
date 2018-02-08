@@ -1,0 +1,634 @@
+@charset "UTF-8";
+/** reset.css **/
+html, body, div, span, iframe, h1, h2, h3, h4, h5, h6, p, a,img, dl, dt, dd, ol, ul, li, form, label, 
+table, tbody, thead, tr, th, td { font-family: 'microsoft yahei'; margin: 0; padding: 0; border: 0; outline: 0; font-weight: inherit; font-style: inherit; font-size: 100%; vertical-align: baseline; } 
+:focus { outline: 0;}
+a, a:link, a:visited, a:hover, a:active{ text-decoration:none } 
+table { border-collapse: separate; border-spacing: 0; } 
+img, iframe { border: none; text-decoration:none; } 
+ol, ul { list-style: none; } 
+input, textarea, select, button { font-size: 100%; font-family: inherit; padding: 0; margin: 0; color: #666; }
+textarea{resize: none;}
+select { margin: inherit; padding:3px 0\9; }
+body{
+    @extend .pa; width: 100%; height: 100%; background-color: #fff; color: #666; font-size: 12px; overflow: hidden;
+    &.hidden{ overflow-x: scroll;}
+}
+label{ cursor:pointer; }
+input[disabled]{ background-color:#eee; }
+input[type=radio],input[type=checkbox]{vertical-align:top; line-height:normal;}
+input[type=file]{display:block}
+input[type=range]{display:block;width:100%}
+select[multiple],select[size]{height:auto}
+input[type=radio]:focus,input[type=checkbox]:focus,input[type=file]:focus{outline:thin dotted;outline:5px auto -webkit-focus-ring-color;outline-offset:-2px}
+em{ font-style: normal; }
+::-webkit-input-placeholder { color: #ddd; }
+:-moz-placeholder {/* Firefox 18- */ color: #ddd; }
+::-moz-placeholder{/* Firefox 19+ */ color: #ddd; }
+:-ms-input-placeholder { color: #ddd; }
+.emptyhint{ position: absolute;left: 0;top: 12px;color: #ddd;width: auto;height: 16px;line-height: 16px;text-align: left;padding-left: 11px; }
+.auto-input-inline{ position: relative; }
+.text-left{ text-align: left; }
+.text-center{ text-align: center; }
+.text-right{ text-align: right; }
+.fl{ float: left; }
+.fr{ float: right; }
+.pa{ position: absolute; }
+.pv{ position: relative; }
+.hide{ display:none !important; }
+.inline{ display: inline-block; *display: inline; *zoom: 1; vertical-align: top; }
+.clear,.clear:after{ content:" "; display:block; clear:both; }
+*, *:before, *:after { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
+.mCSB_container{ width: auto !important; }
+.margin-b-20{ margin-bottom: 20px; }
+.transition{ transition: all .3s; -webkit-transition: all .3s; }
+.layui-btn.layui-disabled{ color: #c9c9c9 !important; background-color: #e4e3e3; }
+.icon{ background-image: url(../images/icon.png); background-repeat: no-repeat; display: inline-block; *display: inline; *zoom: 1; }
+.i:after, .i:before { border: 4px solid transparent; border-top: 4px solid #636f7f; width: 0; height: 0; position: absolute; top: 0; right: 0; content: ' ' }
+.i:before { border-top-color: #c0d4e9; top: 12px; }
+
+
+.fl8{font-size: 18px;}
+.f14{font-size: 14px;}
+.f24{font-size: 24px;}
+
+
+.loading{ text-align: center; line-height: 25px; font-size: 14px; img{ @extend .inline; width: 25px; margin-right: 10px; } }
+
+/** 标题 **/
+.g-title{ height: 22px; line-height: 22px; margin: 26px 0 18px 0; font-size: 16px; font-weight: bold; color: #9B9B9B; }
+/** 特定文字颜色 **/
+.c-red{ color: #D0021B; }
+.c-blue{color: #3E8EDE;}
+.c-green{color:#9AC26E;}
+/** 公共布局 **/
+.wamp-content{ @extend .pa; top: 60px; right: 0; bottom: 0; left: 210px; background-color: #F3F7FA; }
+.wamp-left{ width: 210px; background: url(../images/lbg.jpg) no-repeat center top #203a5d; @extend .pa; top: 60px; bottom: 0; }
+.wamp-body{ padding: 26px; padding-top: 0; }
+
+
+.header{
+    min-width: 1200px; height: 60px; background-color: #626F7E; @extend .pv; z-index: 100;
+    .logo{ margin: 10px 0 0 36px; }
+}
+
+.city-link{
+    line-height: 19px; margin: 15px 0 0 100px; padding: 5px 15px; border-radius: 50px; background-color: #516378;
+    .name{ @extend .inline; @extend .text-center; min-width: 24px; }
+    .name,.change-city{ color: #C8DBEF; }
+    .icon{ @extend .inline; width: 14px; height: 20px; background-position: -22px 0; }
+}
+
+/** 头部导航菜单 **/
+.top-nav{
+    margin: 6px 0 0 84px;
+    .link{
+        line-height: 26px; margin-right: 34px; @extend .inline;
+        color: #C8DBEF; padding: 10px 0;
+        &.active{ color: #FFF; border-bottom: 2px solid #FFF; }
+        .icon{ width: 22px; height: 20px; margin: 3px 3px 0 0; @extend .inline;
+            &.intelligentSearch{ background-position: 0 -42px; }
+            &.applicationMarket{ background-position: 0 -63px; }
+        }
+    }
+    .i1{ background-position: 0 0; }
+    .i2{ background-position: 0 0; }
+}
+
+/** 下拉导航菜单 **/
+.drop-nav{
+    .drop-nav-item{
+        margin: 18px 30px 15px 0; @extend .inline; @extend .pv;
+        .icon{ width: 22px; height: 20px; margin: 4px 5px 0 0; @extend .inline;
+            &.i1{ background-position: 0 -84px; }
+            &.i2{ background-position: 0 -294px; }
+            &.icon-news{background-position: -24px -222px;width: 26px;height: 26px;margin-top: 0;}
+            &.icon-dot{background-position: -51px -225px;width: 9px;height: 9px;position: absolute;left: 20px;top:-3px}
+        }
+        .i{ background-color: #ddd; vertical-align: middle; margin-left: 15px; }
+        .link{ @extend .transition; line-height: 27px; color: #C8DBEF; @extend .inline; &:hover{ color: #4ecdd1; } }
+    }
+    .drop-nav-child{
+        display: none; position: absolute; left: 0; top: 45px; min-width: 100%; line-height: 36px; padding: 5px 0; box-shadow: 0 2px 4px rgba(0,0,0,.12); border: 1px solid #d2d2d2; background-color: #fff; z-index: 100; border-radius: 2px; white-space: nowrap;
+        a{
+
+            display: block; padding: 0 20px; color: #fff; color: #666; @extend .transition;
+            &:hover{ background-color: #eee; }
+        }
+    }
+}
+
+/** 左侧菜单 **/
+.nav-tree{
+    margin-top: 30px;
+    .nav-tree-item{
+        .icon{ width: 22px; height: 20px; margin: 4px 10px 0 35px; @extend .inline; }
+        .link{
+            width: 100%; line-height: 28px; padding: 13px 0; color: #C8DBEF; @extend .inline; @extend .transition;
+            &:hover,&.active{ background-color: #314A6A; color: #FFF;
+                .propertyValuation{ background-position: 0 -21px; }
+                .queryLogs{ background-position: 0 -399px; }
+                .pricingLogs{background-position:0 -252px;}
+            }
+            .icon{ @extend .transition; }
+            .propertyValuation{ background-position: 0 0; }
+            .queryLogs{ background-position: 0 -378px; }
+            .pricingLogs{background-position:0 -231px;}
+        }
+    }
+}
+/**右边侧栏**/
+.fixedtool{
+    position: fixed;right:-42px;z-index: 100;
+    .fix-box{
+        background: #62CDBD;width: 42px;border-radius: 5px;
+        .fix-box-first{border-radius:5px 5px 0 0;}
+        .fix-box-last{border-radius:0 0 5px 5px;}
+        li{
+            position:relative; width: 42px; height: 42px; margin-top: -1px; cursor:pointer;-webkit-transition:all 0.3s ease; -moz-transition:all 0.3s ease; -o-transition:all 0.3s ease; -ms-transition:all 0.3s ease; transition:all 0.3s ease; 
+            &:hover{background: #1DBBA6;}
+            &:hover .fix-border{display: block;}
+            &:hover .icon-edit{width: 28px;height: 34px;background-position: 0 -525px;margin-top: -17px;}
+            .icon{position: absolute;top: 50%;left:50%;margin-top: -10px;margin-left: -11px;width: 22px;height: 20px;}
+            .icon-qq{background-position:-23px -250px;width: 22px;height: 21px;margin-left: -70px;}
+            .icon-code{background-position:0 -442px;}
+            .icon-tell{background-position:0 -463px;}
+            .icon-edit{background-position:0 -503px;}
+            .icon-services{background-position:0 -483px;}
+            .fix-border{position: absolute;border: 1px solid #1DBBA6;display: none;right: 49px;background:#fff;border-radius: 5px;}
+            .h-twocode{padding: 5px;top:-162px}
+            .h-tellphone{width: 129px;padding: 11px;font-size:14px;color:#1DBBA6;text-align: center;border-radius:4px;}
+            .h-services-right{background: url(../images/lucency.png) repeat;height: 100%;position: absolute;right: -11px;width: 11px;top:0;}
+            .h-qq{
+                width: 159px;
+                li{
+                    width: 100%;
+                    &:hover{background: transparent;opacity: .8;filter: alpha(opacity=80);}
+                    a{display: block;font-size: 14px;color: #1DBBA6;padding: 12px 0;text-align: center;}
+                }
+            }
+        }
+    }
+}
+
+
+
+/** 搜索 **/
+.house-search-center{ height: 100%; background-color: #FFF;
+    .house-search{ position: relative; width: 860px; top: 40%; margin: 0 auto; box-shadow: none; }
+}
+.house-search{ padding: 26px; box-shadow: 0 2px 4px 0 #ddd; background-color: #FFF; }
+.search-box{
+    @extend .fl; @extend .pv; width: 668px; height: 36px; border: 1px solid #D8D8D8; border-radius: 3px;
+    .emptyhint{ left: 34px; top: 8px; padding-left: 0; }
+    .icon{ @extend .fl; width: 22px; height: 20px; margin: 7px 6px; background-position: 0 -357px; }
+    .search-input{ @extend .fl; width: 514px; height: 34px; line-height: 34px; border: 0 none; color: #666; font-size: 14px; background: none; }
+    .search-btn{ margin: -1px; width: 120px; height: 36px; line-height: 36px;  vertical-align: top;
+        &:hover{ color: #FFF; }
+    }
+    &.on{
+        animation:changeColor 1.2s 1;
+        -moz-animation:changeColor 1.2s 1; /* Firefox */
+        -webkit-animation:changeColor 1.2s 1; /* Safari and Chrome */
+        -o-animation:changeColor 1.2s 1; /* Opera */
+    }
+}
+.server-btn{
+     @extend .inline; margin-left: 20px; line-height: 18px; color: #3FCACB; font-weight: bold;
+    .icon{ @extend .fl; width: 41px; height: 37px; background-position: -24px -40px; margin-right: 4px; }
+    &:hover{ color: #3FCACB; }
+}
+.search-logs{
+    margin-top: 13px; font-size: 14px;
+    span{ color: #8A939C; }
+    a{ color: #3E8EDE; margin-right: 10px;
+        &:hover{ text-decoration: underline; }
+    }
+}
+
+/** 房产估值-搜索区 **/
+.valuation-body{ width: 100%; }
+.valuation-require,
+.valuation-response{ @extend .inline; width: 49%; min-height: 356px; padding: 30px 22px; background: #FFFFFF; border: 1px solid #E4E3E3; border-radius: 5px; }
+.valuation-response{ @extend .fr;
+    .response-head{ height: 20px; line-height: 20px; margin-bottom: 17px; color: #8A939C; font-size: 14px; }
+    .response-price-body{ @extend .clear; padding: 32px 22px; margin-bottom: 25px; background-color: #F9FCFC; border: 1px solid #E9E9E9;
+        .price{ width: 50%; text-align: center; }
+        .text{ font-size: 18px; color: #BAC1C9; }
+        .number{ @extend .inline; font-size: 24px; color: #D0021B; }
+        .small{ @extend .inline; margin-top: 6px; font-size: 14px; color: #D0021B; }
+    }
+    .total-sum{ height: 28px; line-height: 28px; text-align: right; font-size: 14px; color: #8A939C;
+        .input{ @extend .inline; width: 40px; height: 28px; border-radius: 3px; border: 1px solid #ddd; text-align: center; font-size: 14px;
+            &:disabled{ background-color: #eee; }
+        }
+        .total-price{ @extend .inline; min-width: 75px; font-size: 24px; text-align: center; }
+    }
+    .valuation-tool{ text-align: center; margin-top: 41px; }
+}
+
+/** 房产估值表单重写 **/
+.valuation-require{
+    .layui-form-label{ width: 95px; padding: 9px 10px 9px 0; }
+    .layui-input-block{ margin-left: 95px; }
+    .auto-input-inline{ margin-left: 95px; display: block; }
+    .layui-inline{ float: left; width: 50%; margin-right: 0; text-align: right;
+        .unit{ @extend .pa; right: 5px; top: 10px; color: #f00; }
+    }
+    .btn-gyg{ width: 150px;
+        &.disabled{ box-shadow: 0px 2px 5px #24aaab inset; }
+    }
+}
+
+
+.model-panel{
+    @extend .inline; width: 100%; background: #FFF; border: 1px solid #E4E3E3; border-radius: 5px;
+    &.half{ width: 49%; overflow: hidden;}
+    &.surround-model{height: 406px;
+        .non-near{height: 256px;line-height: 256px;text-align: center;}
+        
+    }
+    &.referen-model-panel{height: 360px;
+        .non-row{height: 200px;line-height: 200px;}
+        .model-body{height: 268px;}
+    }
+    &.detial-cont{height: 348px;
+        .table-fixed{table-layout: fixed;
+            td,th{text-overflow: ellipsis;overflow: hidden;}
+        }
+        .non-detail{height: 250px;line-height: 250px;text-align: center;}
+    }
+    .model-head{
+        height: 40px; line-height: 40px; padding: 0 22px; border-bottom: 1px solid #E4E3E3; font-size: 14px;
+    }
+    .h3{ @extend .inline; }
+    .model-body{ padding: 20px; 
+        &.model-price{height: 246px;}
+        .non-draw{line-height: 278px;text-align: center;font-size:14px;}
+    }
+    .model-foot{
+        padding: 0 20px 20px;
+        .layui-laypage{margin: 0;}
+    }
+}
+.model-tab{
+    &.model-tab-big {
+        li{ padding: 0 15px; height: 46px; }
+    }
+    li{
+        @extend .inline; height: 40px; line-height: 40px; margin-left: 16px; color: #3E8EDE; cursor: pointer;
+        &.active{ color: #3FCACB; border-bottom: 3px solid #3FCACB; }
+    }
+}
+
+/** 小区参考信息 **/
+.house-reference{ @extend .clear; background: #FFF; border: 1px solid #E4E3E3; border-radius: 5px; box-shadow: none;
+    .layui-tab-content{ @extend .clear; padding: 20px; }
+}
+/** 加载 loading 效果**/
+#referenceCase,#communityDetails,#priceTrend,#neighborhood{
+    .loading{left:0!important;top:0!important;}
+}
+
+/** 参考案例 **/
+#referenceCase{
+    .model-panel{ width: 49%; }
+}
+.move-case{ margin: 20px 0 0 0;
+    span{ font-size: 14px; color: #8A939C; margin-right: 13px; }
+}
+
+/** 流动性评级 **/
+.liquidity-rating{
+    @extend .clear;
+    .rating-body{ font-size: 14px; color: #8A939C; }
+    .rating-name{ margin-bottom: 10px; font-size: 18px; color: #8A939C; }
+    .rating-request,.rating-response{ @extend .inline; }
+    .rating-request{ @extend .fl; width: 50%; }
+    .rating-ul{
+        margin-top: 16px;
+        li{
+            @extend .inline; width: 28px; height: 26px; background-color: #ddd;
+            &.active{ background-color: yellow; }
+        }
+    }
+    .rating-response{ width: 50%;
+        p{ margin-bottom: 20px; }
+        strong{ margin: 0 5px; }
+    }
+    .rating-panel{ @extend .inline; width: 49%; }
+    .charts{ height: 250px; }
+}
+
+/** 小区详情 **/
+.house-info{
+    @extend .inline; width: 49%;
+    .house-panel{ padding: 25px 40px; margin-bottom: 10px; border: 1px solid #E4E3E3; border-radius: 5px; font-size: 14px; color: #8A939C; }
+    .standard-price,.house-proportion{ @extend .inline; width: 49%; }
+    .standard-price{ text-align: center;
+        line-height: 24px;
+        strong{ @extend .inline; font-size: 24px; }
+    }
+    .house-proportion{ line-height: 24px;
+        strong{ @extend .inline; font-size: 18px; }
+    }
+    .house-banner{ width: 100%; height: 238px;border-radius: 5px; overflow: hidden; background-color: #ddd;
+        img{max-height: 238px;}
+        .carousel-box{
+            div{text-align: center;
+            }
+        }
+    }
+}
+
+/** 小区成交均价走势 **/
+#bargainTrend{ height: 206px;}
+.model-body{
+   .non-trend{position: absolute;top: 23px;background: #fff;width: 100%;text-align: center;height: 206px;
+    line-height: 206px;left: 0;} 
+}
+
+
+.price-analysis{
+    color: #8A939C; text-align: center;
+    .analysis-head{ height: 20px; line-height: 20px; margin-bottom: 20px; font-size: 14px; }
+    .analysis-body{
+        font-size: 14px;
+        .name{ margin-bottom: 10px; }
+        .price{ font-size: 24px; }
+        .unit{ margin-bottom: 15px; }
+        
+        li{ @extend .inline; background: #F9FCFC; padding: 20px 10px;width: 30%;}
+    }
+    .proportion{
+        font-size: 12px; strong{ font-weight: normal; }
+        .icon{ @extend .inline; width: 10px; height: 10px; margin: 3px 0 0 2px; }
+        &.rise{ strong{ color: #D0021B; } .icon{ background-color: #f00; } }
+        &.decline{ strong{ color: #9AC26E; } .icon{ background-color: #9AC26E; } }
+    }
+    .non-detail{height: 140px;line-height: 140px;color: #333;}
+}
+
+
+/*个人中心-查询记录*/
+.query-logs{
+    .query-condition{ padding: 22px;background: #fff;border: 1px solid #E4E3E3; margin-bottom: 20px;
+        .min-input{ float: left; position: relative; width: 45%; height: 38px; line-height: 38px; }
+        .min-input-sm{ width: 49%; }
+        .min-label{ float: left;  width: 10%; height: 38px; line-height: 38px; text-align: center; }
+        .layui-form-label{ width: 95px; padding: 9px 10px 9px 0; }
+        .layui-input-block{ margin-left: 95px; }
+        .auto-input-inline{ margin-left: 95px; display: block; }
+        .layui-inline{ float: left; width: 33.33%; margin-right: 0; text-align: right;
+            .unit{ @extend .pa; right: 8px; top: 0; color: #ddd; }
+        }
+        .layui-form-right{ @extend .fr; }
+    }
+    
+    .free-table{width: 100%;color: #8A939C ;
+        td{vertical-align: middle;font-size:14px ;padding: 0 10px;}
+        tr{height: 78px;}
+        .msg-red-point{@extend .inline;min-width: 20px;height: 20px;padding: 3px;line-height: 14px;background: red;border-radius: 50%;color: #fff;text-align: center;}
+    }
+}
+/*查看详情--弹窗*/
+.pop-up{
+    &.min-pop, &.leave-pop{display: none;}
+    &.details-pop{width:630px;display: none;}
+    .pop-title{height: 36px;line-height: 36px;background:#E4E4E4;color:#656565;position: relative;font-size: 14px;padding-left: 10px;
+        .close{@extend .inline;position: absolute;right: 10px;top:9px;cursor: pointer;}
+    }
+    .h-title{color: #3FCACB;font-size: 14px;width: 56px;border-bottom: 2px solid #3FCACB;padding-bottom: 2px;
+        .c-red{width: 104px;font-size: 12px;top:4px;left: 72px;}
+    }
+    .pop-body{background: #fff;padding: 12px 22px;height: 520px;
+        &.feed-back-body{height: 380px;}
+    }
+    .details-pop-hd{
+        .pop-price-box{border: 1px solid #D8D8D8;width: 280px;height: 129px;
+            .title-hore{@extend .inline;width: 104px;height:85px;background:url("../images/title-horn.png") no-repeat;
+                &.evaluate-title{background-position:0px -87px;}
+            }
+            .price-inline{@extend .inline;margin-left: -46px;margin-top: 36px;}
+        }
+    }
+    .time-cont{font-size: 14px;color: #8A939C;margin: 12px 0;text-align: right;}
+    .valuation-require{width: 100%;border-radius:0;padding-right: 46px;padding-bottom: 16px;}
+}
+
+/*下载弹框*/
+.down-pop{width: 286px;
+    .btn-groub{margin-top: 10px;
+        .layui-btn{width: 92px;padding: 0;text-align: center;}
+    }
+    .pop-body{height: 130px !important;
+        h1{font-size: 16px;line-height: 32px;margin: 10px 0;font-weight: bold;}
+    }
+    &.leave-pop{
+        .pop-body{height: 160px !important;
+            .title-state{margin-bottom: 0;margin-top: 10px;}
+            h1{margin-top:0;}
+        }
+        
+    }
+}
+
+/*意见反馈*/
+.feed-back-pop{width: 558px;font-size: 14px;color: #8A939C;
+    .feed-back-qus{margin-right: 10px;vertical-align: middle;}
+    .feed-back-box{
+        p{margin-bottom: 10px;}
+    }
+    .feed-back-hd{margin-bottom: 10px;
+        label{margin-left: 20px;color: #4a4a4a;}
+        input[type=checkbox]{vertical-align: middle;cursor: pointer;}
+     }
+     .feed-cont{width: 100%;height:76px;border: 1px solid #D8D8D8;border-radius:4px;padding: 6px;font-size: 12px;}
+}
+/*税费计算*/
+.calculator-pop{width:587px; overflow: hidden;
+    .pop-body{padding: 22px 20px;height: auto;}
+    .mortgage-fd{font-size: 14px;color: #8A939C;width: 100%; border: 1px solid #D8D8D8;margin-top: 24px;
+        .mortgage-fd-left{padding: 37px 0;text-align: center;width:24%;border-right:1px solid #c1c1c1;
+            .c-red{font-size: 24px;}
+        }  
+        .mortgage-fd-right{font-size: 12px;width:76%;
+            .title{background: #eeeeee;text-align: center;}      
+            li{height: 41px;line-height: 41px;border-bottom: 1px solid #c1c1c1;
+                &.last{border: none;}
+            }  
+            .mortgage-cell{display: inline-block;*display:block;*zoom:1;width: 24%;text-align: center;
+                &.gide3{width: 32%;}
+            }   
+             
+        }
+        
+    }
+    .taxation-explain{margin-top:5px;color:#8A939C;font-size: 14px;}
+    .icon-question-mark{@extend .inline;width:21px;height: 21px;background-position:0px -419px;vertical-align: top;}
+    .explain-box{top:42px; background: #fff; border: 1px solid #3FCACB; border-radius: 4px; color:#72797f; font-size: 14px; height: 180px; left: 0; line-height: 21px; padding: 5px; position: absolute;width: 325px;z-index: 1;display: none; 
+        .list{text-align: left;font-size: 12px;}
+        .arrorw-up{ margin-left: -80px;top:-20px;left:85px; border-color:transparent transparent  #3FCACB  transparent ; border-style:dashed dashed solid dashed; border-width:10px; display:block; width:0; height:0; line-height:0; font-size:1; 
+            .upward{ left: -9px; top: -7px; border-color:transparent transparent #fff transparent; border-style:dashed dashed solid dashed; border-width:9px; display:block; width:0; height:0; line-height:0; font-size:1; }
+        }
+        
+    }
+   
+}
+
+/*人工核价*/
+.manmade-pop-detail{display: block !important;
+    .layui-form-label{width:74px;padding-left: 0;text-align: left;}
+    .layui-input-block,.auto-input-inline{margin-left:74px;}
+    .layui-form-item{
+        .layui-inline{margin-right: 0;width: 47%;
+            &.left-inline{margin-right: 31px;}
+        }
+    }
+    .upload-grounps{
+        .mid-mask{position: absolute;z-index: 9;width: 100%;height: 100%;background: #666;top:0;left: 0;opacity: .8;filter:alpha(opacity=80);
+            .mid-mask-tip{color: #fff;font-size: 14px;margin-top: 88px;text-align: center;}
+        }
+    }
+    .upload-cont{display: inline-block;*display:block;*zoom:1;width: 48%;margin:10px 19px 10px 0;
+        &.last-box{margin-right: 0;}
+    }
+    .single-box{text-align: center;height: 81px;position: relative;
+        .pic-name{margin-top: 23px;margin-bottom: 10px;font-size: 14px;}
+    }
+    .manmade-border-grounp{
+        position: absolute;font-size: 0;width: 200px;top:0;left: 72px;z-index: 6;
+        .manmade-border-box{@extend .inline;width: 79px;height: 79px;border:1px solid #e6e6e6;border-radius:5px;margin-right:10px;}
+    }
+    .auto-input-inline{
+        .min-input{float: left;position: relative;width: 45%;height: 38px;line-height: 38px;}
+        .layui-form-mid{margin:0 7px;}
+        .unit{position: absolute;right: 10px;top: 12px;}
+    }
+    
+}
+
+
+
+
+#surroundingHouse{
+    .map{ padding: 0; }
+    .layui-progress{ width: 80%; }
+}
+/** 临近小区，周边配套地图 **/
+#surroundingMap,#rimMap{
+    width: 100%; height: 306px; background-color: #ddd;
+}
+#surroundingMap{ height: 324px;
+    .non-near-map{height: 324px;line-height: 324px;text-align: center;font-size: 14px;}
+}
+.surhouse-table{
+    &.layui-table th, &.layui-table td{vertical-align: middle !important;padding: 9px 5px !important;}
+}
+
+/** 下拉关键字检索 **/
+.autoprompting{
+    display: none; position: absolute; z-index: 999999999; background-color: #FFF; border-radius: 4px; overflow: hidden; border: 1px solid #eee;
+    .prompting_ul{
+        li{
+            @extend .clear;
+            background-color: #FFF; height: 35px; line-height: 35px; padding: 0 10px; font-size: 14px; cursor: pointer; border-bottom: 1px solid #eee; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; -webkit-transition: all .5s cubic-bezier(0.45, 0.41, 1, 1); transition: all .5s cubic-bezier(0.45, 0.41, 1, 1);
+            &:hover,&.active{ background-color: #EEE; }
+            &.disabled{ color: #d2d2d2!important; cursor: not-allowed!important; }
+            span{ @extend .fr; }
+        }
+    }
+}
+
+/** 城市弹窗 **/
+.layui-layer-close{ @extend .icon; @extend .transition; right: 18px; top: 18px; width: 22px; height: 20px; background-position: 0 -273px;
+    &:hover{ -webkit-transform: rotate(-180deg); transform: rotate(-180deg); }
+}
+#cityContent{ display: none; }
+.pop-city-content{
+    @extend .pv; font-size: 14px;
+    .search-box{ width: 330px; margin-bottom: 13px;
+        .search-input{ width: 220px; }
+        .search-btn{ width: 76px; }
+    }
+    .search-logs{ @extend .clear; margin: 0; }
+    .search-panel{ float: left; }
+}
+.city-head{
+    @extend .clear; padding: 25px 25px 0 25px;
+    .current{ @extend .fl; line-height: 36px; min-width: 110px; padding-right: 10px; font-size: 14px;
+        .icon{ @extend .inline; width: 14px; height: 20px; margin: 8px 5px 0 0; background-position: -22px 0; }
+    }
+}
+.city-body{
+    .model-tab{ margin-left: 15px;
+        @extend .pv; z-index: 1; font-size: 14px; margin-top: 15px; margin-left: 0;
+    }
+}
+.city-content{
+    @extend .clear; height: 400px; padding: 15px 20px; margin-top: -3px; border-top: 3px solid #E4E3E3; overflow-x: hidden;
+    .layui-btn{ height: 36px; line-height: 36px;
+        &.active{ color: #3FCACB; }
+    }
+    .city-list{
+        padding-top: 25px; color: #8A939C; letter-spacing: 0;
+        li{ @extend .clear; width: 107%; padding-bottom: 10px; }
+        .key{ @extend .inline; width: 56px; text-align: right; }
+        .vals{ @extend .inline; width: 466px; }
+        .link{ @extend .inline; @extend .transition; margin-right: 20px; color: #8A939C; margin-bottom: 10px;
+            &:hover{ color: #3FCACB; }
+            &.notBuy{ color: #d2d2d2 !important; cursor: not-allowed !important; }
+        }
+    }
+}
+
+/** 房屋坐落 **/
+.result-item{ float:left; background: #eee; border: 1px solid #ddd; border-radius: 3px; color: #666; height: 38px; line-height: 36px; padding-left:5px; margin-right:3px; overflow: hidden; text-overflow: ellipsis; }
+.result-item span{ float:left; }
+.result-item a{ @extend .pv; float:left; width:22px; height:22px; margin:7px 5px 0 5px;
+    &:before { border: 6px solid transparent; border-top: 6px solid #636f7f; border-top-color: #636f7f; width: 0; height: 0; position: absolute; top: 9px; right: 5px; content: ' '; }
+}
+.result-item a:hover{ background-position:-225px -29px; }
+
+.menu-result{ width: 100%; max-height: 150px; top: 42px; border-radius: 4px; position:absolute; z-index:999; display:block; background-color:#fff; border:1px solid #ccc; }
+.menu-result ul{ top:28px; }
+.menu-result ul li{
+    @extend .transition; background-color: #FFF; height: 30px; line-height: 30px; padding: 0 10px; cursor: pointer; transition: all .5s cubic-bezier(0.45, 0.41, 1, 1); border-bottom: 1px solid #eee;
+    &.active,&:hover{ background-color: #eee; }
+}
+
+
+.keybody{ @extend .inline; position:relative; float: right; width: 100%; }
+/* .keybody .emptyhint{ left:5px; top:1px; font-size: 14px; height: 24px; line-height: 24px; margin: 2px; } */
+.keybody .input{ padding-right: 7px !important;padding-left: 8px;}
+
+
+@media screen and (max-width: 1300px) {
+    .layui-table th, .layui-table td{ font-size: 12px; padding: 9px 12px; }
+    .layui-laypage a,
+    .layui-laypage span{ padding: 0 10px; }
+}
+
+@keyframes changeColor
+{
+    0% {background-color:#dffcfd;}
+    33% {background-color:#fff;}
+    66% {background-color:#dffcfd;}
+    100% {background-color:#fff;}
+}
+
+@-moz-keyframes changeColor /* Firefox */
+{
+    0% {background-color:#dffcfd;}
+    33% {background-color:#fff;}
+    66% {background-color:#dffcfd;}
+    100% {background-color:#fff;}
+}
+
+@-webkit-keyframes changeColor /* Safari 和 Chrome */
+{
+    0% {background-color:#dffcfd;}
+    33% {background-color:#fff;}
+    66% {background-color:#dffcfd;}
+    100% {background-color:#fff;}
+}

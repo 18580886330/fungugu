@@ -1,0 +1,80 @@
+<div class="model-panel referen-model-panel">
+	<div class="model-head">
+		<h3 class="h3">最新案例</h3>
+		<ul id="changeCaseHd" class="model-tab fr">
+			<li class="active">挂牌案例</li>
+			<li data-load='false'>成交案例</li>
+		</ul>
+	</div>
+	<div id="changeCaseBd" class="model-body">
+		<div class="panel">
+			<table class="layui-table" lay-even="" lay-skin="nob">
+				<thead>
+					<tr>
+						<th>挂牌时间</th>
+						<th>面积(㎡)</th>
+						<th>居室类型</th>
+						<th>单价(元/㎡)</th>
+						<th>总价(万元)</th>
+					</tr> 
+				</thead>
+				<tbody id="guapai_list">
+					<!--<tr>
+						<td>2017-3-5</td>
+						<td>131.17</td>
+						<td>一居室</td>
+						<td>110050</td>
+						<td>1187</td>
+					</tr>-->
+					
+				</tbody>
+			</table>
+			<!--<div class="model-foot text-center">
+				<div id="casePage"></div>
+			</div>-->
+		</div>
+
+		<div class="panel">
+			<table class="layui-table" lay-even="" lay-skin="nob">
+				<thead>
+					<tr>
+						<th>成交时间</th>
+						<th>面积(㎡)</th>
+						<th>居室类型</th>
+						<th>单价(元/㎡)</th>
+						<th>总价(万元)</th>
+					</tr> 
+				</thead>
+				<tbody id="deal_list">
+					<!--<tr>
+						<td>2017-3-5</td>
+						<td>131.17</td>
+						<td>一居室</td>
+						<td>110050</td>
+						<td>1187</td>
+					</tr>-->
+					
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="model-foot text-center">
+		<div id="casePage"></div>
+		<div id="donePage"></div>
+	</div>
+</div>
+
+<div class="model-panel fr">
+	<div class="model-head">
+		<h3 class="h3">案例散点图</h3>
+	</div>
+	<div class="model-body">
+		<div id="caseChart" style="height:278px;"></div>
+		<div class="non-draw hide" id="no_scatter">无法绘制小区案例散点图</div>
+	</div>
+</div>
+
+<!--<div class="move-case">
+	<span>查询并导出更多案例信息，请开通案例查询功能</span>
+	<a href="javascript:;" class="layui-btn">前去体验</a>
+</div>-->

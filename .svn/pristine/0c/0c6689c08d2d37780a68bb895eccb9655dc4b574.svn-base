@@ -1,0 +1,36 @@
+<div class="model-panel half">
+    <div class="model-head">
+        <h3 class="h3">小区地图</h3>
+    </div>
+    <div class="model-body map">
+        <div id="rimMap"></div>
+    </div>
+</div>
+
+<div class="model-panel half fr">
+    <div class="model-head">
+        <h3 class="h3">小区周边详情</h3>
+    </div>
+    <div class="model-body">
+        <table class="layui-table" lay-skin="nob">
+            <tbody>
+                <tr>
+                    <td><strong>交通设施</strong></td>
+                    <td>83路; 323路; 353路; 470路; 477路; 480路; 546路;</td>
+                </tr>
+                <tr>
+                    <td><strong>教育机构</strong></td>
+                    <td>北京瑶医医院地址：总部基地海鹰路6号院31号楼CA2栋(玛雅岛酒店正门对面)</td>
+                </tr>
+                <tr>
+                    <td><strong>医疗配套</strong></td>
+                    <td>北京瑶医医院地址：总部基地海鹰路6号院31号楼CA2栋(玛雅岛酒店正门对面)</td>
+                </tr>
+                <tr>
+                    <td>其他配套</td>
+                    <td>丰台科技园-地铁站线路：地铁9号线</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

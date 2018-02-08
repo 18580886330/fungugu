@@ -1,0 +1,79 @@
+require([
+    'src/components/houseDetail/js/houseDetail.server.js',
+], function(server) {
+    'use strict';
+    layer.msg('小区详情');
+	var main=({
+		init:function(){
+			this.getDetailFn();
+		},
+		getDetailFn:function(){
+			var _this=this;
+			var params={
+				city:yf.userInfo.city,
+				comName:yf.param('housingName')
+			};
+			server.getHouseDetail(params).success(function(data){
+					if(data.code==200){
+						
+						$('#uptown_unit_price').text(data.data.details.unitPrice);
+						Number(data.data.details.ratioByLastYearForPrice)>0?$('#tongbi').addClass('c-red'):$('#tongbi').addClass('c-green');
+						Number(data.data.details.ratioByLastMonthForPrice)>0?$('#huanbi').addClass('c-red'):$('#huanbi').addClass('c-green');
+						$('#tongbi').text((Number(data.data.details.ratioByLastYearForPrice)*100).toFixed(2)+'%');
+						$('#huanbi').text((Number(data.data.details.ratioByLastMonthForPrice)*100).toFixed(2)+'%');
+						
+						_this.picSlideFn(data.data.imgs);
+						
+						$('#uptown_info').html('<tr>\
+							                    	<td colspan="2">小区地址：'+yf.filterStr(data.data.details.address)+'</td>\
+								                </tr>\
+								                <tr>\
+								                    <td><strong>小区名称：</strong><span>'+yf.filterStr(data.data.details.residentialAreaName)+'</span></td>\
+								                    <td><strong>建筑类别：</strong><span>'+yf.filterStr(data.data.details.buildingCategory)+'</span></td>\
+								                </tr>\
+								                <tr>\
+								                    <td><strong>开发商：</strong><span>'+yf.filterStr(data.data.details.developerCompany)+'</span></td>\
+								                    <td><strong>开盘时间：</strong><span>'+yf.dateStampFn(data.data.details.sellDate)+'</span></td>\
+								                </tr>\
+								                <tr>\
+								                    <td><strong>绿化率：</strong><span>'+Number(data.data.details.greeningRate)*100+'%</span></td>\
+								                    <td><strong>容积率：</strong><span>--</span></td>\
+								                </tr>\
+								                <tr>\
+								                    <td><strong>物业公司：</strong><span>'+yf.filterStr(data.data.details.managementCompany)+'</span></td>\
+								                    <td><strong>物业费：</strong><span>'+yf.filterStr(data.data.details.managementFees)+'</span></td>\
+								                </tr>\
+								                <tr>\
+								                    <td><strong>建筑面积：</strong><span>'+yf.filterStr(data.data.details.buildingArea)+'</span></td>\
+								                    <td><strong>土地面积：</strong><span>'+yf.filterStr(data.data.details.landArea)+'</span></td>\
+								                </tr>\
+								                <tr>\
+								                    <td><strong>车位情况：</strong><span>'+yf.filterStr(data.data.details.parkingSpaceInfo)+'</span></td>\
+								                    <td><strong>土地年限：</strong><span>'+yf.filterStr(data.data.details.landUseYearsLimit)+'年</span></td>\
+								                </tr>');
+								                
+					}
+			}).error(function(res){
+				
+			})
+		},
+		picSlideFn(data){
+			layui.use(['carousel', 'form'], function(){
+				 var carousel = layui.carousel;
+				 var str='';
+				 var arr=data.split(',');
+				 for(var i=0;i<arr.length;i++){
+				 	str+='<div><img src="'+arr[i]+'"/></div>'
+				 }
+				 $('#carousel_cont').html(str);
+				  carousel.render({
+				    elem: '#carousel_cont',
+				    width:'100%',
+				    height:'238px',
+				    interval: 5000
+				  });
+			})
+		}
+	}).init();
+    
+});

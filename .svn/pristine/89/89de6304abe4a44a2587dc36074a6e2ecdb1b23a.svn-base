@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link type="image/x-icon" mce_href="../../content/images/favicon.ico" href="../../content/images/favicon.ico" rel="icon">
+    <title>房估估客服为您服务...</title>
+    <link rel="stylesheet" type="text/css" href="src/content/js/third/layer/css/layui.css">
+    <link rel="stylesheet" type="text/css" href="chatServer/css/style.css">
+    <link rel="stylesheet" type="text/css" href="src/content/js/third/jquery/scrollbar/css/jquery.mCustomScrollbar.min.css">
+</head>
+<body>
+    <div id="chatServer" class="chatserver">
+        <div class="server-list">
+            <div class="server-hd">核价列表</div>
+            <div id="enquiryList" class="server-bd">
+                <ul class="list">
+                    <!-- <li class="item active">
+                        <div class="item-head"><b class="icon"></b></div>
+                        <div class="item-info">
+                            <p class="address">北京市海淀区上园村西一楼352号</p>
+                            <p class="other"><span class="j-area">111㎡</span><span>12/17层</span><span>南北</span><span>住宅</span></p>
+                        </div>
+                        <b class="tag new">news</b>
+                    </li> -->
+                </ul>
+            </div>
+        </div>
+        <div class="server-content">
+            <div class="server-hd">房估估客服</div>
+            <div class="server-bd clear">
+                <div class="server-panel">
+                    <div class="msg-panel">
+                        <!-- <div class="off-line" style=" position: absolute; top: 0; left: 0; right: 0; height: 22px; background: #ddd; line-height: 22px; z-index: 9; padding: 0 20px;"><b class="icon"></b>您已经处于离线状态，无法发送消息，请尝试<a href="javascript:;" class="move-link">重新链接。</a></div> -->
+                        <div class="msg-response-scroll">
+                            <div id="msgResponse" class="msg-response">
+                                
+                                <div class="response-item">
+                                    <div class="move"><b class="icon"></b><a href="javascript:;" class="move-link">查看更多消息</a></div>
+                                    <div class="msg-server">
+                                        <div class="msg-server-hd"></div>
+                                        <div class="msg-server-info">
+                                            <b class="icon i"></b>
+                                            <p>您的估价已提交成功，稍后我们会给您回复结果，请耐心等候。如有疑问请随时与我沟通！</p>
+                                        </div>
+                                    </div>
+                                    <div class="msg-time"><span>2017年6月12日 14:21</span></div>
+                                    <div class="msg-guest">
+                                        <div class="msg-server-info">
+                                            <b class="icon i"></b>
+                                            <p>您的估价已提交成功，稍后我们会给您回复结果，请耐心等候。如有疑问请随时与我沟通！您的估价已提交成功，稍后我们会给您回复结果，请耐心等候。如有疑问请随时与我沟通！</p>
+                                        </div>
+                                        <div class="msg-server-hd"></div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="msg-request">
+                        <div class="request-hd">
+                            <a href="javascript:;" class="icon pic"><input type="file" name="file" id="picUpload"></a>
+                        </div>
+                        <div class="request-area">
+                            <div class="hide-area"></div>
+                            <textarea id="msgTextArea" class="textarea" placeholder="说出您的问题..."></textarea>
+                        </div>
+                        <div id="requestBtns" class="request-btns">
+                            <div class="text-null"><b class="i"></b>不能发送空白信息</div>
+                            <a href="javascript:;" class="layui-btn send">发送(S)</a><span></span><a href="javascript:;" class="layui-btn send-btn"><b class="i"></b></a>
+                            <div class="send-type hide">
+                                <ul class="list">
+                                    <li class="item"><b class="icon"></b>按Enter键发送消息，Ctrl+Enter换行</li>
+                                    <li class="item"><b class="icon"></b>按Ctrl+Enter键发送消息，Enter换行</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="server-object">
+                    <h1 class="object-name">核价对象详情</h1>
+                    <div class="object-info">
+                        <table id="objectDetails" class="layui-table">
+                            <thead>
+                                <tr><th colspan="2" class="name"><h1>三家店中街小区</h1></th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td class="hd">建筑面积</td><td>--㎡</td></tr>
+                                <tr><td class="hd">物业类型</td><td>--</td></tr>
+                                <tr><td class="hd">房屋朝向</td><td>--</td></tr>
+                                <tr><td class="hd">建成年代</td><td>--年</td></tr>
+                                <tr><td class="hd">所在楼层</td><td>--层</td></tr>
+                                <tr><td class="hd">总楼层</td><td>--层</td></tr>
+                                <tr><td class="hd">特殊因素</td><td>--</td></tr>
+                                <tr><td class="hd c-yellow">反馈单价</td><td>--（元）</td></tr>
+                                <tr><td class="hd c-yellow">反馈总价</td><td>--（万元）</td></tr>
+                                <tr><td class="hd c-blue">核实单价</td><td>--（元）</td></tr>
+                                <tr><td class="hd c-blue">核实总价</td><td>--（万元）</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="src/content/js/third/jquery/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript" src="src/content/js/third/jquery/scrollbar/js/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script type="text/javascript" src="src/content/js/third/require/require.min.js"></script>
+    <script type="text/javascript" src="chatServer/js/chatServer.controller.js"></script>
+</body>
+</html>

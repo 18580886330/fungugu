@@ -1,0 +1,1 @@
+<div class="pop-up down-pop" id="guzhiDownPop"><div class="pop-body text-center"><h1>估值单已生成</h1><p class="btn-groub"><a class="layui-btn" id="guzhiDownload" href="javascript:;">立即下载</a> <a class="layui-btn layui-btn-primary" href="javascript:;" onclick="layer.closeAll()">取消</a></p></div></div>

@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<link type="image/x-icon" mce_href="src/content/images/favicon.ico" href="src/content/images/favicon.ico" rel="icon">
+	<title>Document</title>
+	<link rel="stylesheet" type="text/css" href="src/content/js/third/layer/css/layui.css">
+	<link rel="stylesheet" type="text/css" href="src/content/css/style.css">
+	<link rel="stylesheet" type="text/css" href="src/content/js/third/jquery/scrollbar/css/jquery.mCustomScrollbar.min.css">
+</head>
+<body>
+	<div id="header" class="header">
+		<a href="/" class="logo fl"><img src="src/content/images/logo.png" alt=""></a>
+		<div id="cityLink" class="city-link fl">
+			<b class="fgg-icon location">&#xe606;</b>
+			<span class="name">---</span>
+			<a href="javascript:;" class="change-city">切换城市</a>
+		</div>
+		<!-- <div id="headerModule" class="top-nav fl" data-modules="[intelligentSearch,applicationMarket,]">
+			<a class="link" data-href="intelligentSearch" href="javascript:;"><b class="icon intelligentSearch"></b><span>智能搜索</span></a>
+			<a class="link" data-href="applicationMarket" href="javascript:;"><b class="icon applicationMarket"></b><span>记录中心</span></a>
+		</div> -->
+		<ul class="drop-nav fr">
+			<li class="drop-nav-item pv hide" id="message_box">
+				<a class="link" href="#/auditPriceRecord">
+					<b class="icon icon-news"></b>
+					<i class="icon icon-dot hide" id="red_dot"></i>
+					<span>消息</span>
+				</a>
+			</li>
+			<li class="drop-nav-item" id="userCenter">
+				<a class="link" href="javascript:;"><b class="icon i2"></b><span id="userName">Hi.</span><b class="i"></b></a>
+				<!-- <dl class="drop-nav-child">
+					<dd><a data-href="queryLogs" href="#/personalCenter">个人中心</a></dd>
+				</dl> -->
+			</li>
+		</ul>
+	</div>
+	<div class="wamp">
+		<div class="wamp-left">
+			<ul id="navTree" class="nav-tree" data-modules="[propertyValuation,caseQuery,liquidityRatingL,artificialNuclearValence]">
+				<!-- <li class="nav-tree-item">
+					<a class="link" data-href="houseValuation" href="javascript:;"><b class="icon"></b><span>房产估值</span></a>
+				</li>
+				<li class="nav-tree-item">
+					<a class="link" data-href="caseInquire" href="#/caseInquire?page=intelligentSearch"><b class="icon"></b><span>案例查询</span></a>
+				</li>
+				<li class="nav-tree-item">
+					<a class="link" href="#"><b class="icon"></b><span>流动性评级</span></a>
+				</li> -->
+				<!-- <li class="nav-tree-item">
+					<a class="link" data-href="personalCenter" href="#/personalCenter"><b class="icon"></b><span>个人中心</span></a>
+				</li> -->
+				<!-- <li class="nav-tree-item">
+					<a class="link" data-href="queryLogs" href="#/queryLogs?page=intelligentSearch"><b class="icon queryLogs"></b><span>查询记录</span></a>
+				</li>
+
+				<li class="nav-tree-item">
+					<a class="link" data-href="queryLogs3233333" href="javascript:;"><b class="icon queryLogs"></b><span>智能查询</span></a>
+					<ul class="nav-tree-child">
+						<li class="nav-tree-child">
+							<a class="link" data-href="queryLogs3233333" href="javascript:;"><b class="icon"></b><span>房产估值</span></a>
+						</li>
+					</ul>
+				</li>
+
+				<li class="nav-tree-item">
+					<a class="link" data-href="queryLogs3233333" href="javascript:;"><b class="icon queryLogs"></b><span>记录中心</span></a>
+					<ul class="nav-tree-child">
+						<li class="nav-tree-child">
+							<a class="link" data-href="queryLogs3233333" href="javascript:;"><b class="icon"></b><span>估值记录</span></a>
+						</li>
+						<li class="nav-tree-child">
+							<a class="link" data-href="queryLogs3233333" href="javascript:;"><b class="icon"></b><span>核价记录</span></a>
+						</li>
+					</ul>
+				</li> -->
+			<!--	<li class="nav-tree-item">
+					<a class="link"  href="javascript:;"><b class="icon queryLogs"></b><span>机构管理</span></a>
+					<ul class="nav-tree-child">
+						<li class="nav-tree-child">
+							<a class="link" data-href="accountManagement" href="#/accountManagement"><b class="icon"></b><span>账号管理</span></a>
+						</li>
+						<li class="nav-tree-child">
+							<a class="link" data-href="authorityManagement" href="#/authorityManagement"><b class="icon"></b><span>权限管理</span></a>
+						</li>
+					</ul>
+				</li>
+				 <li class="nav-tree-item">
+					<a class="link" data-href="personalCenter" href="#/personalCenter"><b class="icon artificialNuclearValence"></b><span>个人中心</span></a>
+				</li> -->
+			</ul>
+		</div>
+		<div show-view class="wamp-content"></div>
+		<!--右边侧栏 begin-->
+		<div class="fixedtool" id="fix_tool">
+			<ul class="fix-box" >
+		        <li class="fix-box-first">
+		        	<i class="icon icon-code"></i>
+		            <div class="h-twocode fix-border"><img src="src/content/images/jrCode.jpg"><div class="h-services-right"></div></div>
+		        </li>
+		       <li>
+		       		<i class="icon icon-tell"></i>
+		            <div class="h-tellphone fix-border">010-60845501 <div class="h-services-right"></div></div>
+		        </li>
+		        <li>
+		        	<i class="icon icon-services"></i>
+		        	<div class="h-services fix-border">
+			            <ul class="h-qq">
+			                <li>
+			                    <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&amp;uin=1569135405&amp;site=qq&amp;menu=yes">
+			                        <img border="0" src="http://wpa.qq.com/pa?p=2:1569135405:52" alt="点击这里给我发消息" title="点击这里给我发消息" style="display:none;">
+			                        	<i class="icon icon-qq"></i>
+			                        	房估估客服1
+			                    </a>
+			                </li>
+			            </ul>
+			            <div class="h-services-right"></div>
+		            </div>
+		        </li>
+        		 <li class="fix-box-last" id="feedBack">
+        		 	<i class="icon icon-edit"></i>
+        		 </li>
+   			 </ul>
+		</div>		
+		<!--右边侧栏 end-->
+		
+		<!-- 弹窗区 -->
+		<div id="cityContent"></div> <!-- 城市弹窗 -->
+		<div id="feedBackContent"></div> <!-- 意见反馈 -->
+        <div id="taxCalculation"></div> <!-- 税费计算 -->
+		<div id="valuationSheet"></div> <!-- 估值单下载 -->
+		<div id="auditPriceRecord"></div> <!--人工核价、新建核价-->
+		<div id="preliminaryReport"></div><!--预评报告-->
+		<!-- 估值记录=>导出记录下载弹框 -->
+		<div class="pop-up down-pop min-pop" id="exportDownPop">
+			<div class="pop-body text-center">
+				<h1>excel列表已生成</h1>
+				<p class="btn-groub">
+					<a class="layui-btn " id="exportDownload" href="javascript:;" >立即下载</a>
+					<a class="layui-btn layui-btn-primary" href="javascript:;" onclick="layer.closeAll()">取消</a>
+				</p>
+			</div>
+		</div>
+		<!--begin 前往聊天弹窗-->
+		<div class="pop-up down-pop leave-pop" id="toChat">
+			<div class="pop-body text-center">
+				<h1 class="title-state">发起核价成功!</h1>
+				<h1>是否进入聊天页面？</h1>
+				<p class="btn-groub">
+					<a class="layui-btn " id="go_chat" href="javascript:;" target="_blank">是</a>
+					<a class="layui-btn layui-btn-primary" href="javascript:;" id="chat_close" >否</a>
+				</p>
+			</div>
+		</div>
+		<!--end-->
+		<!--历史估值详情 begin pop-->
+		<div class="pop-up details-pop" id="details_popup">
+			<p class="pop-title">历史估值详情<a class="close layui-layer-close"></a></p>
+			<div class="pop-body" id="his_evaluate">
+				<div class="details-pop-hd clear">
+					<div class="fl pop-price-box">
+						<i class="title-hore markt-title"></i>
+						<div class="price-inline">
+							<p>
+								<span class="fl8">单价</span>
+								<span class="c-red f24" id="market_unit_price"></span>
+								<span class="c-red f14" >元/㎡</span>
+							</p>
+							<p>
+								<span class="fl8">总价</span>
+								<span class="c-red f24" id="market_total_price"></span>
+								<span class="c-red f14">万元</span>
+							</p>
+						</div>
+					</div>
+					<div class="fr pop-price-box">
+						<i class="title-hore evaluate-title"></i>
+						<div class="price-inline">
+							<p>
+								<span class="fl8">单价</span>
+								<span class="c-red f24" id="evaluate_unit_price"></span>
+								<span class="c-red f14">元/㎡</span>
+							</p>
+							<p>
+								<span class="fl8">总价</span>
+								<span class="c-red f24" id="evaluate_total_price"></span>
+								<span class="c-red f14">万元</span>
+							</p>
+						</div>
+					</div>
+				</div>
+				<p class="time-cont">估值时点：<span id="gu_time"></span></p>
+				
+				
+				<div class="valuation-body valuation-require">
+					<div class="layui-form">
+						<div class="layui-form-item">
+							<label class="layui-form-label">小区地址</label>
+							<div class="layui-input-block">
+								<input type="text" id="village_addr"  class="layui-input" disabled="disabled"/>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<div class="layui-inline">
+								<label class="layui-form-label">小区名称</label>
+								<div class="auto-input-inline">
+									<input type="text" id="village_name" autocomplete="off" class="layui-input" disabled="disabled"/>
+								</div>
+							</div>
+							<div class="layui-inline">
+								<label class="layui-form-label">城市</label>
+								<div class="auto-input-inline">
+									<input type="text" id="village_city" autocomplete="off" class="layui-input" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<div class="layui-inline">
+								<label class="layui-form-label">行政区</label>
+								<div class="auto-input-inline">
+									<input type="text" id="village_district" autocomplete="off" class="layui-input" disabled="disabled"/>
+								</div>
+							</div>
+							<div class="layui-inline">
+								<label class="layui-form-label">片区</label>
+								<div class="auto-input-inline">
+									<input type="text" id="village_zone" autocomplete="off" class="layui-input" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<div class="layui-inline">
+								<label class="layui-form-label">楼栋号</label>
+								<div class="auto-input-inline">
+									<input type="text" id="village_building" autocomplete="off" class="layui-input" disabled="disabled"/>
+								</div>
+							</div>
+							<div class="layui-inline">
+								<label class="layui-form-label">单元号</label>
+								<div class="auto-input-inline">
+									<input type="text" id="village_unit" autocomplete="off" class="layui-input" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<div class="layui-inline">
+								<label class="layui-form-label">户号</label>
+								<div class="auto-input-inline">
+									<input type="text" id="village_code" autocomplete="off" class="layui-input" disabled="disabled"/>
+								</div>
+							</div>
+							<div class="layui-inline">
+								<label class="layui-form-label">建筑面积</label>
+								<div class="auto-input-inline">
+									<input type="text" id="village_area" autocomplete="off" class="layui-input" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<div class="layui-inline">
+								<label class="layui-form-label">楼层</label>
+								<div class="auto-input-inline">
+									<input type="text" id="village_floor" autocomplete="off" class="layui-input" disabled="disabled"/>
+								</div>
+							</div>
+							<div class="layui-inline">
+								<label class="layui-form-label">朝向</label>
+								<div class="auto-input-inline">
+									<input type="text" id="village_direction" autocomplete="off" class="layui-input" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<div class="layui-inline">
+								<label class="layui-form-label">建成年代</label>
+								<div class="auto-input-inline">
+									<input type="text" id="village_year" autocomplete="off" class="layui-input" disabled="disabled"/>
+								</div>
+							</div>
+							<div class="layui-inline">
+								<label class="layui-form-label">物业类型</label>
+								<div class="auto-input-inline">
+									<input type="text" id="village_estates" autocomplete="off" class="layui-input" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<div class="layui-inline">
+								<label class="layui-form-label">特殊因素</label>
+								<div class="auto-input-inline">
+									<input type="text" id="village_specil" autocomplete="off" class="layui-input" disabled="disabled"/>
+								</div>
+							</div>
+							<div class="layui-inline">
+								<label class="layui-form-label">小区基准价</label>
+								<div class="auto-input-inline">
+									<input type="text" id="village_benchmark" autocomplete="off" class="layui-input" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						
+					</div>	
+				</div>
+			</div>
+		</div>
+		<!--历史估值详情 end-->
+		<!--修改密码 begin-->
+		<div class="pop-up update-pop" id="update_major">
+			<p class="pop-title">修改密码<a class="close layui-layer-close" onclick="layer.closeAll()"></a></p>
+			<div class="pop-body layui-form manmade-pop-detail">
+				<div class="layui-form-item">
+					<label class="layui-form-label">
+						旧密码
+					</label>
+					<div class="layui-input-block">
+						<input type="password"  class="layui-input" id="oldPwd" placeholder="请输入您的旧密码"/>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">
+						新密码
+					</label>
+					<div class="layui-input-block">
+						<input type="password"  class="layui-input" id="newPwd" placeholder="密码为8-16位，须是字母、数字和符号两种及以上的组合" maxlength="16">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">
+						确认新密码
+					</label>
+					<div class="layui-input-block">
+						<input type="password"  class="layui-input" id="newPwdAgain" placeholder="请再次输入新密码" maxlength="16">
+					</div>
+				</div>
+				<div class="text-center">
+					<a class="layui-btn" id="doUpdate" href="javascript:;">确认修改</a>
+				</div>
+			</div>
+		</div>	
+		<!--修改密码 end-->	
+		<!--批量弹窗设置 begin-->
+	    <div class="pop-up batch-pop manmade-pop-detail" id="batch_setup">
+	    	<p class="pop-title"><span>批量设置</span><a class="close layui-layer-close"></a></p>
+	    	<div class="pop-body" id="batch_setup_main">
+	    		<div class="layui-form">
+	    			<div class="layui-form-item">
+	    				<div class="layui-inline left-inline">
+							<label class="layui-form-label">
+								选择机构
+							</label>
+							<div class="auto-input-inline">
+								<select id="batch_pop_outfit" lay-filter="batchPop-outfit" lay-search>
+									<option></option>
+								</select>
+							</div>
+						</div>
+						<div class="layui-inline">
+							<label class="layui-form-label">选择城市</label>
+							<div class="auto-input-inline">
+								<select id="batch_pop_subCity" lay-filter="batchPop-subCity" lay-search>
+									<option></option>
+								</select>
+							</div>
+						</div>
+	    			</div>
+	    			<div class="layui-form-item">
+	    				<div class="layui-inline  left-inline">
+							<label class="layui-form-label">
+								结果展示
+							</label>
+							<div class="auto-input-inline">
+								<select id="batch_pop_type" lay-filter="batch-types">
+									<option value="0">市场评估价</option>
+									<option value="1">抵押评估价</option>
+									<option value="2">自设抵押评估价</option>
+								</select>
+							</div>
+						</div>
+						<div class="layui-inline">
+							<label class="layui-form-label">
+								放款折扣
+							</label>
+							<div class="auto-input-inline">
+								<input type="text" class="layui-input" id="batch_pop_discount" maxlength="3"/>
+								<span class="batch-pop-unit">%</span>
+							</div>
+						</div>
+	    			</div>
+	    			<div class="layui-form-item">
+	    				<div class="layui-inline">
+							<label class="layui-form-label">
+								自设抵押率
+							</label>
+							<div class="auto-input-inline">
+								<input type="text" class="layui-input" id="batch_pop_mortgage" maxlength="3"/>
+								<span class="batch-pop-unit">%</span>
+							</div>
+						</div>
+	    			</div>
+	    		</div>
+	    		<p class="batch-pop-fd">
+	    			<a class="layui-btn" id="batch_pop_conserve" href="javascript:;">保存</a>
+	    			<a class="layui-btn layui-btn-normal" id="batch_pop_cancle" href="javascript:;">取消</a>
+	    		</p>
+	    	</div>
+	    </div>
+   		<!--批量弹窗 end-->
+   		<!--增加 新添账号 弹窗-->
+	    <div class="pop-up account-pop" id="account_popup">
+	    	<p class="pop-title"><span id="account_tit">添加账号</span><a class="close layui-layer-close"></a></p>
+	    	<div class="pop-body" id="account_body">
+	    		<div class="layui-form">
+	    			<div class="layui-form-item">
+	    				<label class="layui-form-label">用户名</label>
+	    				<div class="layui-input-block">
+							<input type="text"  class="layui-input" id="account_pop_userName" placeholder="请输入登录账号,最多输入20个汉字" maxlength="20"/>
+						</div>
+	    			</div>
+	    			<div class="layui-form-item">
+	    				<label class="layui-form-label">密码</label>
+	    				<div class="layui-input-block">
+							<input type="password"  class="layui-input" id="account_pop_userPass" placeholder="密码8-16位，须为字母、数字和符号两种及以上的组合"/>
+						</div>
+	    			</div>
+	    			<div class="layui-form-item">
+	    				<label class="layui-form-label">姓名</label>
+	    				<div class="layui-input-block">
+							<input type="text"  class="layui-input" id="account_pop_fullName" placeholder="请输入客户名称" maxlength="20"/>
+						</div>
+	    			</div>
+	    			<div class="layui-form-item hide">
+	    				<label class="layui-form-label">机构</label>
+	    				<div class="layui-input-block">
+							<input type="text"  class="layui-input" id="account_pop_comp" disabled="disabled"/>
+						</div>
+	    			</div>
+	    			<div class="layui-form-item">
+	    				<label class="layui-form-label">部门</label>
+	    				<div class="layui-input-block">
+							<input type="text"  class="layui-input" id="account_pop_department" placeholder="请输入部门" maxlength="15"/>
+						</div>
+	    			</div>
+	    			<div class="layui-form-item last-item">
+	    				<label class="layui-form-label">&nbsp;</label>
+	    				<div class="layui-input-block">
+							<a class="layui-btn" id="account_ensure" href="javascript:;">确定</a>
+							<a class="layui-btn layui-btn-warm" id="account_cancel" href="javascript:;">取消</a>
+						</div>
+	    			</div>
+	    		</div>
+	    	</div>	
+	    </div>
+	    <!--增加 新添账号end-->
+	    <!--账号删除弹框 begin-->
+	    <div class="pop-up report-affirm routine-pop" id="account_delete">
+			<a class="close layui-layer-close" href="javascript:;"></a>
+			<div class="report-affirm-info">
+				<div class="report-affirm-bd clear">
+					<span class="fl report-icon tip-icon"></span>
+					<p class="fr report-affirm-describle">是否确认删除此用户</p>
+				</div>
+				<div class="report-affirm-fd">
+					<a class="layui-btn" id="account_rev_amend" href="javascript:;">确认</a>
+					<a class="layui-btn layui-btn-normal" id="account_rev_cancel" href="javascript:;" >取消</a>
+				</div>
+			</div>
+		</div>
+		<!--账号删除弹框  end-->
+		<!--收索弹窗 begin-->
+		<div class="pop-up search-pop" id="search_pop_affirm">
+			<a class="close layui-layer-close" href="javascript:;" id="search_pop_close"></a>
+			<div class="search-pop-info">
+				<div class="search-pop-bd clear">
+					<span class="fl fgg-icon">&#xe636;</span>
+					<div class="fl search-pop-describle">
+						根据您的输入项<br/>“<span class="c-red" id="search_pop_initem"></span>”<br/>
+						我们为您自动匹配到<br/>“<span class="c-red" id="search_pop_mate"></span>”<br/>
+						点击确认房产估值服务	
+					</div>
+				</div>
+				<div class="search-btns clear">
+					<a class="layui-btn fl" id="search_pop_back" href="javascript:;">返回修改</a>
+					<a class="layui-btn fr" id="search_pop_confirm" href="javascript:;" >确认估值</a>
+				</div>
+			</div>
+			<p class="search-pop-fd"><i class="icon icon-popup-stip"></i>如不准确请进行&nbsp;<a href="javascript:;" class="c-blue" id="search_pop_artificial">人工服务</a> &nbsp;&nbsp;如未开通该功能&nbsp;&nbsp;010-60845501</p>
+		</div>
+		<!--收索弹窗 end-->
+		<!--暂无价格的时候的弹框提示 begin-->
+		<div class="pop-up dialog-lack" id="noprice_popup">
+			<a class="close layui-layer-close" href="javascript:;"></a>
+			<div class="dialog-lack-cont">
+				<div class="dialog-lack-info">
+					<div class="dialog-lack-bd">
+						<span class="fgg-icon">&#xe636;</span>
+						<p class="dialog-lack-describle">
+							本次评估暂无价格可能是物业类型错误,<br/>
+							请<span class="c-red">确认信息</span>或进行<span class="c-red">人工询价</span>
+						</p>
+					</div>
+					<div class="dialog-lack-btns">
+						<a class="layui-btn"  href="javascript:;" onclick="layer.closeAll()">重新填写信息</a>
+						<a class="layui-btn layui-btn-normal" id="nopricePop_artificial" href="javascript:;">人工询价</a>
+					</div>
+				</div>
+			</div>
+			<p class="dialog-lack-fd">如未开通该功能  010-60845501</p>
+		</div>
+		<!--暂无价格的时候的弹框提示 end-->
+		<!--权限开通 begin-->
+		<div class="pop-up dialog-lack currency-pop" id="open_authority">
+			<a class="close layui-layer-close" href="javascript:;"></a>
+			<div class="dialog-lack-cont">
+				<div class="dialog-lack-info">
+					<div class="dialog-lack-bd">
+						<span class="fgg-icon">&#xe637;</span>
+						<p class="dialog-lack-describle">
+							<span id="authority_pop_state">开通</span><span class="c-light-blue" id="authority_pop_name"></span>功能<br/>
+							请联系我们<span class="c-light-blue">010-60845501</span>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>	
+		<!--权限开通 end-->
+		<!-- 弹窗区 end -->
+	</div>
+	<script type="text/javascript" src="src/content/js/third/jquery/jquery-1.8.2.min.js"></script>
+	<script type="text/javascript" src="src/content/js/third/layer/layui.all.min.js"></script>
+	<script type="text/javascript" src="src/content/js/third/webUpload/webuploader.html5only.min.js"></script>
+	<!--[if Ite IE 9]>
+	<script type="text/javascript" src="src/content/js/third/webUpload/webuploader.flashonly.min.js"></script>
+	<![endif]-->
+	<script type="text/javascript" src="src/content/js/third/jquery/scrollbar/js/jquery.mCustomScrollbar.concat.min.js"></script>
+	<script type="text/javascript" src="src/content/js/third/echarts/echarts.min.js"></script>
+	<script type="text/javascript" src="src/content/js/third/require/require.min.js"></script>
+	<script type="text/javascript" src="src/content/js/common.js"></script>
+	<script type="text/javascript" src="src/content/js/autoprompting.js"></script>
+	<script type="text/javascript" src="src/content/js/router/router.js"></script>
+	<script type="text/javascript" src="src/content/js/main.js"></script>
+	<script>
+		var _hmt = _hmt || [];
+		(function() {
+		var hm = document.createElement("script");
+		hm.src = "https://hm.baidu.com/hm.js?aac4ead6bd95d85c66c34623a979eb43";
+		var s = document.getElementsByTagName("script")[0]; 
+		s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+	<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.0&key=3e6bbdcf50ba944671f4fa15e05f7ae3"></script>
+</body>
+</html>

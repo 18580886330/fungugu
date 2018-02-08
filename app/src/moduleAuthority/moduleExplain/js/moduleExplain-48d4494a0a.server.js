@@ -1,0 +1,1 @@
+define(function(){"use strict";var e=e||{getModuleExplain:function(){return $.ajax({type:"get",url:"/api/v1/moduleAuthority/moduleExplain/"+encodeURIComponent(yf.userInfo.city)})}};return e});

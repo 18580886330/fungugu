@@ -1,0 +1,33 @@
+define(function(){
+	var artificialServer = artificialServer || {
+		 //发起核价
+		 sendPriceFn:function(data){
+		 	 return $.ajax({
+		 	 	type: "get",
+				url: "/api/v1/artificialNuclearValence/formSubmit/"+data.city+"/"+data.area+"/"+data.comName,
+				data:{
+					priceType:data.priceType,
+					houseType:data.houseType,
+					floor:data.floor,
+					totalFloor:data.totalFloor,
+					toward:data.toward,
+					specialFactors:data.specialFactors,
+					buildYear:data.buildYear,
+					price:data.price,
+					totalPrice:data.totalPrice,
+					confirmPrice:data.confirmPrice,
+					confirmTotalPrice:data.confirmTotalPrice,
+					priceDY:data.priceDY,
+					priceZY:data.priceZY,
+					premisesPermitImgOne:data.premisesPermitImgOne,
+					premisesPermitImgTwo:data.premisesPermitImgTwo,
+					comImgOne:data.comImgOne,
+					comImgTwo:data.comImgTwo,
+					otherImgOne:data.otherImgOne,
+					otherImgTwo:data.otherImgTwo
+				}
+		 	 })
+		 }
+	}
+	return artificialServer;
+})

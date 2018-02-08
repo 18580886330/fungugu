@@ -1,0 +1,31 @@
+define(function() {
+    'use strict';
+   var queryServer=queryServer||{
+   		/*获取列表*/
+   		getTableList:function(data){
+   			return $.ajax({
+				type: 'get',
+				url: '/api/v1/valuation/records',
+				dataType: 'json',
+				data: data
+			});
+   		},
+   		/*获取历史纪录*/
+   		getLocalRecord:function(id){
+   			return $.ajax({
+				type: 'get',
+				url: '/api/v1/valuation/records/detail/'+id,
+				dataType: 'json',
+			});
+   		},
+   		/*导出excel*/
+   		getExcelExport:function(data){
+   			return $.ajax({
+   				type:"get",
+   				url:"/api/v1/valuation/records/export",
+   				data:data
+   			});
+   		}
+   }
+   return queryServer; 
+});

@@ -1,0 +1,1 @@
+define(function(){"use strict";var e=e||{getTableList:function(e){return $.ajax({type:"get",url:"/api/v1/artificialNuclearValence/"+encodeURIComponent(e.curCity)+"/mqRecordsGet?"+(new Date).getTime(),dataType:"json",data:e})}};return e});

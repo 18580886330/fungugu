@@ -1,0 +1,1 @@
+require(["src/intelligentSearch/caseInquire/js/caseInquire-d535ed5b40.server.js"],function(e){"use strict"});

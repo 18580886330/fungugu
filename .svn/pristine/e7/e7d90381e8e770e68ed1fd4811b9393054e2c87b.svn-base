@@ -1,0 +1,97 @@
+/**
+ * 模块加载器
+ * 说明：所有模块在此~.~
+ */
+define(function() {
+    var modules = modules || {
+        // 生成(适合)选项卡模块容器生成
+        tabInit: function(id,json) {
+            var oHouseReference = $(id),
+                oTabTitle = oHouseReference.find('.layui-tab-title'),
+                oTabContent = oHouseReference.find('.layui-tab-content'),
+                tHtml = '',
+                bHtml = '',
+                tClass = 'layui-this',
+                bClass = 'layui-tab-item layui-show';
+            for( var i=0; i<json.length; i++ ) {
+                if( i==0 ){
+                    // 默认选中第一条
+                    tHtml += '<li data-module="'+json[i].nameEn+'" class="'+tClass+'">'+json[i].nameZn+'</li>';
+                    bHtml += '<div id="'+json[i].nameEn+'" class="'+bClass+'"><div class="loading"><img src="src/content/js/third/layer/css/modules/layer/default/loading-2.gif">正在加载...</div></div>';
+                }else{
+                    tHtml += '<li data-module="'+json[i].nameEn+'">'+json[i].nameZn+'</li>';
+                    bHtml += '<div id="'+json[i].nameEn+'" class="layui-tab-item"><div class="loading"><img src="src/content/js/third/layer/css/modules/layer/default/loading-2.gif">正在加载...</div></div>';
+                }
+            }
+            oTabTitle.html( tHtml );
+            oTabContent.html( bHtml );
+        },
+        /** 房产估值下模块 *************************************************************/
+        // 参考案例
+        referenceCase: function() {
+            yf.path.load("#referenceCase",{
+                controllerUrl: 'src/components/referenceCase/js/referenceCase.controller.js',
+                templateUrl: 'src/components/referenceCase/referenceCase.html',
+                reload: false // 是否重新加载该组件，默认不重新加载
+            });
+        },
+        // 流动性评级
+        liquidityRatingB: function() {
+            yf.path.load("#liquidityRatingB",{
+                controllerUrl: 'src/components/liquidityRating/js/liquidityRating.controller.js',
+                templateUrl: 'src/components/liquidityRating/liquidityRating.html'
+            });
+        },
+        // 小区详情
+        communityDetails: function() {
+            yf.path.load("#communityDetails",{
+                controllerUrl: 'src/components/houseDetail/js/houseDetail.controller.js',
+                templateUrl: 'src/components/houseDetail/houseDetail.html'
+            });
+        },
+        // 周边配套
+        peripheralMatching: function() {
+            yf.path.load("#peripheralMatching",{
+                controllerUrl: 'src/components/surroundingFacility/js/surroundingFacility.controller.js',
+                templateUrl: 'src/components/surroundingFacility/surroundingFacility.html'
+            });
+        },
+        // 价格走势
+        priceTrend: function() {
+            yf.path.load("#priceTrend",{
+                controllerUrl: 'src/components/priceTrend/js/priceTrend.controller.js',
+                templateUrl: 'src/components/priceTrend/priceTrend.html'
+            });
+        },
+        // 临近小区
+        neighborhood: function() {
+            yf.path.load("#neighborhood",{
+                controllerUrl: 'src/components/surroundingHouse/js/surroundingHouse.controller.js',
+                templateUrl: 'src/components/surroundingHouse/surroundingHouse.html'
+            });
+        },
+        // 税费计算
+        taxCalculation: function() {
+             yf.path.load("#taxCalculation",{
+                controllerUrl: 'src/components/taxation/js/taxation.controller.js',
+                templateUrl: 'src/components/taxation/taxation.html',
+                reload: true
+            });
+           
+        },
+        // 估值单
+        valuationSheet: function() {
+            console.log('估值单')
+        },
+        // 评估报告
+        preliminaryReport: function() {
+            console.log('评估报告')
+        },
+        // 人工核价
+        artificialNuclearValence: function() {
+            console.log('人工核价')
+        },
+        /** 案例查询下模块 *************************************************************/
+    };
+    return modules;
+});

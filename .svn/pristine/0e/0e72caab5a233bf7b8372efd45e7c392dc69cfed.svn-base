@@ -1,0 +1,15 @@
+define(function(){
+	'use strict';
+	var priceTrendServer = priceTrendServer||{
+		getTrendInfo:function(data){
+			return $.ajax({
+				type:"get",
+				url:"/api/v1/priceTrend/"+data.city+"/"+data.comName+"/"+data.timeSpan,
+				data:{
+					houseType:data.houseType
+				}
+			});
+		}
+	}
+	return priceTrendServer;
+})

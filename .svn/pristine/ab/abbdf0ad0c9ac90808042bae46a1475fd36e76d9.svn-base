@@ -1,0 +1,739 @@
+require([
+    'src/content/js/modules.js',
+    'src/intelligentSearch/houseValuation/js/houseValuation.server.js',
+], function(modules,server) {
+    'use strict';
+    /**
+     * 模块入口
+     */
+    var main = ({
+        init: function() {
+            /**
+             * 根据用户权限匹配模块
+             */
+            this.data();
+            this.getObjects();         // 获取对象
+            this.search();             // 小区搜索功能
+            this.getSpecialFactors();  // 特殊因素信息
+            this.getRecords();         // 最近搜索记录
+            this.houseReferenceArea(); // 小区信息参考模块区域
+            this.calculateResult(0);   // 估值响应区域
+            this.gugu();               // 估一估
+            this.navEvent();           // 左侧部分链接跳转控制
+            yf.placeholder();
+            return this;
+        },
+        data: function() {
+            var valuationResponse = $('#valuationResponse');
+            this.jTimer = valuationResponse.find('.jTimer').eq(0);  // 估值时点
+            this.jUnitPrice = valuationResponse.find('.jUnitPrice').eq(0);  // 单价
+            this.jTotalPrice = valuationResponse.find('.jTotalPrice').eq(0);  // 总价
+            this.jDiscount = valuationResponse.find('.jDiscount').eq(0);  // 折扣比例
+            this.jSumPrice = valuationResponse.find('.jSumPrice').eq(0);  // 总额
+            this.oValuationTool = $('#valuationTool');
+            this.housingName = $('#housingName'); // 小区标题
+        },
+        // 左侧导航状态(似乎有点不妥。。。)
+        navEvent: function() {
+            var t = setInterval(function(){
+                $('a[data-href="propertyValuation"]').addClass('active');
+                if($('a[data-href="propertyValuation"]').html()){
+                    clearInterval(t);
+                }
+            },100);
+        },
+        // 内容为空提示
+        addNullStatus: function() {
+            $(".search-box").addClass('on');
+            setTimeout(function(){
+                $(".search-box").removeClass('on');
+            },1200);
+        },
+        // 数据搜索
+        search: function() {
+            var _this = this,
+                housingName = yf.param('sval') || yf.param('alias'); // 默认显示用户输入的数据
+            this.valuationInput = $('#valuationInput');
+            if(housingName) {
+                this.valuationInput.val( housingName );
+            }
+            $("#searchHouse").unbind('click').bind('click',function() {
+                if(_this.valuationInput.val()==''){
+                    _this.addNullStatus();
+                }
+            });
+            this.valuationInput.autoprompting({
+                style: { height:'auto' },
+                time: 150, // 延时时间
+                url: 'api/v1/propertyValuation/roomAddress/',
+                type: 'get',
+                async: false,
+                dataType: 'json',
+                mustData: {
+                    city: yf.userInfo.city
+                },
+                params: {},
+                otherElm: '#searchHouse', // 指定一个元素绑定click事件，与回车事件enter相同
+                render: function(data,len) {
+                    // 1条数据表示查找到详细信息
+                    var similarWord = '';
+                    if(len == 1){
+                        similarWord = (data.buildingName || '') + (data.unitName || '') + (data.houseName || '');
+                        return '<li data-keywords="'+similarWord+'" data-residentialname="'+data.residentialName+'" data-districtname="'+data.districtName+'" data-buildingname="'+(data.buildingName || '')+'" data-buildingid="'+(data.buildingId || '')+'" data-unitname="'+(data.unitName || '')+'" data-unitid="'+(data.unitId || '')+'" data-housename="'+(data.houseName || '')+'" data-houseid="'+(data.houseId || '')+'">'+similarWord+'('+data.residentialName+')<span>'+data.districtName || ""+'</span></li>';
+                    }
+                    /**
+                     * districtname: 行政区
+                     * similarWord: 小区别名
+                     * residentialName: 小区名称
+                     */
+                    similarWord = (!data.similarWord?data.residentialName:data.similarWord);
+                    return '<li data-districtname="'+data.districtName+'" data-keywords="'+similarWord+'" data-similarword="'+similarWord+'" data-residentialname="'+data.residentialName+'">'+similarWord+'('+data.residentialName+')<span>'+(data.districtName || '')+'</span></li>';
+                },
+                enter: function(data,sval,len) {
+                    if(len == 1){
+                        var sval = data.keywords;
+                        location.href = '#/houseValuation?page=intelligentSearch&alias='+data.residentialname+'&housingName='+data.residentialname+'&istrative='+data.districtname+'&sval='+sval+'&buildingName='+data.buildingname+'&buildingId='+data.buildingid+'&unitName='+data.unitname+'&unitId='+data.unitid+'&houseName='+data.housename+'&houseId='+data.houseid+'';
+                    }else{
+                        location.href = '#/houseValuation?page=intelligentSearch&alias='+(!data.similarword?data.residentialname:data.similarword)+'&housingName='+data.residentialname+'&istrative='+data.districtname+'&sval='+sval;
+                    }
+                    location.reload();
+                }
+            });
+        },
+        // 小区信息参考模块区域
+        houseReferenceArea: function() {
+            if(!$('#houseReference').length) return;
+            this.housingName.text( yf.param('housingName') );
+            var moduleNames = $('#houseReference').data().modules.replace(/[\[\]]/g,'').split(',');
+            yf.tabInit('#houseReference',yf.matchModule(moduleNames));
+            modules['referenceCase'](); // 参考案例
+        },
+        // 计算结果模块区域
+        calculateResult: function(status) {
+            var _this = this;
+            if(!this.oValuationTool.length) return;
+            // 思路：首先获取对应权限列表，再依次渲染对应的链接按钮
+            var _this = this,html = '',
+                moduleNames = _this.oValuationTool.data().modules.replace(/[\[\]]/g,'').split(','),
+                sClass = '';
+                if( status == '1' ) {
+                    sClass = '';
+                }else{
+                    sClass = ' layui-disabled';
+                }
+            yf.matchModule(moduleNames,function(data) {
+                for(var i=0; i<data.length; i++) {
+                    html += '<a href="javascript:;" class="layui-btn'+sClass+'" data-module="'+data[i].nameEn+'">'+data[i].nameZn+'</a>';
+                }
+                // 绑定事件，加载模块
+                _this.oValuationTool.html( html ).find('a[data-module]').not('.layui-disabled').each(function(idx,elm){
+                    $(elm).unbind().bind('click',function() {
+                        modules[$(this).data().module](); // 调用模块
+                    });
+                });
+            });
+        },
+        // 最近搜索
+        getRecords: function() {
+            var oSearchLogs = $('#searchLogs'),
+                sHtml = '<span>最近搜索：</span>';
+            server.getRecords().success(function(data) {
+                if(!data.data) return;
+                var data = data.data.list;
+                for( var i=0; i<data.length; i++ ) {
+                    sHtml += '<a href="javascript:;" data-similarword="'+data[i].xiaoQuMingCheng+'" data-districtname="'+data[i].xingZhengQu+'" data-keywords="'+data[i].xiaoQuMingCheng+'" title="'+data[i].xiaoQuMingCheng+'" class="item">'+data[i].xiaoQuMingCheng+'</a>';
+                }
+                oSearchLogs.append(sHtml).find('a').bind('click',function() {
+                    location.href = '#/houseValuation?page=intelligentSearch&alias='+$(this).data().similarword+'&housingName='+$(this).data().keywords+'&istrative='+$(this).data().districtname;
+                });
+            }).error(function(e){});
+        },
+        getObjects: function() {
+            this.valuationRequire = $('#valuationRequire');
+            this.oHouseArea = this.valuationRequire.find('input[name="houseArea"]').eq(0);    // 建筑面积
+            this.oEstateType = this.valuationRequire.find('select[name="estateType"]').eq(0); // 物业类型
+            this.oToward = this.valuationRequire.find('select[name="toward"]').eq(0);         // 朝向
+            this.oYear = this.valuationRequire.find('input[name="year"]').eq(0);              // 建成年代
+            this.oFloor = this.valuationRequire.find('input[name="floor"]').eq(0);            // 所在楼层
+            this.oSumFloor = this.valuationRequire.find('input[name="sumFloor"]').eq(0);      // 总楼层
+            this.oSpecial = this.valuationRequire.find('select[name="special"]').eq(0);       // 特殊因素
+            return this;
+        },
+        // 获取户信息
+        getHouseInfo: function(params) {
+            var _this = this;
+            this.getObjects(); // 获取初始对象
+            this.houseData = params; // 小区参数信息
+            server.getHouseInfos(params).success(function(data) {
+                var data = data.data;
+                if(!data){
+                    _this.oEstateType.val( '' ).next().find('input').val( '' );
+                    _this.oToward.val( '' ).next().find('input').val( '' );
+                    _this.oYear.val( '' );
+                    _this.oFloor.val( '' );
+                    _this.oSumFloor.val( '' );
+                    _this.oSpecial.val( '' );
+                    return;
+                }
+                // 绑定户信息
+                //_this.oHouseArea.val( data.buildingArea ); 面积回显暂时去掉
+                _this.oEstateType.val( '住宅' ).next().find('input').val( '住宅' );
+                _this.oToward.val( data.toward || '' ).next().find('input').val( data.toward || '' );
+                _this.oYear.val( data.buildDateRecord );
+                _this.oFloor.val( data.floor );
+                _this.oSumFloor.val( data.floorCount );
+                _this.oSpecial.val( '' );
+                yf.placeholder();
+            }).error(function(e){});
+        },
+        // 特殊因素信息
+        getSpecialFactors: function() {
+            if(!this.oSpecial.length) return;
+            var _this = this,reqParams = {
+                comName: yf.param('housingName')
+            }
+            server.specialFactors(reqParams).success(function(data) {
+                var data = data.data,sHtml = '';
+                if(!data) return;
+                // var oSpecial = _this.valuationRequire.find('select[name="special"]').eq(0);
+                for( var i=0; i<data.length; i++ ) {
+                    sHtml += '<option value="'+data[i]+'">'+data[i]+'</option>';
+                }
+                _this.oSpecial.append( sHtml );
+                main.form.render('select'); //刷新select选择框渲染
+            }).error(function(e){});
+        },
+        // 估一估
+        gugu: function () {
+            var _this = this,
+                oGugu = $('#gugu'),
+                reqParams = '',
+                sYear = new Date().getFullYear();
+            // 估估前做输入验证
+            _this.oHouseArea.unbind('keyup').bind('keyup',function(){
+                var sHouseArea = $(this).val();
+                if( !/^[1-9]\d{0,3}(\.\d{0,2})?$/.test( sHouseArea ) || sHouseArea > 9998.99 ) {
+                    _this.oHouseArea.focus();
+                    _this.oHouseArea.val( sHouseArea.length>=4?sHouseArea.substr(0,4):sHouseArea.substr(sHouseArea.length-1) );
+                    return layer.tips("请输入面积为1~9998.99，只留两位小数！", _this.oHouseArea, {tips: [2, '#666']});
+                }
+            });
+
+            oGugu.unbind('click').bind('click',function() {
+                if(oGugu.hasClass('disabled')) return;
+                // 存储一下需要验证的对象数据
+                var sHouseArea = _this.oHouseArea.val(),
+                    sYearVal = _this.oYear.val(),
+                    sFloor = _this.oFloor.val(),
+                    sSumFloor = _this.oSumFloor.val();
+                // 必填验证
+                if( !/^[1-9]\d{0,3}(\.\d{0,2})?$/.test( sHouseArea ) || sHouseArea > 9998.99 ) {
+                    _this.oHouseArea.focus();
+                    layer.tips("请输入面积为1~9998.99，只留两位小数！", _this.oHouseArea, {tips: [2, '#666']});
+                }else{
+                    // 非空验证
+                    if( sYearVal!='' && !/^\d{4}$/.test( sYearVal ) ){
+                        _this.oYear.focus();
+                        return layer.tips("请输入年代为1900~"+sYear+"的四位整数！", _this.oYear, {tips: [2, '#666']});
+                    }
+                    if( sYearVal!='' && (sYearVal < 1900 || sYearVal > sYear) ) {
+                        _this.oYear.focus();
+                        return layer.tips("请输入年代为1900~"+sYear+"的四位整数！", _this.oYear, {tips: [2, '#666']});
+                    }
+                    if( sFloor!='' && !/^\d{1,2}$|-1$/.test(sFloor) ) {
+                        _this.oFloor.focus();
+                        return layer.tips("所在楼层应该为-1或1~99！", _this.oFloor, {tips: [2, '#666']});
+                    }
+                    if( sFloor!='' && sFloor == '0' ) {
+                        _this.oFloor.focus();
+                        return layer.tips("所在楼层应该为-1或1~99！", _this.oFloor, {tips: [2, '#666']});
+                    }
+                    if( sSumFloor!='' && !/^\d{0,2}$/.test(sSumFloor) ) {
+                        _this.oSumFloor.focus();
+                        return layer.tips("总楼层应该为1~99！", _this.oSumFloor, {tips: [2, '#666']});
+                    }
+                    if( sSumFloor!='' && sSumFloor == '0' ) {
+                        _this.oSumFloor.focus();
+                        return layer.tips("总楼层应该为1~99！", _this.oSumFloor, {tips: [2, '#666']});
+                    }
+                    // 大小判断
+                    if( (sFloor!='' && sSumFloor!='') && Number(sFloor) > Number(sSumFloor) ) {
+                        _this.oFloor.focus();
+                        return layer.tips("所在楼层不能大于总楼层！", _this.oFloor, {tips: [2, '#666']});
+                    }
+                    yf.loading('#valuationResponse'); // loading
+                    // 验证通过=>设置请求参数
+                    reqParams = {
+                        distName: yf.param('istrative'),                // 行政区(必填)
+                        comName: yf.param('housingName'),               // 小区名称(必填)
+                        area: _this.oHouseArea.val(),                   // 面积
+                        buildingNo: _this.houseData?_this.houseData.buildingName:'', // 楼栋号
+                        unitNo: _this.houseData?_this.houseData.unitName:'',         // 单元号
+                        houseNo: _this.houseData?_this.houseData.houseName:'',       // 户号
+                        buildingYears: _this.oYear.val()  || '',         // 建成年代
+                        floor: _this.oFloor.val() || '',                 // 所在楼层
+                        totalFloor: _this.oSumFloor.val() || '',         // 总楼层
+                        toward: _this.oToward.val() || '',               // 朝向
+                        specialFactors: _this.oSpecial.val() || '',      // 特殊因素
+                        houseType: _this.oEstateType.val() || '',        // 物业类型
+                        comAddress: _this.valuationInput.val() || '',    // 小区地址
+                        regionName: '',                           // 片区
+                        searchType: '',                           // 检索方式
+                        basePrice: '',                            // 基准价
+                        pointX: '',                               // 经度
+                        pointY: '',                               // 纬度
+                    }
+                    server.gugu(reqParams).success(function(data){
+                        if( !data.data ) {
+                            layer.msg(data.msg);
+                            yf.removeLoading('#valuationResponse'); // loading
+                            return;
+                        }
+                        var data = data.data;
+                        // 估一估完成后要做的事
+                        _this.responseData(data);
+                        _this.calculateResult(data?1:0);    // 计算结果模块区域
+                        oGugu.addClass('disabled');         // 重复点击拦截
+                        yf.removeLoading('#valuationResponse'); // loading
+                        setTimeout(function(){
+                            oGugu.removeClass('disabled');
+                        },1000);
+                    }).error(function(e){});
+                }
+            });
+        },
+        // 估一估完成后要做的事
+        responseData: function(data) {
+            if(!data){
+                this.oValuationTool.find('.layui-btn').addClass('layui-disabled');
+                this.valuationId = ''; // 估值id
+                this.jTimer.text('--');
+                this.jUnitPrice.text('暂无价格').next().hide();
+                this.jTotalPrice.text('暂无价格').next().hide();
+                this.jDiscount.prop('disabled',true).val('');
+                this.jSumPrice.text('--');
+                return;
+            }
+            /* var valuationResponse = $('#valuationResponse');
+            this.jTimer = valuationResponse.find('.jTimer').eq(0);  // 估值时点
+            this.jUnitPrice = valuationResponse.find('.jUnitPrice').eq(0);  // 单价
+            this.jTotalPrice = valuationResponse.find('.jTotalPrice').eq(0);  // 总价
+            this.jDiscount = valuationResponse.find('.jDiscount').eq(0);  // 折扣比例
+            this.jSumPrice = valuationResponse.find('.jSumPrice').eq(0);  // 总额 */
+            var _this = this;
+            this.oValuationTool.find('.layui-btn').removeClass('layui-disabled');
+            this.valuationId = data.valuationId; // 估值id
+            this.jTimer.text(data.valuationTime);
+            this.jUnitPrice.text(data.vPrice).next().show();
+            this.jTotalPrice.text(data.vTotalPrice).next().show();
+            this.jDiscount.prop('disabled',false).val(data.discount*100);
+            this.jSumPrice.text( parseInt(data.vTotalPrice * data.discount) );
+
+            // 估一估完成过后需要请求参考案例模块的某些方法
+            this.referenceCase();
+            
+            // 折扣改变计算
+            this.jDiscount.keyup(function() {
+                var val = $(this).val();
+                if( val=='' ) return _this.jSumPrice.text('--');
+                if( !/^([0-9]{1,2}|100)$/.test( val ) ) {
+                    return $(this).val(val.substring(0, val.length-1));
+                }
+                _this.jSumPrice.text( parseInt( _this.jDiscount.val() / 100 * _this.jTotalPrice.text() ) );
+            });
+        },
+        // 参考案例模块数据请求
+        referenceCase: function() {
+            // 更新案例散点图，传入价格用于绘画基准线
+            if(yf.referenceCase){
+            	 yf.referenceCase.main.initChartsFn('挂牌',yf.referenceCase.guapaiData,this.jUnitPrice.text());
+            	 yf.referenceCase.main.initChartsFn('成交',yf.referenceCase.successData,this.jUnitPrice.text());
+            }
+        }
+    }).init();
+
+
+    /**
+     * 房屋坐落
+     * 1.获取小区名称 （五栋大楼）
+     * 
+     * 2.生成默认房屋坐落输入框
+     * 点击出现的数据查询:
+     *      根据小区名称查询楼栋名称 （五栋大楼C座）
+     *      根据楼栋名称查询单元名称 （1单元）
+     *      根据单元名称查询户名称 （1单元）
+     *          特殊数据情况：
+     *              根据楼栋名称查找户数据
+     * 
+     * 3.点击下拉按钮改变对应数据并且隐藏后面的内容
+     * 4.点击下拉列表中的数据找到类型查询下级数据
+     * 
+     */
+    var linkage = ({
+        init:function(){
+            this.elm = $('#linkageBox');
+            this.staticPanel = $("#staticPanel");
+            this.parentNode = this.staticPanel.parent();
+            this.createDefaultTmplate();
+            this.bindLinkageInputEvent();
+            this.echoData();
+            return this;
+        },
+        // 生成初始模板
+        createDefaultTmplate:function() {
+            this.elm.html( $('<div class="keybody"><input type="text" id="linkageInput" data-span="building" data-name="building" data-type="housingName" autocomplete="off" placeholder="请输入房屋坐落" class="input layui-input"></div>') );
+            this.linkageInput = $("#linkageInput");
+            this.keyBody = this.elm.find('.keybody').eq(0);
+            this.emptyhint = this.elm.find('.emptyhint').eq(0); // ie8提示文字对象
+        },
+        // 回显数据
+        echoData: function() {
+            this.isEcho = false; // 是否存在回显的数据
+            var buildingName = yf.param('buildingName'),
+                buildingId = yf.param('buildingId'),
+                unitName = yf.param('unitName'),
+                unitId = yf.param('unitId'),
+                houseName = yf.param('houseName'),
+                houseId = yf.param('houseId');
+
+            if(buildingName){
+                this.isEcho = true;
+                // 楼栋号
+                this.createStaticTemplate({
+                    data: {
+                        type: 'building',
+                        code: ''
+                    },
+                    text: ''
+                },'building');
+                
+                this.createStaticTemplate({
+                    data: {
+                        type: 'building',
+                        code: buildingId
+                    },
+                    text: buildingName
+                },'building');
+            }
+
+            if(unitName){
+                // 单元
+                this.createStaticTemplate({
+                    data: {
+                        type: 'unit',
+                        code: unitId
+                    },
+                    text: unitName
+                },'unit');
+            }
+            
+            if(houseName){
+                // 户
+                this.createStaticTemplate({
+                    data: {
+                        type: 'house',
+                        code: houseId
+                    },
+                    text: houseName
+                },'house');
+            }
+        },
+        // 生成下拉菜单模板
+        createDownTemplate: function(typeName,dataList) {
+            // console.log( typeName+'=='+dataList )
+            var _this = this;
+            // 根据请求参数类型生成模板
+            
+            // 添加之前进行重复验证
+            var resultElm = $('#result_'+typeName),
+                childrenList = '',
+                sHtml = '';
+            if( !resultElm.length ) {
+                sHtml += '<div style="left: 0;" data-result-code="result_'+typeName+'" id="result_'+typeName+'" class="menu-result" data-index="0"><ul>';
+                    for( var i=0; i<dataList.length; i++ ) {
+                        sHtml += '<li data-code="'+dataList[i].code+'" data-type="'+typeName+'" data-index="'+i+'">'+dataList[i].name+'</li>';
+                    }
+                    sHtml += '</ul></div>';
+                this.elm.append( sHtml );
+            }else{
+                for( var i=0; i<dataList.length; i++ ) {
+                    sHtml += '<li data-code="'+dataList[i].code+'" data-type="'+typeName+'" data-index="'+i+'">'+dataList[i].name+'</li>';
+                }
+                // 请求到户的情况下不显示对应的下拉菜单
+                resultElm.show().find('ul').html(sHtml);
+            }
+            
+            // 点击下拉列表类型创建对应的的显示数据
+            childrenList = $('#result_'+typeName).find('li');
+            childrenList.unbind('click').bind('click',function(){
+                _this.linkageInput.val('').attr('data-name',typeName);
+                // 创建静态展示模块
+                _this.createStaticTemplate( $(this),typeName );
+                
+                // 更新data-span属性，用于搜索关键字使用，默认data-span为building，所以不用修改
+                if( typeName == 'building' ) {
+                    _this.linkageInput.attr('data-span','unit');
+                }else if( typeName == 'unit' ){
+                    _this.linkageInput.attr('data-span','house');
+                }
+                // 将光标设置设置到input中，并click
+                _this.linkageInput.focus().click();
+            });
+
+            $(document).on('click',function(e) {
+                var aMenuResult = _this.elm.find('.menu-result');
+                aMenuResult.each(function() {
+                    if( aMenuResult.is(':visible') ) {
+                        if(_this.spanParentNode) {
+                            _this.spanParentNode.show().nextAll().show();
+                            _this.linkageInput.val('');
+                            _this.calculateStyle(); // 计算宽度
+                        }
+                        aMenuResult.hide();
+                    }
+                });
+            });
+            yf.scroll({elmId:'.menu-result','height':'auto'});
+            
+            // 是否是回显的数据
+            if(this.isEcho){
+                this.elm.find('.menu-result').hide();
+                var type = this.staticPanel.children().eq( this.staticPanel.children().length-1 ).data().type;
+                this.linkageInput.attr('data-span',type).attr('data-name',type);
+            }
+        },
+        /**
+         * elm : 点击的li对象
+         * typeName: 请求的数据类型名称
+         */
+        createStaticTemplate: function(elm,typeName) {
+            var data = null,text = '';
+            if( elm.text instanceof Function ) {
+                data = elm.data(),
+                text = elm.text();
+            }else{
+                data = elm.data,
+                text = elm.text;
+            }
+            // 若存在，则更新数据
+            if( $('#result_item_'+data.type).length > 0 ) {
+                this.linkageInput.val(''); // 清空点击textNode的值
+                $('#result_item_'+data.type).show().attr({'data-type':data.type,'data-id':data.code,'data-name':text}).find('span').text( text );
+                $('#result_item_'+data.type).nextAll('.result-item').remove(); // 移除当前对象之后的所有数据，防止数据请求参数变动，再次改变数据过后会生成新的dom及数据
+            }else{
+                var sHtml = '';
+                sHtml += '<div class="result-item" id="result_item_'+data.type+'" data-type="'+data.type+'" data-id="'+data.code+'" data-name="'+text+'">\
+                    <span data-type="result_'+data.type+'">'+text+'</span><a data-type="result_'+data.type+'" href="javascript:;"></a>\
+                </div>';
+                this.staticPanel.append( sHtml );
+            }
+            this.updataParams(); // 更新请求参数
+            $('#result_'+typeName).hide(); // 隐藏被点击的下拉菜单对象
+            // 改变估值对象#valuationInput的值
+            this.changeValuationInput();
+            // 获取最新的元素绑定click事件，展示对应的下拉菜单
+            var staticPanelChildren = this.staticPanel.children();
+            this.bindStaticPanelChildrenEvent(staticPanelChildren);
+            this.calculateStyle(); // 计算宽度
+
+            // 似乎没什么卵用？
+            // this.linkageInput.val('').attr('data-name',typeName);
+            // 更新data-span属性，用于搜索关键字使用，默认data-span为building，所以不用修改
+            if( typeName == 'building' ) {
+                this.linkageInput.attr('data-span','unit');//.attr('data-name','unit');
+            }else if( typeName == 'unit' ){
+                this.linkageInput.attr('data-span','house');//.attr('data-name','house');
+            }
+
+            // 如果到了户数据点击的情况下，不再将光标focus到input中也不点击
+            if( typeName == 'house' ) {
+                // 请求户数据
+                return main.getHouseInfo(this.getParams);
+            }else{
+                this.getListData(); // 根据回显的数据请求对应的列表数据
+            }
+        },
+        // 改变估值对象#valuationInput的值
+        changeValuationInput: function() {
+            var sVal = '';
+            this.staticPanel.children('.result-item').each(function(idx,elm) {
+                sVal += $(elm).attr('data-name');
+            });
+            main.valuationInput.val( sVal );
+            main.addNullStatus();
+        },
+        /**
+         * 针对房屋坐落中下拉图标绑定event
+         */
+        bindStaticPanelChildrenEvent: function(children) {
+            var _this = this;
+            children.each(function(idx,elm){
+                $(elm).find('a').unbind('click').bind('click',function(event) {
+                    _this.isEcho = false;
+                    _this.spanParentNode = $(this).parent();
+                    $('#result_'+_this.spanParentNode.data().type).find('ul>li').show();
+                    $('#'+$(this).data().type).toggle().siblings('.menu-result').hide();
+                    event.stopPropagation();
+                });
+                $(elm).find('span').unbind('click').bind('click',function(event) {
+                    _this.isEcho = false;
+                    _this.spanParentNode = $(this).parent();
+                    $('#result_'+_this.spanParentNode.attr('data-type')).find('ul>li').show();
+                    // 先隐藏对应的元素
+                    _this.spanParentNode.hide().nextAll('.result-item').hide();
+                    // 显示对应的下拉菜单
+                    $('#result_'+_this.spanParentNode.attr('data-type')).show().siblings('.menu-result').hide();
+
+                    // 改变input宽度，并赋值给input
+                    _this.linkageInput.attr('data-span',_this.spanParentNode.attr('data-type')).val( _this.spanParentNode.attr('data-name') ).focus();
+                    _this.calculateStyle(); // 计算宽度
+                    event.stopPropagation();
+                });
+            });
+        },
+        /**
+         * 输入框绑定event
+         */
+        bindLinkageInputEvent: function() {
+            var _this = this;
+            _this.getParams = {
+                buildingName: '', // 楼栋名称
+                buildingCode: '', // 楼栋code
+                unitName: '', // 单元名称
+                unitCode: '', // 单元code
+                houseName: '', // 户名称
+                houseCode: '', // 户code
+            }
+            _this.clearParams = function() {
+                _this.getParams.buildingName = ''; // 楼栋名称
+                _this.getParams.buildingCode = ''; // 楼栋code
+                _this.getParams.unitName = ''; // 单元名称
+                _this.getParams.unitCode = ''; // 单元code
+                _this.getParams.houseName = ''; // 户名称
+                _this.getParams.houseCode = ''; // 户code
+                return _this.getParams;
+            }
+            _this.getParams.comName = yf.param('housingName');  // 小区名称(必填)
+            
+            this.linkageInput.unbind('click').bind('click',function() {
+                _this.isEcho = false;
+                // 如果到了户数据点击的情况下，不再将光标focus到input中也不点击
+                if( this.getAttribute('data-name') == 'house' ) {
+                    // 请求户数据
+                    return main.getHouseInfo(_this.getParams);
+                }
+                
+                _this.getListData();
+                /* server.linkageBuilding(_this.getParams).success(function(data){
+                    var data = data.data;
+                    if( !data || !data.list.length ) {
+                        return;
+                    }
+                    _this.createDownTemplate( data.qtype,data.list ); // 获取html模板
+                }).error(function(e){}); */
+            });
+            // 针对input绑定搜索功能
+            this.linkageInput.unbind('keyup').bind('keyup',function(event) {
+                var spanType = this.getAttribute('data-span'),
+                    val = yf.replaceHtml( $(this).val() ),
+                    children = $('#result_'+spanType).find('ul>li');
+                val != '' ? children.hide().filter('li:contains('+val+')').show(): children.show();
+            });
+        },
+        // 请求下拉列表动态数据
+        getListData: function() {
+            var _this = this;
+            // 如果存在请求过的数据，就拿最后一条对象的data属性
+            if( _this.staticPanel.children().length > 0 ) {
+                _this.clearParams(); // 清空请求参数
+                _this.updataParams(); // 获取最新请求参数
+            }
+            server.linkageBuilding(this.getParams).success(function(data){
+                var data = data.data;
+                if( !data || !data.list.length ) {
+                    return;
+                }
+                _this.createDownTemplate( data.qtype,data.list ); // 获取html模板
+                
+            }).error(function(e){});
+        },
+        // 更新请求参数
+        updataParams: function() {
+            var _this = this;
+            _this.staticPanel.children().each(function(idx,elm) {
+                _this.getParams[elm.getAttribute('data-type')+'Name'] = elm.getAttribute('data-name'); // $(elm).data().name;
+                _this.getParams[elm.getAttribute('data-type')+'Code'] = elm.getAttribute('data-id'); // $(elm).data().id;
+            });
+            return _this.getParams;
+        },
+        // 计算宽度
+        calculateStyle: function() {
+            var _this = this,
+                style = function() {
+                    _this.keyBody.css({
+                        width: _this.parentNode.width() - _this.staticPanel.width()-1 // 减1px差距
+                    });
+                };
+                style(),$(window).resize(style);
+        }
+    }).init();
+    
+
+    /**
+     * layui功能区
+     */
+    layui.use(['form','element'], function() {
+        main.form = layui.form;
+        main.element = layui.element;
+        main.form.render('select'); //刷新select选择框渲染
+        yf.scroll({elmId:'.layui-anim',height:'auto'});
+
+        /**
+         * 物业类型选择
+         * 下拉菜单事件
+         */
+        main.form.on('select(wuyeleixing)', function(data) {
+            //console.log(data); //得到select原始DOM对象
+            if(yf.priceTrend){
+        		yf.priceTrend.main.trendInfo();
+        	}
+        }); 
+
+        /**
+         * 小区参考信息=>功能切换
+         */
+        main.element.on('tab(houseReference)', function(data) {
+            // var module = $(data.elem).find('li.layui-this').data().module;
+            modules[$(data.elem).find('li.layui-this').data().module](); // 根据指示加载对应的模块
+            /* setTimeout(function(){
+                $('#scrollWamp').mCustomScrollbar("scrollTo",'bottom');
+            },10); */
+        });
+        
+       
+    });
+
+    return yf.$params = (function(){
+        return {
+            housingName: yf.param('housingName'),       // 小区名称
+            istrative: yf.param('istrative'),           // 行政区
+            houseArea: main.oHouseArea.val() || '',     // 面积
+            estateType: main.oEstateType.val() || '',   // 物业类型
+            toward: main.oToward.val() || '',           // 朝向
+            year: main.oYear.val() || '',               // 年代
+            floor: main.oFloor.val() || '',             // 所在楼层
+            sumFloor: main.oSumFloor.val() || '',       // 总楼层
+            special: main.oSpecial.val(),               // 特殊因素
+            valuationId: main.valuationId || '',              // 估值id
+            jUnitPrice: main.jUnitPrice.text() || '',         // 市场单价
+            jTotalPrice: main.jTotalPrice.text() || '',       // 市场总价
+            buildingName: linkage.getParams.buildingName || '', // 楼栋名称
+            buildingCode: linkage.getParams.buildingCode || '', // 楼栋code
+            unitName: linkage.getParams.unitName || '', // 单元名称
+            unitCode: linkage.getParams.unitCode || '', // 单元code
+            houseName: linkage.getParams.houseName || '', // 户名称
+            houseCode: linkage.getParams.houseCode || '' // 户code
+        };
+    });
+
+});

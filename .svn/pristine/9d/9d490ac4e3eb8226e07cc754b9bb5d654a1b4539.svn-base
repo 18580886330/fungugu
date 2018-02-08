@@ -1,0 +1,1 @@
+!function(e){e.comboBuyServer=e.comboBuyServer||{getPropertyTaxes:function(e){return $.ajax({type:"post",data:e,beforeSend:function(e){},complete:function(){},dataType:"json"})}},e.comboBuyServer}(window);

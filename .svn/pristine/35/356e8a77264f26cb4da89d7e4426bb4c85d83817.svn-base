@@ -1,0 +1,38 @@
+<div class="model-panel half">
+    <div class="model-head">
+        <h3 class="h3">临近小区分布</h3>
+    </div>
+    <div class="model-body map">
+        <div id="surroundingMap"></div>
+    </div>
+</div>
+
+<div class="model-panel half fr surround-model">
+    <div class="model-head">
+        <h3 class="h3">临近小区</h3>
+    </div>
+    <div class="model-body">
+        <table class="layui-table surhouse-table" lay-skin="nob">
+        	<thead>
+        		 <tr>
+                    <td width="30"><strong>临近小区名称</strong></td>
+                    <td width="20">相邻距离(米)</td>
+                    <td width="30">小区基准价(元/㎡)</td>
+                    <td width="20">&nbsp;</td>
+                </tr>
+        	</thead>
+            <tbody id="surround_list">
+               <!-- <tr>
+                    <td>长阳金桥国际公寓</td>
+                    <td>136</td>
+                    <td>
+                        <div class="layui-progress layui-progress-big" lay-showpercent="true">
+                            <div class="layui-progress-bar layui-bg-blue" lay-percent="100%" style="width:70%;"></div>
+                        </div>
+                    </td>
+                    <td>136</td>
+                </tr>-->
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,56 @@
+<div class="house-info">
+    <div class="house-panel">
+        <div class="standard-price">
+            <p>小区基准价</p>
+            <p><strong class="c-red" id="uptown_unit_price"></strong><span class="c-red">元/㎡</span></p>
+        </div>
+        <div class="house-proportion">
+            <p>同比去年：<strong class="c-red" id="tongbi"></strong><b class="icon up"></b></p>
+            <p>环比上月：<strong class="c-red" id="huanbi"></strong><b class="icon up"></b></p>
+        </div>
+    </div>
+    <div class="house-banner layui-carousel">
+		<div carousel-item="" id="carousel_cont">
+			
+		</div>
+    </div>
+</div>
+
+<div class="model-panel half fr detial-cont">
+    <div class="model-head">
+        <h3 class="h3">小区详情</h3>
+    </div>
+    <div class="model-body ">
+        <table class="layui-table" lay-even="" lay-skin="nob" >
+            <tbody id="uptown_info">
+               <!-- <tr>
+                    <td colspan="2">小区地址：北京市海淀区车公庄大街9号院1001室</td>
+                </tr>
+                <tr>
+                    <td><strong>小区名称：</strong><span>五栋大楼</span></td>
+                    <td><strong>建筑类别：</strong><span>商用</span></td>
+                </tr>
+                <tr>
+                    <td><strong>开发商：</strong><span>金城阜业</span></td>
+                    <td><strong>开盘时间：</strong><span>2015.09.19</span></td>
+                </tr>
+                <tr>
+                    <td><strong>绿化率：</strong><span>30%</span></td>
+                    <td><strong>容积率：</strong><span>--</span></td>
+                </tr>
+                <tr>
+                    <td><strong>物业公司：</strong><span>--</span></td>
+                    <td><strong>物业费：</strong><span>--</span></td>
+                </tr>
+                <tr>
+                    <td><strong>建筑面积：</strong><span>83</span></td>
+                    <td><strong>土地面积：</strong><span>--</span></td>
+                </tr>
+                <tr>
+                    <td><strong>车位情况：</strong><span>有</span></td>
+                    <td><strong>土地年限：</strong><span>--</span></td>
+                </tr>-->
+            </tbody>
+        </table>
+    </div>
+</div>

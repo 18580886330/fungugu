@@ -1,0 +1,1 @@
+define(function(){"use strict";var e=e||{sendFeed:function(e){return $.ajax({type:"get",url:"/api/v1/feedBack/version",data:e})}};return e});

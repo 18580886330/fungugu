@@ -1,0 +1,254 @@
+<div id="scrollWamp">
+    <div class="wamp-body query-logs">
+        <div class="g-title">查询记录</div>
+		<div class="valuation-body">
+			<div class="layui-form query-condition" id="detail_record">
+				<div class="layui-form-item">
+					<div class="layui-inline big-inline">
+						<label class="layui-form-label">估值对象</label>
+						<div class="auto-input-inline" >
+							<input class="layui-input" placeholder="请输入估值对象" id="com_name"/>
+						</div>
+					</div>
+					<div class="layui-inline mid-inline">
+						<label class="layui-form-label">日期范围</label>
+						<div class="auto-input-inline">
+							<input class="layui-input inline-two" id="begin_date" readonly="readonly"/>
+							<input class="layui-input inline-two" id="end_date" readonly="readonly"/>
+						</div>
+					</div>
+					<div class="layui-inline small-inline">
+						<label class="layui-form-label">面积范围</label>
+						<div class="auto-input-inline">
+							<input class="layui-input min-input" id="min_area" placeholder="单位：㎡"/>
+							
+						</div>
+					</div>
+					<div class="layui-inline small-inline special-box">
+						<label class="layui-form-label ">-</label>
+						<div class="auto-input-inline">
+							<input class="layui-input min-input" id="max_area" placeholder="单位:㎡"/>
+							
+						</div>
+					</div>
+					<!--<div class="layui-inline mid-inline">
+						<div class="auto-input-inline">
+							<input class="layui-input last-inpt" />
+						</div>
+					</div>-->
+				</div>
+				
+				<div class="layui-form-item clear layui-form-last">
+					<div class="layui-inline big-inline fl">
+						<label class="layui-form-label">估值城市</label>
+						<div class="auto-input-inline" >
+							<input class="layui-input" placeholder="请输入估值城市" id="local_city"/>
+						</div>
+					</div>
+										
+					<div class="layui-form-right">
+						<a class="layui-btn" href="javascript:;" id="detail_search">查询</a>
+						<a class="layui-btn" href="javascript:;" id="detail_reset">重置</a>
+						<a class="layui-btn layui-btn-warm" href="javascript:;" id="detail_export">导出</a>
+					</div>
+				</div>
+			</div>
+			
+			<div class="query-condition top-space">
+				<table class="free-table" id="his_detatil">
+					<!--<tr>
+						<td>
+							北京
+						</td>
+						<td>
+							<p>北京车公庄大街五栋大楼c座10层1202室</p>
+							<p>2016-09-21 14:51:57</p>
+						</td>
+						<td>
+							<p>总价：<span class="c-red">999</span>万元</p>
+							<p>单价：<span class="c-red">888</span>万元</p>
+						</td>
+						<td>
+							<p>面积：<span class="c-red">999</span>㎡</p>
+							<p>朝向：<span>888</span></p>
+						</td>
+						<td>
+							<p>总楼层：23层</p>
+							<p>所在层：7层</p>
+						</td>
+						<td>
+							<a class="c-blue" href="javascript:;">查看详情</a>
+						</td>
+					</tr>-->
+				</table>
+			</div>
+			<!--分页-->
+			<div id='queryLogsPage' class="text-center">
+				
+			</div>
+			
+			
+			
+			
+		</div>       
+    </div>
+</div>
+
+
+
+
+
+<!--begin pop-->
+<div class="pop-up details-pop" id="details-popup">
+	<p class="pop-title">
+		历史估值详情
+		<a class="close layui-layer-close"></a>
+	</p>
+	<div class="pop-body" id="his_evaluate">
+		<div class="details-pop-hd clear">
+			<div class="fl pop-price-box">
+				<i class="title-hore markt-title"></i>
+				<div class="price-inline">
+					<p>
+						<span class="fl8">单价</span>
+						<span class="c-red f24" id="market_unit_price"></span>
+						<span class="c-red f14" >元/㎡</span>
+					</p>
+					<p>
+						<span class="fl8">总价</span>
+						<span class="c-red f24" id="market_total_price"></span>
+						<span class="c-red f14">万元</span>
+					</p>
+				</div>
+			</div>
+			<div class="fr pop-price-box">
+				<i class="title-hore evaluate-title"></i>
+				<div class="price-inline">
+					<p>
+						<span class="fl8">单价</span>
+						<span class="c-red f24" id="evaluate_unit_price"></span>
+						<span class="c-red f14">元/㎡</span>
+					</p>
+					<p>
+						<span class="fl8">总价</span>
+						<span class="c-red f24" id="evaluate_total_price"></span>
+						<span class="c-red f14">万元</span>
+					</p>
+				</div>
+			</div>
+		</div>
+		<p class="time-cont">估值时点：<span id="gu_time"></span></p>
+		
+		
+		<div class="valuation-body valuation-require">
+			<div class="layui-form">
+				<div class="layui-form-item">
+					<label class="layui-form-label">小区地址</label>
+					<div class="layui-input-block">
+               			 <input type="text" id="village_addr"  class="layui-input" disabled="disabled"/>
+           			</div>
+				</div>
+				<div class="layui-form-item">
+					<div class="layui-inline">
+                        <label class="layui-form-label">小区名称</label>
+                        <div class="auto-input-inline">
+                            <input type="text" id="village_name" autocomplete="off" class="layui-input" disabled="disabled"/>
+                        </div>
+               		 </div>
+               		 <div class="layui-inline">
+               		 	 <label class="layui-form-label">城市</label>
+                         <div class="auto-input-inline">
+                              <input type="text" id="village_city" autocomplete="off" class="layui-input" disabled="disabled"/>
+                         </div>
+               		 </div>
+				</div>
+				<div class="layui-form-item">
+					<div class="layui-inline">
+                        <label class="layui-form-label">行政区</label>
+                        <div class="auto-input-inline">
+                            <input type="text" id="village_district" autocomplete="off" class="layui-input" disabled="disabled"/>
+                        </div>
+               		 </div>
+               		 <div class="layui-inline">
+               		 	 <label class="layui-form-label">片区</label>
+                         <div class="auto-input-inline">
+                              <input type="text" id="village_zone" autocomplete="off" class="layui-input" disabled="disabled"/>
+                         </div>
+               		 </div>
+				</div>
+				<div class="layui-form-item">
+					<div class="layui-inline">
+                        <label class="layui-form-label">楼栋号</label>
+                        <div class="auto-input-inline">
+                            <input type="text" id="village_building" autocomplete="off" class="layui-input" disabled="disabled"/>
+                        </div>
+               		 </div>
+               		 <div class="layui-inline">
+               		 	 <label class="layui-form-label">单元号</label>
+                         <div class="auto-input-inline">
+                              <input type="text" id="village_unit" autocomplete="off" class="layui-input" disabled="disabled"/>
+                         </div>
+               		 </div>
+				</div>
+				<div class="layui-form-item">
+					<div class="layui-inline">
+                        <label class="layui-form-label">户号</label>
+                        <div class="auto-input-inline">
+                            <input type="text" id="village_code" autocomplete="off" class="layui-input" disabled="disabled"/>
+                        </div>
+               		 </div>
+               		 <div class="layui-inline">
+               		 	 <label class="layui-form-label">建筑面积</label>
+                         <div class="auto-input-inline">
+                              <input type="text" id="village_area" autocomplete="off" class="layui-input" disabled="disabled"/>
+                         </div>
+               		 </div>
+				</div>
+				<div class="layui-form-item">
+					<div class="layui-inline">
+                        <label class="layui-form-label">楼层</label>
+                        <div class="auto-input-inline">
+                            <input type="text" id="village_floor" autocomplete="off" class="layui-input" disabled="disabled"/>
+                        </div>
+               		 </div>
+               		 <div class="layui-inline">
+               		 	 <label class="layui-form-label">朝向</label>
+                         <div class="auto-input-inline">
+                              <input type="text" id="village_direction" autocomplete="off" class="layui-input" disabled="disabled"/>
+                         </div>
+               		 </div>
+				</div>
+				<div class="layui-form-item">
+					<div class="layui-inline">
+                        <label class="layui-form-label">建成年代</label>
+                        <div class="auto-input-inline">
+                            <input type="text" id="village_year" autocomplete="off" class="layui-input" disabled="disabled"/>
+                        </div>
+               		 </div>
+               		 <div class="layui-inline">
+               		 	 <label class="layui-form-label">物业类型</label>
+                         <div class="auto-input-inline">
+                              <input type="text" id="village_estates" autocomplete="off" class="layui-input" disabled="disabled"/>
+                         </div>
+               		 </div>
+				</div>
+				<div class="layui-form-item">
+					<div class="layui-inline">
+                        <label class="layui-form-label">特殊因素</label>
+                        <div class="auto-input-inline">
+                            <input type="text" id="village_specil" autocomplete="off" class="layui-input" disabled="disabled"/>
+                        </div>
+               		 </div>
+               		 <div class="layui-inline">
+               		 	 <label class="layui-form-label">小区基准价</label>
+                         <div class="auto-input-inline">
+                              <input type="text" id="village_benchmark" autocomplete="off" class="layui-input" disabled="disabled"/>
+                         </div>
+               		 </div>
+				</div>
+				
+			</div>	
+		</div>
+	</div>
+</div>
+<!--end popup-->

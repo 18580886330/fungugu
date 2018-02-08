@@ -1,0 +1,67 @@
+<!--意见反馈-->
+<div class="pop-up feed-back-pop hidden" id='feedBackPop'>
+	<p class="pop-title">
+		意见反馈
+		<a class="close layui-layer-close"></a>
+	</p>
+	<div class="pop-body feed-back-body" id="opinion">
+		<div class="feed-back-box">
+			<p class="feed-back-hd">
+				<span class="feed-back-qus">您对于本次界面改版是否满意？</span>
+				<label>
+					<input type="checkbox" checked="checked" id="interfaceSatisfaction" name=""/>
+					<span>满意</span>
+				</label>
+				<label>
+					<input type="checkbox"/>
+					<span>不满意</span>
+				</label>
+			</p>
+			<p class="feed-back-bd">您对于本次界面改版还有哪些意见？</p>
+			<textarea class="feed-cont" id="interfaceProposal"></textarea>
+			<p class="text-right">您还可以输入<span id="inter_num">300</span>个字</p>
+		</div>
+		
+		<!--<div class="feed-back-box">
+			<p class="feed-back-hd">
+				<span class="feed-back-qus">您对于案例查询功能体验如何？</span>
+				<label>
+					<input type="checkbox" checked="checked" id="caseFunSatisfaction"/>
+					<span>满意</span>
+				</label>
+				<label>
+					<input type="checkbox"/>
+					<span>不满意</span>
+				</label>
+			</p>
+			<p class="feed-back-bd">您对于案例查询还有哪些意见？</p>
+			<textarea class="feed-cont" id="caseFunProposal"></textarea>
+		</div>
+		
+		<div class="feed-back-box">
+			<p class="feed-back-hd">
+				<span class="feed-back-qus">您对于流动性评级功能体验如何？</span>
+				<label>
+					<input type="checkbox" checked="checked" id="communityGradeSatisfaction"/>
+					<span>满意</span>
+				</label>
+				<label>
+					<input type="checkbox"/>
+					<span>不满意</span>
+				</label>
+			</p>
+			<p class="feed-back-bd">您对于流动性评级还有哪些意见？</p>
+			<textarea class="feed-cont" id="communityGradeProposal"></textarea>
+		</div>-->
+		
+		<div class="feed-back-box">
+			<p class="feed-back-bd">您还有哪些其他改进意见？</p>
+			<textarea class="feed-cont" id="othersProposal"></textarea>
+			<p class="text-right">您还可以输入<span id="feed_num">300</span>个字</p>
+		</div>
+		<p class="text-center">
+			<a class="layui-btn" id="subFeed">确认提交</a>
+		</p>
+	</div>
+</div>
+<!--end 意见反馈-->

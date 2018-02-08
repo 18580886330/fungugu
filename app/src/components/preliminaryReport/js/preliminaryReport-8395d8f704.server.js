@@ -1,0 +1,1 @@
+define(function(){"use strict";var e=e||{getReport:function(e){return $.ajax({type:"post",url:"/api/v1/preliminaryReport/generationReport",dataType:"json",data:e})},downReportFn:function(e){return $.ajax({type:"get",url:"/api/v1/preliminaryReport/downloadReport/"+encodeURIComponent(yf.userInfo.city)+"/"+e.reportId,dataType:"json"})}};return e});

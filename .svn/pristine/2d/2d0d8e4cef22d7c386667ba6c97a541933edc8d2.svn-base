@@ -1,0 +1,27 @@
+define(function(){
+	'use strict';
+	var valuationSheetServer = valuationSheetServer || {
+		getValuationDetail:function(data){
+			return $.ajax({
+				type:"get",
+				url:"/api/v1/valuationSheet/valuationDetailedList/"+encodeURIComponent(data.city)+"/"+encodeURIComponent(data.comName)+"/"+encodeURIComponent(data.area)+"/download",
+				data:{
+					houseType:data.houseType,
+					residentialLocated:data.residentialLocated,
+					position:data.position,
+					floorBuilding:data.floorBuilding,
+					houseNumber:data.houseNumber,
+					toward:data.toward,
+					builtedTime:data.builtedTime,
+					floor:data.floor,
+					totalFloor:data.totalFloor,
+					specialFactors:data.specialFactors,
+					marketPrice:data.marketPrice,
+					marketTotalPrice:data.marketTotalPrice,
+					unitNumber:data.unitNumber
+				}
+			});
+		}
+	}
+	return valuationSheetServer;
+})

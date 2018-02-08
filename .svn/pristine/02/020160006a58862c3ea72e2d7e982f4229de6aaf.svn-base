@@ -1,0 +1,1 @@
+define(function(){"use strict";var e=e||{getTabelList:function(e){return $.ajax({type:"get",url:"/api/v1/referenceCase/caseInfoGet/"+encodeURIComponent(e.city)+"/"+encodeURIComponent(e.comName)+"/"+encodeURIComponent(e.caseType)+"/"+encodeURIComponent(e.timeSpan),data:{pageNo:e.pageNo,pageSize:e.pageSize}})}};return e});

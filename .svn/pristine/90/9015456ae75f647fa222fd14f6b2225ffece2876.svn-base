@@ -1,0 +1,128 @@
+require([
+    'src/components/liquidityRating/js/liquidityRating.server.js',
+], function(rateServer) {
+    'use strict';
+    layer.msg('流动性评级');
+	
+	//暂缓上线
+	({
+		init:function(){
+			//this.getRateDateFn();
+		},
+		/*获取*/
+		getRateDateFn:function(){
+			var params={
+				city:yf.param('city'),
+				distName:yf.param('distName'),
+				comName:yf.param('comName'),
+			}
+			rateServer.getRateFn(params).success(function(data){
+				if(data.code==200){
+					console.log(data)
+				}
+			}).error(function(res){
+				
+			})
+		}
+	}).init()
+
+
+
+    var chart = new Highcharts.Chart('monthStatistics', {
+        credits:{
+            enabled: false
+        },
+        title: {
+            text: '',
+            x: -20
+        },
+        xAxis: {
+            categories: ['一月', '二月', '三月', '四月', '五月', '六月']
+        },
+        yAxis: {
+            title: {
+                text: '单位：元/㎡',
+                align: 'high',
+                offset: -40,
+                rotation: 0,
+                y: -15
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }]
+        },
+        tooltip: {
+            valueSuffix: '°C'
+        },
+        legend: {
+            verticalAlign: 'top',
+            borderWidth: 0,
+            y: 0
+        },
+        series: [{
+            name: '东京',
+            data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5]
+        }, {
+            name: '纽约',
+            data: [-0.2, 0.8, 5.7, 11.3, 17.0, 22.0]
+        }, {
+            name: '柏林',
+            data: [-0.9, 0.6, 3.5, 8.4, 13.5, 17.0]
+        }, {
+            name: '伦敦',
+            data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2]
+        }]
+    });
+
+
+    var chart = new Highcharts.Chart('areaStatistics', {
+        credits:{
+            enabled: false
+        },
+        title: {
+            text: '',
+            x: -20
+        },
+        xAxis: {
+            categories: ['一月', '二月', '三月', '四月', '五月', '六月']
+        },
+        yAxis: {
+            title: {
+                text: '单位：元/㎡',
+                align: 'high',
+                offset: -40,
+                rotation: 0,
+                y: -15
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }]
+        },
+        tooltip: {
+            valueSuffix: '°C'
+        },
+        legend: {
+            verticalAlign: 'top',
+            borderWidth: 0,
+            y: 0
+        },
+        series: [{
+            name: '东京',
+            data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5]
+        }, {
+            name: '纽约',
+            data: [-0.2, 0.8, 5.7, 11.3, 17.0, 22.0]
+        }, {
+            name: '柏林',
+            data: [-0.9, 0.6, 3.5, 8.4, 13.5, 17.0]
+        }, {
+            name: '伦敦',
+            data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2]
+        }]
+    });
+    
+});

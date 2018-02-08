@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<link type="image/x-icon" mce_href="src/content/images/favicon.ico" href="src/content/images/favicon.ico" rel="icon">
+	<title>Document</title>
+	<link rel="stylesheet" type="text/css" href="src/content/js/third/layer/css/layui.css">
+	<link rel="stylesheet" type="text/css" href="src/content/css/style.css">
+	<link rel="stylesheet" type="text/css" href="src/content/js/third/jquery/scrollbar/css/jquery.mCustomScrollbar.min.css">
+</head>
+<body>
+	<div id="header" class="header">
+		<a href="/" class="logo fl"><img src="src/content/images/logo.png" alt=""></a>
+		<div id="cityLink" class="city-link fl">
+			<b class="icon"></b>
+			<span class="name">---</span>
+			<a href="javascript:;" class="change-city">切换城市</a>
+		</div>
+		<div id="headerModule" class="top-nav fl" data-modules="[intelligentSearch,applicationMarket]">
+			<a class="link" data-href="intelligentSearch" href="javascript:;"><b class="icon intelligentSearch"></b><span>智能搜索</span></a>
+		</div>
+		<ul class="drop-nav fr">
+			<li class="drop-nav-item">
+				<a class="link" href="javascript:;" id="feedBack"><b class="icon i1"></b><span>意见反馈</span></a>
+			</li>
+			<li class="drop-nav-item">
+				<a class="link" href="javascript:;"><b class="icon i2"></b><span id="userName">Hi.</span><b class="i"></b></a>
+				<!-- <dl class="drop-nav-child">
+					<dd><a data-href="queryLogs" href="#/queryLogs?page=intelligentSearch">个人中心</a></dd>
+				</dl> -->
+			</li>
+		</ul>
+	</div>
+	<div class="wamp">
+		<div class="wamp-left">
+			<ul id="navTree" class="nav-tree" data-modules="[propertyValuation,caseQuery,liquidityRatingL]">
+				<!-- <li class="nav-tree-item">
+					<a class="link" data-href="houseValuation" href="javascript:;"><b class="icon"></b><span>房产估值</span></a>
+				</li>
+				<li class="nav-tree-item">
+					<a class="link" data-href="caseInquire" href="#/caseInquire?page=intelligentSearch"><b class="icon"></b><span>案例查询</span></a>
+				</li>
+				<li class="nav-tree-item">
+					<a class="link" href="#"><b class="icon"></b><span>流动性评级</span></a>
+				</li> -->
+				<!-- <li class="nav-tree-item">
+					<a class="link" data-href="personalCenter" href="#/personalCenter"><b class="icon"></b><span>个人中心</span></a>
+				</li> -->
+				<li class="nav-tree-item">
+					<a class="link" data-href="queryLogs" href="#/queryLogs?page=intelligentSearch"><b class="icon queryLogs"></b><span>查询记录</span></a>
+				</li>
+			</ul>
+		</div>
+		<div show-view class="wamp-content"></div>
+
+		<!-- 弹窗区 -->
+		<div id="cityContent"></div> <!-- 城市弹窗 -->
+		<div id="feedBackContent"></div> <!-- 意见反馈 -->
+        <div id="taxCalculation"></div> <!-- 税费计算 -->
+		<div id="valuationSheet"></div> <!-- 估值单下载 -->
+
+		<!-- 估值记录=>导出记录下载弹框 -->
+		<div class="pop-up down-pop hide" id="exportDownPop">
+			<div class="pop-body text-center">
+				<h1>excel列表已生成</h1>
+				<p class="btn-groub">
+					<a class="layui-btn " id="exportDownload" href="javascript:;" >立即下载</a>
+					<a class="layui-btn layui-btn-primary" href="javascript:;" onclick="layer.closeAll()">取消</a>
+				</p>
+			</div>
+		</div>
+
+		<!--历史估值详情 begin pop-->
+		<div class="pop-up details-pop" id="details-popup">
+			<p class="pop-title">历史估值详情<a class="close layui-layer-close"></a></p>
+			<div class="pop-body" id="his_evaluate">
+				<div class="details-pop-hd clear">
+					<div class="fl pop-price-box">
+						<i class="title-hore markt-title"></i>
+						<div class="price-inline">
+							<p>
+								<span class="fl8">单价</span>
+								<span class="c-red f24" id="market_unit_price"></span>
+								<span class="c-red f14" >元/㎡</span>
+							</p>
+							<p>
+								<span class="fl8">总价</span>
+								<span class="c-red f24" id="market_total_price"></span>
+								<span class="c-red f14">万元</span>
+							</p>
+						</div>
+					</div>
+					<div class="fr pop-price-box">
+						<i class="title-hore evaluate-title"></i>
+						<div class="price-inline">
+							<p>
+								<span class="fl8">单价</span>
+								<span class="c-red f24" id="evaluate_unit_price"></span>
+								<span class="c-red f14">元/㎡</span>
+							</p>
+							<p>
+								<span class="fl8">总价</span>
+								<span class="c-red f24" id="evaluate_total_price"></span>
+								<span class="c-red f14">万元</span>
+							</p>
+						</div>
+					</div>
+				</div>
+				<p class="time-cont">估值时点：<span id="gu_time"></span></p>
+				
+				
+				<div class="valuation-body valuation-require">
+					<div class="layui-form">
+						<div class="layui-form-item">
+							<label class="layui-form-label">小区地址</label>
+							<div class="layui-input-block">
+								<input type="text" id="village_addr"  class="layui-input" disabled="disabled"/>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<div class="layui-inline">
+								<label class="layui-form-label">小区名称</label>
+								<div class="auto-input-inline">
+									<input type="text" id="village_name" autocomplete="off" class="layui-input" disabled="disabled"/>
+								</div>
+							</div>
+							<div class="layui-inline">
+								<label class="layui-form-label">城市</label>
+								<div class="auto-input-inline">
+									<input type="text" id="village_city" autocomplete="off" class="layui-input" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<div class="layui-inline">
+								<label class="layui-form-label">行政区</label>
+								<div class="auto-input-inline">
+									<input type="text" id="village_district" autocomplete="off" class="layui-input" disabled="disabled"/>
+								</div>
+							</div>
+							<div class="layui-inline">
+								<label class="layui-form-label">片区</label>
+								<div class="auto-input-inline">
+									<input type="text" id="village_zone" autocomplete="off" class="layui-input" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<div class="layui-inline">
+								<label class="layui-form-label">楼栋号</label>
+								<div class="auto-input-inline">
+									<input type="text" id="village_building" autocomplete="off" class="layui-input" disabled="disabled"/>
+								</div>
+							</div>
+							<div class="layui-inline">
+								<label class="layui-form-label">单元号</label>
+								<div class="auto-input-inline">
+									<input type="text" id="village_unit" autocomplete="off" class="layui-input" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<div class="layui-inline">
+								<label class="layui-form-label">户号</label>
+								<div class="auto-input-inline">
+									<input type="text" id="village_code" autocomplete="off" class="layui-input" disabled="disabled"/>
+								</div>
+							</div>
+							<div class="layui-inline">
+								<label class="layui-form-label">建筑面积</label>
+								<div class="auto-input-inline">
+									<input type="text" id="village_area" autocomplete="off" class="layui-input" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<div class="layui-inline">
+								<label class="layui-form-label">楼层</label>
+								<div class="auto-input-inline">
+									<input type="text" id="village_floor" autocomplete="off" class="layui-input" disabled="disabled"/>
+								</div>
+							</div>
+							<div class="layui-inline">
+								<label class="layui-form-label">朝向</label>
+								<div class="auto-input-inline">
+									<input type="text" id="village_direction" autocomplete="off" class="layui-input" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<div class="layui-inline">
+								<label class="layui-form-label">建成年代</label>
+								<div class="auto-input-inline">
+									<input type="text" id="village_year" autocomplete="off" class="layui-input" disabled="disabled"/>
+								</div>
+							</div>
+							<div class="layui-inline">
+								<label class="layui-form-label">物业类型</label>
+								<div class="auto-input-inline">
+									<input type="text" id="village_estates" autocomplete="off" class="layui-input" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<div class="layui-inline">
+								<label class="layui-form-label">特殊因素</label>
+								<div class="auto-input-inline">
+									<input type="text" id="village_specil" autocomplete="off" class="layui-input" disabled="disabled"/>
+								</div>
+							</div>
+							<div class="layui-inline">
+								<label class="layui-form-label">小区基准价</label>
+								<div class="auto-input-inline">
+									<input type="text" id="village_benchmark" autocomplete="off" class="layui-input" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						
+					</div>	
+				</div>
+			</div>
+		</div>
+		<!--end popup-->
+		<!-- 弹窗区 end -->
+
+	</div>
+	<script type="text/javascript" src="src/content/js/third/jquery/jquery-1.8.2.min.js"></script>
+	<script type="text/javascript" src="src/content/js/third/layer/layui.all.min.js"></script>
+	<script type="text/javascript" src="src/content/js/third/jquery/scrollbar/js/jquery.mCustomScrollbar.concat.min.js"></script>
+	<script type="text/javascript" src="src/content/js/third/echarts/echarts.min.js"></script>
+	<script type="text/javascript" src="src/content/js/third/require/require.min.js"></script>
+	<script type="text/javascript" src="src/content/js/common.js"></script>
+	<script type="text/javascript" src="src/content/js/autoprompting.js"></script>
+	<script type="text/javascript" src="src/content/js/router/router.js"></script>
+	<script type="text/javascript" src="src/content/js/main.js"></script>
+	<script>
+		var _hmt = _hmt || [];
+		(function() {
+		var hm = document.createElement("script");
+		hm.src = "https://hm.baidu.com/hm.js?aac4ead6bd95d85c66c34623a979eb43";
+		var s = document.getElementsByTagName("script")[0]; 
+		s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+	<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.0&key=3e6bbdcf50ba944671f4fa15e05f7ae3 "></script>
+</body>
+</html>

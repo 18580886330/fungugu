@@ -1,0 +1,1 @@
+require(["src/components/liquidityRating/js/liquidityRating-712d9769f6.server.js"],function(i){"use strict"});

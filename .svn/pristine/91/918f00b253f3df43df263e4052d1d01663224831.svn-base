@@ -1,0 +1,125 @@
+<div class="model-panel">
+    <div class="model-head">
+        <h3 class="h3" id="surf_caption">小区周边概况</h3>
+    </div>
+    <div class="model-body surfat-cont">
+    	<a class="layui-btn shift-btn" id="surf_map_btn" href="javascript:;">查看周边详情</a>
+    	<!--周边概况  begin-->
+    	<div class="pv" id="peripheralFactss" >
+    		<div id="rimMap"></div>
+	        <div class="surfat-survey" id="basic_facts">
+	        	<a class="switch-btn icon"  href="javascript:;">收起</a>
+	        	<ul class="surfat-basisc-list">
+	        		<li>
+	        			<p class="b-title">公交线路</p>
+	        			<div class="b-depict" id="basisc_transit"></div>
+	        		</li>
+	        		<li>
+	        			<p class="b-title">轨道交通</p>
+	        			<div class="b-depict" id="basisc_rail"></div>
+	        		</li>
+	        		<li>
+	        			<p class="b-title">医疗配套</p>
+	        			<div class="b-depict" id="basisc_medical"></div>
+	        		</li>
+	        		<li>
+	        			<p class="b-title">教育配套</p>
+	        			<div class="b-depict" id="basisc_educate"></div>
+	        		</li>
+	        	</ul>
+	        </div>
+    	</div>
+       <!--周边概况  end-->
+       
+		<div class="pv" id="peripheralDetails">
+			<div id="detailMap"></div>
+			<div class="surfat-survey" id="detail_facts">
+        	<a class="switch-btn icon"  href="javascript:;">收起</a>
+        	<div class="device">
+				<ul class="list" id="detailMenu">
+					<li class="item">
+						<a href="javascript:;">
+							<i class="fgg-icon school">&#xe61b;</i>
+							<p class="name">学校</p>
+						</a>
+					</li>
+					<li class="item">
+						<a href="javascript:;">
+							<i class="fgg-icon hospital">&#xe618;</i>
+							<p class="name">医院</p>
+						</a>
+					</li>
+					<li class="item">
+						<a href="javascript:;">
+							<i class="fgg-icon supermarket">&#xe61c;</i>
+							<p class="name">超市</p>
+						</a>
+					</li>
+					<li class="item">
+						<a href="javascript:;">
+							<i class="fgg-icon bank">&#xe61d;</i>
+							<p class="name">银行</p>
+						</a>
+					</li>
+					<li class="item">
+						<a href="javascript:;">
+							<i class="fgg-icon bus">&#xe619;</i>
+							<p class="name">公交</p>
+						</a>
+					</li>
+					<li class="item">
+						<a href="javascript:;">
+							<i class="fgg-icon metro">&#xe61a;</i>
+							<p class="name">地铁</p>
+						</a>
+					</li>
+				</ul>
+			</div>
+			<div class="result-map" id="result_map">
+				<div class="result-map-hd clear">
+					<b clsass="fl" id='result_come'></b>
+					<a class="layui-btn layui-btn-primary fr" id="back_map_result" href="javascript:;" >返回</a>
+				</div>
+				<div id="result_grounbs">
+					<div class="result-gather" id="result_gather">
+					
+					</div>
+				</div>
+				
+			</div>
+			
+        </div>
+		</div>        
+       
+        
+        
+    </div>
+</div>
+
+<!--<div class="model-panel half fr">
+    <div class="model-head">
+        <h3 class="h3">小区周边详情</h3>
+    </div>
+    <div class="model-body">
+        <table class="layui-table" lay-skin="nob">
+            <tbody>
+                <tr>
+                    <td><strong>交通设施</strong></td>
+                    <td>83路; 323路; 353路; 470路; 477路; 480路; 546路;</td>
+                </tr>
+                <tr>
+                    <td><strong>教育机构</strong></td>
+                    <td>北京瑶医医院地址：总部基地海鹰路6号院31号楼CA2栋(玛雅岛酒店正门对面)</td>
+                </tr>
+                <tr>
+                    <td><strong>医疗配套</strong></td>
+                    <td>北京瑶医医院地址：总部基地海鹰路6号院31号楼CA2栋(玛雅岛酒店正门对面)</td>
+                </tr>
+                <tr>
+                    <td>其他配套</td>
+                    <td>丰台科技园-地铁站线路：地铁9号线</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>-->

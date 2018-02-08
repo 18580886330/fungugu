@@ -1,0 +1,1 @@
+define(function(){"use strict";var e=e||{getSurHouse:function(e){return $.ajax({type:"get",url:"/api/v1/neighborhood/aroundAvgPrice/"+encodeURIComponent(e.city)+"/"+encodeURIComponent(e.comName)+"/"+encodeURIComponent(e.distance)})}};return e});

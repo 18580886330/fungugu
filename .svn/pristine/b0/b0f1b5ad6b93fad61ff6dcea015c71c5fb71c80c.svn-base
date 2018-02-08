@@ -1,0 +1,247 @@
+require([
+    'src/components/priceTrend/js/priceTrend.server.js',
+], function(server) {
+    'use strict';
+   
+	var main=({
+		init:function(){
+			this.trendInfo();
+		},
+		trendInfo:function(){
+			var _this=this;
+			var params={
+				city:yf.userInfo.city,
+				comName:yf.param('housingName'),
+				timeSpan:'6',
+				houseType:''
+			};
+			$('#residen_name').text(yf.param('housingName'));
+			$('#city_name').text(yf.userInfo.city);
+			$('#district_name').text(yf.param('istrative'));
+			server.getTrendInfo(params).success(function(data){
+				if(data.code==200){
+					var arrDate=[];
+					for(var i=0;i<data.data.residentialarea.length;i++){
+						arrDate.push(yf.dateStampFn(data.data.residentialarea[i].priceDate).split('-')[1]+'月');
+					}
+					_this.trendInit(arrDate,data.data.residentialarea,data.data.city,data.data.district,data);
+					
+					_this.specificFn(data,i-1);
+					
+				}
+			}).error(function(){
+				
+			})
+		},
+		/*右边的模块*/
+		specificFn:function(data,i){
+			var lastDate=(yf.dateStampFn(data.data.residentialarea[i].priceDate)).split('-')[0]+'年'+
+								(yf.dateStampFn(data.data.residentialarea[i].priceDate)).split('-')[1]+'月';
+			$('#trend_date').text(lastDate);
+			$('#residen_price').text(data.data.residentialarea[i].price);
+			
+			
+			this.disPrecFn('#residen_huanbi',data.data.residentialarea[i].trendRatio);
+			this.disPrecFn('#city_huanbi',data.data.city[i].trendRatio);
+			this.disPrecFn('#district_huanbi',data.data.district[i].trendRatio);
+			$('#city_price').text(data.data.city[i].price);
+			$('#district_price').text(data.data.district[i].price);
+			
+			
+		},
+		disPrecFn:function(id,prec){
+			if(prec>=0){
+				$(id).removeClass('decline').addClass('rise');
+				$(id).html('环比上月<strong class="c-red">'+prec.toFixed(2)+'%</strong><b class="icon up"></b>')
+			}else{
+				$(id).removeClass('rise').addClass('decline');
+				$(id).html('环比上月<strong class="c-green">'+prec.toFixed(2)+'%</strong><b class="icon down"></b>')
+			}
+		},
+		extractFn:function(data){
+			var arr=[];
+			for(var i=0;i<data.length;i++){
+				arr.push(data[i].price);
+			}
+			return arr;
+		},
+		/*
+		 *arrDate:日期
+		 *resiData:小区数据
+		 *cityData:城市
+		 *districtData:行政区 
+		 * */
+		trendInit:function(arrDate,resiData,cityData,districtData,data){
+			 var zsChart = echarts.init(document.getElementById('bargainTrend'));
+			 var _this = this;
+			 var option = {
+				    legend: {
+				        data:['小区价格','城市价格','行政区价格']
+				    },
+				    grid: {
+				        left: '3%',
+				        right: '4%',
+				        bottom: '3%',
+				        containLabel: true
+				    },
+				   
+				    xAxis: {
+				        type: 'category',
+				        boundaryGap: false,
+				        data: arrDate
+				    },
+				    yAxis: {
+				        type: 'value',
+				        name:'单位：元/㎡'
+				    },
+				    tooltip: {
+				        trigger: 'axis',
+				        formatter:function(params){
+				        	  var res =params[0].name;
+					            for (var i = 0, l = params.length; i < l; i++) {
+					                res += '<br/>' + params[i].seriesName + ' : ' + params[i].value;
+					            }
+					            var idx=params[0].name;
+				                var i=arrDate.indexOf(idx);
+				               _this.specificFn(data,i);
+					            return res;
+				        }
+				    },
+				    series: [
+				        {
+				            name:'小区价格',
+				            type:'line',
+				            data:_this.extractFn(resiData)
+				        },
+				        {
+				            name:'城市价格',
+				            type:'line',
+				            data:_this.extractFn(cityData)
+				        },
+				        {
+				            name:'行政区价格',
+				            type:'line',
+				            data:_this.extractFn(districtData)
+				        }
+				        
+				    ]
+				};
+
+			zsChart.setOption(option);
+			/*var _this=this;
+			var chart = new Highcharts.Chart('bargainTrend', {
+		        credits:{
+		            enabled: false
+		        },
+		        title: {
+		            text: '',
+		            x: -20
+		        },
+		        xAxis: {
+		            categories: arrDate
+		        },
+		        yAxis: {
+		            title: {
+		                text: '单位：元/㎡',
+		                align: 'high',
+		                offset: -20,
+		                rotation: 0,
+		                y: -15
+		            },
+		            plotLines: [{
+		                value: 0,
+		                width: 1,
+		                color: '#808080'
+		            }],
+		            labels:{
+		            	format: '{value}'
+		            }
+		        },
+		        tooltip: {
+		            shared: true,
+               		crosshairs: true,
+               		formatter:function(){
+               			 var s = '<b>' + this.x + '</b>';
+		                $.each(this.points, function () {
+		                    s += '<br/>' + this.series.name + ': ' +
+		                        this.y;
+		                });
+		                var idx=this.points[0].x
+		                var i=arrDate.indexOf(idx);
+		               _this.specificFn(data,i);
+		                return s;
+               			
+               			
+               		}
+               		
+		        },
+		        legend: {
+		            verticalAlign: 'top',
+		            borderWidth: 0,
+		            y: 0
+		        },
+		        series: [{
+		            name: '小区价格',
+		            data: _this.extractFn(resiData)
+		        }, {
+		            name: '城市价格',
+		            data: _this.extractFn(cityData)
+		        }, {
+		            name: '行政区价格',
+		            data: _this.extractFn(districtData)
+		        }]
+		    });*/
+		    
+		    
+		}
+	}).init();
+	
+
+
+/*
+    var chart = new Highcharts.Chart('bargainTrend', {
+        credits:{
+            enabled: false
+        },
+        title: {
+            text: '',
+            x: -20
+        },
+        xAxis: {
+            categories: ['一月', '二月', '三月', '四月', '五月', '六月']
+        },
+        yAxis: {
+            title: {
+                text: '单位：元/㎡',
+                align: 'high',
+                offset: -40,
+                rotation: 0,
+                y: -15
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }]
+        },
+        tooltip: {
+            valueSuffix: '°C'
+        },
+        legend: {
+            verticalAlign: 'top',
+            borderWidth: 0,
+            y: 0
+        },
+        series: [{
+            name: '东京',
+            data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5]
+        }, {
+            name: '纽约',
+            data: [-0.2, 0.8, 5.7, 11.3, 17.0, 22.0]
+        }, {
+            name: '柏林',
+            data: [-0.9, 0.6, 3.5, 8.4, 13.5, 17.0]
+        }]
+    });*/
+    
+});

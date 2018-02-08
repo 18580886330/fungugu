@@ -1,0 +1,1 @@
+define(function(){"use strict";var e=e||{getTrendInfo:function(e){return $.ajax({type:"get",url:"/api/v1/priceTrend/"+encodeURIComponent(e.city)+"/"+encodeURIComponent(e.comName)+"/"+encodeURIComponent(e.timeSpan),data:{houseType:e.houseType}})}};return e});

@@ -1,0 +1,34 @@
+require([
+    'src/components/valuationSheet/js/valuationSheet.server.js',
+], function(server) {
+	var main = ({
+		init:function(){
+			this.downBillFn();
+		},
+		downBillFn:function(){
+			var params={
+				city:yf.userInfo.city,
+				comName:yf.$params().housingName,
+				area:yf.$params().houseArea,
+				houseType:yf.$params().estateType
+			};
+			var i=layer.load(2, {shade: [0.1,'#000']});
+			server.getValuationDetail(params).success(function(data){
+				if(!yf.msg(data)){
+	  				layer.close(i);
+	  				return;
+		  		};
+				if(data.code==200){
+					layer.msg('下载成功');
+					window.location.href=data.data;
+					layer.close(i);
+				}else{
+					layer.msg('下载失败');
+					layer.close(i);
+				}
+			}).error(function(res){
+				
+			})
+		}
+	}).init();
+})

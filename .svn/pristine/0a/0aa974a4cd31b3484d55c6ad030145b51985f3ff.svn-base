@@ -1,0 +1,1 @@
+require(["src/components/liquidityRating/js/liquidityRating.server.js"],function(i){"use strict";({init:function(){},getRateDateFn:function(){var t={city:yf.param("city"),distName:yf.param("distName"),comName:yf.param("comName")};i.getRateFn(t).success(function(i){200==i.code&&console.log(i)}).error(function(i){})}}).init()});

@@ -1,0 +1,43 @@
+<div class="model-panel half">
+    <div class="model-head">
+        <h3 class="h3">小区成交均价走势</h3>
+    </div>
+    <div class="model-body">
+        <div id="bargainTrend"></div>
+    </div>
+</div>
+
+<div class="model-panel half fr">
+    <div class="model-head">
+        <h3 class="h3">价格分析</h3>
+    </div>
+    <div class="model-body model-price">
+        <div class="price-analysis" id="">
+            <div class="analysis-head" id="trend_date"></div>
+            <div class="non-detail hide"></div>
+            <ul class="analysis-body" id="analysis_body">
+                <li>
+                    <p class="name" id="residen_name"></p>
+                    <p class="price c-red"><strong class="c-red" id="residen_price">--</strong></p>
+                    <p class="unit c-red">元/㎡</p>
+                   <!-- <p class="proportion rise" id="residen_tongbi">同比去年：<strong>3.49%</strong><b class="icon up"></b></p>-->
+                    <p class="proportion" id="residen_huanbi"></p>
+                </li>
+                <li>
+                    <p class="name" id="district_name"></p>
+                    <p class="price"><strong class="c-red" id='district_price'>--</strong></p>
+                    <p class="unit c-red">元/㎡</p>
+                  <!--  <p class="proportion rise">同比去年：<strong>3.49%</strong><b class="icon up"></b></p>-->
+                    <p class="proportion" id="district_huanbi"></p>
+                </li>
+                 <li>
+                    <p class="name" id="city_name"></p>
+                    <p class="price"><strong class="c-red" id='city_price'>--</strong></p>
+                    <p class="unit c-red">元/㎡</p>
+                    <!--<p class="proportion rise">同比去年：<strong>3.49%</strong><b class="icon up"></b></p>-->
+                    <p class="proportion" id="city_huanbi"></p>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
