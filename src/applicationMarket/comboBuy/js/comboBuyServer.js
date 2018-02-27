@@ -1,6 +1,6 @@
-;(function(w){
+; (function (w) {
 	w.comboBuyServer = w.comboBuyServer || {
-		getPropertyTaxes:function(form){
+		getPropertyTaxes: function (form) {
 			var param = {
 
 			};
@@ -8,11 +8,11 @@
 				type: 'post',
 				//url: "/house/getPropertyTaxes",
 				data: form,
-				beforeSend: function(request) {
+				beforeSend: function (request) {
 					/*yf.load = layer.load(2);
                     request.setRequestHeader("token", yf.getCookie('token'));*/
-                },
-				complete: function(){
+				},
+				complete: function () {
 					//layer.close(yf.load);
 				},
 				dataType: 'json'

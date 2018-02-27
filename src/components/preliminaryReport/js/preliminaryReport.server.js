@@ -1,21 +1,21 @@
-define(function(){
+define(function () {
 	'use strict';
 	var preliminaryReportServer = preliminaryReportServer || {
 		/*生成报告*/
-		getReport:function(data){
+		getReport: function (data) {
 			return $.ajax({
-				type:"post",
-				url:"/api/v1/preliminaryReport/generationReport",
-				dataType:"json",
-				data:data
+				type: "post",
+				url: "/api/v1/preliminaryReport/generationReport",
+				dataType: "json",
+				data: data
 			});
 		},
 		/*下载报告*/
-		downReportFn:function(data){
+		downReportFn: function (data) {
 			return $.ajax({
-				type:"get",
-				url:"/api/v1/preliminaryReport/downloadReport/"+encodeURIComponent(yf.userInfo.city)+"/"+data.reportId,
-				dataType:"json"
+				type: "get",
+				url: "/api/v1/preliminaryReport/downloadReport/" + encodeURIComponent(yf.userInfo.city) + "/" + data.reportId,
+				dataType: "json"
 			});
 		}
 	};

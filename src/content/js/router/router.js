@@ -1,7 +1,7 @@
-~ function() {
+~ function () {
     var view = $("div[show-view]");
     // 404
-    function notFound(){
+    function notFound() {
         view.html("404 Not Found");
     }
     // 房产估值过渡页
@@ -25,13 +25,13 @@
         templateUrl: 'src/user/valuationRecord/valuationRecord.html'
     });
 
-	//核价记录
-	 yf.path.map("#/auditPriceRecord").to({
+    //核价记录
+    yf.path.map("#/auditPriceRecord").to({
         controllerUrl: 'src/user/auditPriceRecord/js/auditPriceRecord.controller.js',
         templateUrl: 'src/user/auditPriceRecord/auditPriceRecord.html'
     });
 
-	// 个人中心
+    // 个人中心
     yf.path.map("#/personalData").to({
         controllerUrl: 'src/user/personalData/js/personalData.controller.js',
         templateUrl: 'src/user/personalData/personalData.html'
@@ -42,21 +42,21 @@
         controllerUrl: 'src/components/chatServer/js/chatServer.controller.js',
         templateUrl: 'src/components/chatServer/chatServer.html'
     });
-    
-	//账号管理
-	yf.path.map("#/accountManagement").to({
+
+    //账号管理
+    yf.path.map("#/accountManagement").to({
         controllerUrl: 'src/user/accountManagement/js/accountManagement.controller.js',
         templateUrl: 'src/user/accountManagement/accountManagement.html'
     });
-    
+
     //权限管理
     yf.path.map("#/jurisdictionManagement").to({
         controllerUrl: 'src/user/jurisdictionManagement/js/jurisdictionManagement.controller.js',
         templateUrl: 'src/user/jurisdictionManagement/jurisdictionManagement.html'
     });
-    
+
     //应用市场
-     yf.path.map("#/moduleExplain").to({
+    yf.path.map("#/moduleExplain").to({
         controllerUrl: 'src/moduleAuthority/moduleExplain/js/moduleExplain.controller.js',
         templateUrl: 'src/moduleAuthority/moduleExplain/moduleExplain.html'
     });

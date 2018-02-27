@@ -1,10 +1,10 @@
-define(function() {
-    'use strict';
+define(function () {
+	'use strict';
 	var houseDetailServer = houseDetailServer || {
-		getHouseDetail:function(data){
+		getHouseDetail: function (data) {
 			return $.ajax({
-				type:"get",
-				url:"/api/v1/communityDetails/comDetails/"+encodeURIComponent(data.city)+"/"+encodeURIComponent(data.comName),
+				type: "get",
+				url: "/api/v1/communityDetails/comDetails/" + encodeURIComponent(data.city) + "/" + encodeURIComponent(data.comName),
 			});
 		}
 	}

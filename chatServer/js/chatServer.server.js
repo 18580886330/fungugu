@@ -1,8 +1,8 @@
-define(function() {
+define(function () {
     'use strict';
-	var chatServer = chatServer || {
+    var chatServer = chatServer || {
         // 发送并存储消息记录
-		sendMsg: function(from) {
+        sendMsg: function (from) {
             var data = {
                 cityName: yf.getItem('userInfo').city,
                 bussinessId: from.bussinessId,
@@ -10,15 +10,15 @@ define(function() {
                 sendTime: from.sendTime,
                 msgContent: from.msgContent
             }
-			return $.ajax({
+            return $.ajax({
                 type: "post",
                 data: data,
                 dataType: 'json',
-				url: "/api/v1/artificialNuclearValence/msgSend",
-			});
+                url: "/api/v1/artificialNuclearValence/msgSend",
+            });
         },
         // 获取消息记录
-        queryMsgLogs: function(from) {
+        queryMsgLogs: function (from) {
             var data = {
                 positionNo: from.positionNo,
                 rqNums: from.rqNums
@@ -27,37 +27,37 @@ define(function() {
                 type: "get",
                 data: data,
                 dataType: 'json',
-				url: "/api/v1/artificialNuclearValence/"+yf.getItem('userInfo').city+"/"+from.sessionId+"/mqmRecordsGet",
-			});
+                url: "/api/v1/artificialNuclearValence/" + yf.getItem('userInfo').city + "/" + from.sessionId + "/mqmRecordsGet",
+            });
         },
         // 查询核价列表
-        getOjbectList: function() {
+        getOjbectList: function () {
             return $.ajax({
                 type: "get",
                 dataType: 'json',
                 async: false,
-				url: "/api/v1/artificialNuclearValence/"+yf.getItem('userInfo').city+"/mqRecordsByDay",
-			});
+                url: "/api/v1/artificialNuclearValence/" + yf.getItem('userInfo').city + "/mqRecordsByDay",
+            });
         },
         // 根据sessionId查找是否存在核价记录
-        isExistLog: function(from) {
+        isExistLog: function (from) {
             return $.ajax({
                 type: "get",
                 dataType: 'json',
-				url: "/api/v1/artificialNuclearValence/mqRecordsDetail/"+yf.getItem('userInfo').city+"/"+from.sessionId,
-			});
+                url: "/api/v1/artificialNuclearValence/mqRecordsDetail/" + yf.getItem('userInfo').city + "/" + from.sessionId,
+            });
         },
         // appkey
-        wsAppKeyGet: function() {
+        wsAppKeyGet: function () {
             return $.ajax({
                 type: "get",
                 dataType: 'json',
                 async: false,
-				url: "/api/v1/artificialNuclearValence/"+yf.getItem('userInfo').city+"/wsAppKeyGet",
-			});
+                url: "/api/v1/artificialNuclearValence/" + yf.getItem('userInfo').city + "/wsAppKeyGet",
+            });
         },
         // 根据核价记录id更新核价对象数据 排到最前
-        activationRecord: function(from) {
+        activationRecord: function (from) {
             var data = {
                 bussinessId: from.bussinessId,
                 cityName: yf.getItem('userInfo').city
@@ -67,9 +67,9 @@ define(function() {
                 data: data,
                 dataType: 'json',
                 async: false,
-				url: "/api/v1/artificialNuclearValence/activationRecord",
-			});
+                url: "/api/v1/artificialNuclearValence/activationRecord",
+            });
         },
-	}
-	return chatServer;
+    }
+    return chatServer;
 });

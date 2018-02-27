@@ -1,13 +1,13 @@
 require([
 	'src/components/surroundingFacility/js/surroundingFacility.server.js',
-], function(server) {
+], function (server) {
 	'use strict';
 	var main = ({
-		init: function() {
+		init: function () {
 			this.rimMap; //周边概况地图
 			this.detailMap; //周边详情地图
 			this.coordinate = {}; //当前小区坐标
-			this.searchName='公交'; //周边详情地图默认展示公交线路
+			this.searchName = '公交'; //周边详情地图默认展示公交线路
 			this.placeSearch;
 			this.changeMapFn();
 			this.initMapFn();
@@ -18,7 +18,7 @@ require([
 				'height': '270px'
 			});
 		},
-		initMapFn: function() {
+		initMapFn: function () {
 			this.retractFn('#basic_facts');
 			this.retractFn('#detail_facts');
 			this.rimMap = new AMap.Map('rimMap', {
@@ -27,42 +27,42 @@ require([
 			this.detailMap = new AMap.Map('detailMap', {
 				resizeEnable: true
 			});
-			$('#peripheralFactss,#peripheralDetails').hover(function() {
+			$('#peripheralFactss,#peripheralDetails').hover(function () {
 				yf.stopMainScroll();
-			}, function() {
+			}, function () {
 				yf.updateMainScroll();
 			});
 		},
 		/*展开收起*/
-		retractFn: function(id) {
+		retractFn: function (id) {
 			var elem = $(id).find('.switch-btn');
-			elem.off('click').click(function() {
+			elem.off('click').click(function () {
 				var _sel = $(this);
-				if($(this).text() == '收起') {
+				if ($(this).text() == '收起') {
 					$(id).stop(true, false).animate({
 						'right': '-34%'
-					}, 500, function(){
+					}, 500, function () {
 						_sel.text('展开');
 					});
 				} else {
 					$(id).stop(true, false).animate({
 						'right': '0'
-					}, 500, function(){
+					}, 500, function () {
 						_sel.text('收起');
 					});
 				}
 			});
 		},
 		/*获取坐标*/
-		obtainLocationFn: function() {
+		obtainLocationFn: function () {
 			var _this = this;
 			var params = {
 				districtName: yf.$params().istrative,
 				comName: yf.$params().housingName
 			};
 			yf.loading('#peripheralFactss');
-			server.getComLocation(params).success(function(data) {
-				if(data.code != 200) {
+			server.getComLocation(params).success(function (data) {
+				if (data.code != 200) {
 					$('#basisc_transit,#basisc_rail,#basisc_medical,#basisc_educate').text('暂无数据');
 					yf.removeLoading('#peripheralFactss');
 					return;
@@ -82,11 +82,11 @@ require([
 			})
 		},
 		/*获取概况右边信息*/
-		obtainInfoFn: function(params) {
+		obtainInfoFn: function (params) {
 			var _this = this;
-			server.getSurvey(params).success(function(data) {
+			server.getSurvey(params).success(function (data) {
 				yf.removeLoading('#peripheralFactss');
-				if(data.code != 200) {
+				if (data.code != 200) {
 					$('#basisc_transit,#basisc_rail,#basisc_medical,#basisc_educate').text('暂无数据');
 					return;
 				};
@@ -97,18 +97,18 @@ require([
 
 			})
 		},
-		loopDataFn: function(id, arr) {
-			if(!arr.length){
+		loopDataFn: function (id, arr) {
+			if (!arr.length) {
 				$(id).text('附近暂无该设施');
 				return;
 			}
 			var str = '';
 			var num = Math.ceil($(id).width() / 14) * 2;
-			for(var i = 0; i < arr.length; i++) {
+			for (var i = 0; i < arr.length; i++) {
 				str += arr[i].name + ';'
 			};
 			$(id).attr('title', str);
-			if(str.length > num) {
+			if (str.length > num) {
 				$(id).html(str.substring(0, num) + '...');
 			} else {
 				$(id).html(str);
@@ -116,9 +116,9 @@ require([
 
 		},
 		/*切换地图*/
-		changeMapFn: function() {
-			$('#surf_map_btn').click(function() {
-				if($(this).text() == "查看周边详情") {
+		changeMapFn: function () {
+			$('#surf_map_btn').click(function () {
+				if ($(this).text() == "查看周边详情") {
 					$(this).text('返回周边概况')
 					$('#surf_caption').text('小区周边详情');
 					$('#peripheralFactss').hide();
@@ -130,48 +130,48 @@ require([
 			})
 		},
 		/*周边详情地图操作*/
-		surDetailFn: function() {
+		surDetailFn: function () {
 			$('#result_gather').html('');
 			var _this = this;
 			_this.detailMap.clearMap();//清除地图上的覆盖物
 			//this.detailMap.setCity(yf.userInfo.city);
-			if(_this.placeSearch) {
+			if (_this.placeSearch) {
 				_this.placeSearch.clear();
 				_this.placeSearch.O.pageIndex = 1;
-				_this.placeSearch.searchNearBy(_this.searchName, [_this.coordinate.longitude, _this.coordinate.latitude], 1000, function(status, result) {
-						
+				_this.placeSearch.searchNearBy(_this.searchName, [_this.coordinate.longitude, _this.coordinate.latitude], 1000, function (status, result) {
+
 				});
 				//console.log(_this.searchName)
-			}else{
-				AMap.service(["AMap.PlaceSearch"], function() {
+			} else {
+				AMap.service(["AMap.PlaceSearch"], function () {
 					_this.placeSearch = new AMap.PlaceSearch({
 						pageSize: 5,
 						pageIndex: 1,
 						map: _this.detailMap,
 						panel: 'result_gather'
 					});
-					_this.placeSearch.searchNearBy(_this.searchName, [_this.coordinate.longitude, _this.coordinate.latitude], 1000, function(status, result) {
-	
+					_this.placeSearch.searchNearBy(_this.searchName, [_this.coordinate.longitude, _this.coordinate.latitude], 1000, function (status, result) {
+
 					});
 				})
 			}
 		},
 		/*周边详情地图上的操作*/
-		searchDetailFn: function() {
+		searchDetailFn: function () {
 			var _this = this;
 			var aLis = $('#detailMenu').find('.item');
 			$('#result_come').html(yf.$params().housingName + '周边配套');
-			aLis.each(function(idx, elms) {
-				$(elms).off('click').on('click', function() {
+			aLis.each(function (idx, elms) {
+				$(elms).off('click').on('click', function () {
 					_this.searchName = $(this).find('a>p.name').text();
 					_this.surDetailFn();
 					_this.showReaultFn();
 				});
 			});
 		},
-		showReaultFn: function() {
+		showReaultFn: function () {
 			$('#result_map').css('right', '0');
-			$('#back_map_result').off('click').click(function() {
+			$('#back_map_result').off('click').click(function () {
 				//需要清空结果集
 				$('#result_gather').html('');
 				$('#result_map').css('right', '-100%');

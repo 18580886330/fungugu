@@ -1,11 +1,11 @@
-define(function(){
+define(function () {
 	'use strict';
-	var moduleExplainServer =  moduleExplainServer ||{
+	var moduleExplainServer = moduleExplainServer || {
 		/*获取列表*/
-		getModuleExplain:function(){
+		getModuleExplain: function () {
 			return $.ajax({
-				type:"get",
-				url:"/api/v1/moduleAuthority/moduleExplain/"+encodeURIComponent(yf.userInfo.city)
+				type: "get",
+				url: "/api/v1/moduleAuthority/moduleExplain/" + encodeURIComponent(yf.userInfo.city)
 			});
 		}
 	};

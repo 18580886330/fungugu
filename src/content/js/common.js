@@ -1,26 +1,26 @@
-~ function(w) {
+~ function (w) {
     w.yf = {
-        setItem: function(key, value) {
-            return localStorage.setItem(key, encodeURIComponent(typeof value == "object" ? JSON.stringify(value) : String(value)) );
+        setItem: function (key, value) {
+            return localStorage.setItem(key, encodeURIComponent(typeof value == "object" ? JSON.stringify(value) : String(value)));
         },
-        getItem: function(key) {
-            if( typeof decodeURIComponent( localStorage.getItem(key) ).match(/\{/) ) {
-                return JSON.parse( decodeURIComponent( localStorage.getItem(key) ) );
+        getItem: function (key) {
+            if (typeof decodeURIComponent(localStorage.getItem(key)).match(/\{/)) {
+                return JSON.parse(decodeURIComponent(localStorage.getItem(key)));
             }
-            return decodeURIComponent( localStorage.getItem(key) );
+            return decodeURIComponent(localStorage.getItem(key));
         },
-        removeItem: function(key) {
+        removeItem: function (key) {
             if (!localStorage.getItem(key)) {
                 return false;
             }
             return !localStorage.removeItem(key);
         },
-        isIe: function() {
+        isIe: function () {
             return navigator.userAgent.toLowerCase().indexOf("msie") >= 0;
         },
         // 针对ie转json对象
-        jsonParse: function( object ) {
-            return this.isIe() ? JSON.parse(decodeURIComponent(JSON.stringify(object))): object;
+        jsonParse: function (object) {
+            return this.isIe() ? JSON.parse(decodeURIComponent(JSON.stringify(object))) : object;
         }
     };
 
@@ -39,9 +39,9 @@
         url: '/api/v1/moduleAuthority/' + encodeURIComponent(yf.userInfo.city),
         dataType: 'json',
         async: false,
-        success: function(data) {
+        success: function (data) {
             // console.log(data);
-            if( !data || !data.data ){
+            if (!data || !data.data) {
                 return layer.msg(data.msg);
             }
             var data = yf.jsonParse(data.data);
@@ -50,7 +50,7 @@
             // 树型模块列表
             yf.treeModuleData = data.treeModule;
             // console.log( JSON.stringify( yf.layoutData ) )
-        },error: function(e){
+        }, error: function (e) {
             // console.log(e)
         }
     });
@@ -59,7 +59,7 @@
      * 让浏览器原生支持placeholder
      * initPlaceHolders => input placeholder
      * */
-    yf.placeholder = function() {
+    yf.placeholder = function () {
         if ('placeholder' in document.createElement('input')) { //如果浏览器原生支持placeholder
             return;
         }
@@ -120,21 +120,21 @@
                     emptyHintEl = document.createElement('span');
                     emptyHintEl.innerHTML = placeholder;
                     emptyHintEl.className = 'emptyhint';
-                    emptyHintEl.onclick = function(el) {
-                        return function() {
+                    emptyHintEl.onclick = function (el) {
+                        return function () {
                             try {
                                 el.focus();
-                            } catch (ex) {}
+                            } catch (ex) { }
                         }
                     }(el);
                     // if(el.value) emptyHintEl.style.display='none';
-                    el.parentNode.style.position = 'relative';                    
+                    el.parentNode.style.position = 'relative';
                     if (el.value) {
                         emptyHintEl.style.display = 'none';
                     }
                     el.parentNode.appendChild(emptyHintEl); //.insertBefore(emptyHintEl,el);
                     el.__emptyHintEl = emptyHintEl;
-                    
+
                 }
             }
         }
@@ -143,14 +143,14 @@
     /**
      * 数组扩展方法
      */
-    Array.prototype.indexOf = function(val) {
+    Array.prototype.indexOf = function (val) {
         for (var i = 0; i < this.length; i++) {
             if (this[i] == val) return i;
         }
         return -1;
     }
     // 删除数组中的某个元素
-    Array.prototype.remove = function(val) {
+    Array.prototype.remove = function (val) {
         var index = this.indexOf(val);
         if (index > -1) {
             this.splice(index, 1);
@@ -158,7 +158,7 @@
         return this;
     }
     // 数组去重
-    Array.prototype.unique = function() {
+    Array.prototype.unique = function () {
         this.sort();
         var re = [this[0]];
         for (var i = 1; i < this.length; i++) {
@@ -175,11 +175,11 @@
      * @param {[dom]} content   [指定存放文件的容器#id，默认head]
      * @param {[type]} callBack [description]
      */
-    var loadFile = function() {
+    var loadFile = function () {
         this.name = ''; // 占个位置（...）
     }
-    loadFile.prototype.init = function(url, callBack){
-    	var _this = this;
+    loadFile.prototype.init = function (url, callBack) {
+        var _this = this;
         var tempUrl = url.split('/');
         // 文件后缀名
         var fileType = tempUrl[tempUrl.length - 1].substring(tempUrl[tempUrl.length - 1].lastIndexOf('.'));
@@ -195,20 +195,20 @@
             target.setAttribute("href", url);
             target.setAttribute("data-href", this.fileName);
             var temp = true;
-            $("link[data-href]").each(function(i,elm){
-        		if( $(elm).attr('data-href') == _this.fileName ){
+            $("link[data-href]").each(function (i, elm) {
+                if ($(elm).attr('data-href') == _this.fileName) {
                     temp = true;
                     // return;
-            		// $($("link[data-href='"+_this.fileName+"']")).remove();
-            	}else{
+                    // $($("link[data-href='"+_this.fileName+"']")).remove();
+                } else {
                     temp = true;
                     document.getElementsByTagName("head")[0].appendChild(target);
                 }
             });
-            if(!temp) {
+            if (!temp) {
                 document.getElementsByTagName("head")[0].appendChild(target);
             }
-            callBack&&callBack();
+            callBack && callBack();
         } else if (fileType == '.js') {
             var target = document.createElement("script");
             target.setAttribute("charset", "utf-8");
@@ -216,28 +216,28 @@
             target.setAttribute("src", url);
             target.setAttribute("data-href", this.fileName);
             // 是否根据指定的容器来加载script
-        	$("script[data-href]").each(function(i,elm){
-        		if( $(elm).attr('data-href') == _this.fileName ){
-            		$($("script[data-href='"+_this.fileName+"']")).remove();
-            	}
-        	});
-        	if(typeof(callBack) != "undefined"){
-        		if (target.readyState){
-        			 target.onreadystatechange = function(){
-        			 	if (target.readyState == "loaded" || target.readyState == "complete") {
-				          target.onreadystatechange = null;
-				          callBack();
-				        }
-        			}
-        		}else{
-        			target.onload = function () {
-				        callBack();
-				     };
-        		}
-        	}
-        	document.body.appendChild(target);
-        	
-        	//document.getElementsByTagName("head")[0].appendChild(target);
+            $("script[data-href]").each(function (i, elm) {
+                if ($(elm).attr('data-href') == _this.fileName) {
+                    $($("script[data-href='" + _this.fileName + "']")).remove();
+                }
+            });
+            if (typeof (callBack) != "undefined") {
+                if (target.readyState) {
+                    target.onreadystatechange = function () {
+                        if (target.readyState == "loaded" || target.readyState == "complete") {
+                            target.onreadystatechange = null;
+                            callBack();
+                        }
+                    }
+                } else {
+                    target.onload = function () {
+                        callBack();
+                    };
+                }
+            }
+            document.body.appendChild(target);
+
+            //document.getElementsByTagName("head")[0].appendChild(target);
         }
         //callBack&&callBack();
     }
@@ -246,35 +246,35 @@
      * 路由切换时添加导航选中状态.active
      * 描述: 目前暂定头部导航和左侧导航的选中状态
      */
-    var runNavActive = function(){
+    var runNavActive = function () {
         var oHead = $('#header'),
             oNavTree = $('#navTree'),
             aA = oHead.find('a[data-href]'),
             aNavTrees = oNavTree.find('a[data-href]'),
             aLinks = [];
         // 头部导航
-        aA.each(function(idx,elm){
+        aA.each(function (idx, elm) {
             aLinks.push($(elm));
         });
         // 左侧导航
-        aNavTrees.each(function(idx,elm){
+        aNavTrees.each(function (idx, elm) {
             aLinks.push($(elm));
         });
         // 处理状态
-        for(var i = 0; i < aLinks.length; i++ ) {
-            try{
+        for (var i = 0; i < aLinks.length; i++) {
+            try {
                 var sHref = $(aLinks).eq(i)[0].data().href; // 出现多个地址跳的情况
                 $(aLinks).eq(i)[0].removeClass('active');
-                if( location.href.match( sHref )) {
+                if (location.href.match(sHref)) {
                     $(aLinks).eq(i)[0].addClass('active');
                     $(aLinks).eq(i)[0].parent().parent().prev('.lead').addClass('activity');
                     continue;
                 }
                 //初始化页面时，默认给第一个加上颜色
-                if(location.href.indexOf('layout')>-1||location.href.indexOf('houseValuation')>-1){
-                	 $(aLinks).eq(0)[0].parent().parent().prev('.lead').addClass('activity');
+                if (location.href.indexOf('layout') > -1 || location.href.indexOf('houseValuation') > -1) {
+                    $(aLinks).eq(0)[0].parent().parent().prev('.lead').addClass('activity');
                 }
-            }catch(e){
+            } catch (e) {
                 // console.log(e)
             }
         }
@@ -283,16 +283,16 @@
     /**
      * 根据路由地址匹配标题
      */
-    yf.matchTitle = function(key) {
+    yf.matchTitle = function (key) {
         var match = {
             'houseValuation': '房产估值',
             'layout': '房产估值',
             'valuationRecord': '估值记录',
-            'auditPriceRecord':'核价记录',
-            'personalData':'基本资料',
-            'accountManagement':'账号管理',
-            'jurisdictionManagement':'权限管理',
-            'moduleExplain':'应用说明'
+            'auditPriceRecord': '核价记录',
+            'personalData': '基本资料',
+            'accountManagement': '账号管理',
+            'jurisdictionManagement': '权限管理',
+            'moduleExplain': '应用说明'
         }
         document.title = match[key];
     }
@@ -300,8 +300,8 @@
     /**
      * 匹配路由地址
      */
-    yf.matchRouter =  function(str) {
-        return !str?location.href.match(/.*\/([^?]*)/)[1]:str.match(/.*\/([^?]*)/)[1];
+    yf.matchRouter = function (str) {
+        return !str ? location.href.match(/.*\/([^?]*)/)[1] : str.match(/.*\/([^?]*)/)[1];
     }
 
     /**
@@ -309,34 +309,34 @@
      */
     var Path = {
         version: "1.0.0",
-        map: function(path) {
-        	var path = path.split("?")[0];
+        map: function (path) {
+            var path = path.split("?")[0];
             if (Path.routes.defined.hasOwnProperty(path)) {
                 return Path.routes.defined[path];
             } else {
                 return new Path.core.route(path);
             }
         },
-        load: function(elm,config) {
-            if(!config.reload) {
+        load: function (elm, config) {
+            if (!config.reload) {
                 // 是否需要重新加载组件，默认不需要重新加载 reload: boolean
-                if( $(elm).attr('data-refresh') ) return;
+                if ($(elm).attr('data-refresh')) return;
             }
-        	var script = document.createElement('script');
-        	script.type = 'type/javascript';
-        	script.src = config.controllerUrl;
-            $(elm).attr('data-refresh','true').html( $.ajax({url:config.templateUrl,async: false}).responseText ).append(script);
-        	return this;
+            var script = document.createElement('script');
+            script.type = 'type/javascript';
+            script.src = config.controllerUrl;
+            $(elm).attr('data-refresh', 'true').html($.ajax({ url: config.templateUrl, async: false }).responseText).append(script);
+            return this;
         },
-        root: function(path) {
+        root: function (path) {
             Path.routes.root = path;
         },
-        rescue: function(fn) {
+        rescue: function (fn) {
             Path.routes.rescue = fn;
         },
         history: {
             initial: {},
-            pushState: function(state, title, path) {
+            pushState: function (state, title, path) {
                 if (Path.history.supported) {
                     if (Path.dispatch(path)) {
                         history.pushState(state, title, path);
@@ -347,13 +347,13 @@
                     }
                 }
             },
-            popState: function(event) {
+            popState: function (event) {
                 var initialPop = !Path.history.initial.popped && location.href == Path.history.initial.URL;
                 Path.history.initial.popped = true;
                 if (initialPop) return;
                 Path.dispatch(document.location.pathname);
             },
-            listen: function(fallback) {
+            listen: function (fallback) {
                 Path.history.supported = !!(window.history && window.history.pushState);
                 Path.history.fallback = fallback;
 
@@ -373,7 +373,7 @@
                 }
             }
         },
-        match: function(path, parameterize) {
+        match: function (path, parameterize) {
             var params = {},
                 route = null,
                 possible_routes, slice, i, j, compare;
@@ -392,7 +392,7 @@
                                 }
                             }
                         }
-                        if (slice === compare.split("?")[0] ) {
+                        if (slice === compare.split("?")[0]) {
                             if (parameterize) {
                                 route.params = params;
                             }
@@ -403,7 +403,7 @@
             }
             return null;
         },
-        dispatch: function(passed_route) {
+        dispatch: function (passed_route) {
             var previous_route, matched_route;
             if (Path.routes.current !== passed_route) {
                 Path.routes.previous = Path.routes.current;
@@ -427,8 +427,8 @@
                 }
             }
         },
-        listen: function() {
-            var fn = function() {
+        listen: function () {
+            var fn = function () {
                 Path.dispatch(location.hash);
             }
             if (location.hash === "") {
@@ -448,7 +448,7 @@
             }
         },
         core: {
-            route: function(path) {
+            route: function (path) {
                 this.path = path;
                 this.action = null;
                 this.do_enter = [];
@@ -466,11 +466,11 @@
         }
     };
     Path.core.route.prototype = {
-        to: function(config) {
-            this.action = function(){
-            	if(!config) return;
-                $("div[show-view]").html( $.ajax({url:config.templateUrl,async: false}).responseText );
-                yf.matchTitle( yf.matchRouter() );
+        to: function (config) {
+            this.action = function () {
+                if (!config) return;
+                $("div[show-view]").html($.ajax({ url: config.templateUrl, async: false }).responseText);
+                yf.matchTitle(yf.matchRouter());
                 yf.loadFile(config.controllerUrl);
                 yf.placeholder();
                 yf.runNavActive();
@@ -478,7 +478,7 @@
             };
             return this;
         },
-        enter: function(fns) {
+        enter: function (fns) {
             if (fns instanceof Array) {
                 this.do_enter = this.do_enter.concat(fns);
             } else {
@@ -486,11 +486,11 @@
             }
             return this;
         },
-        exit: function(fn) {
+        exit: function (fn) {
             this.do_exit = fn;
             return this;
         },
-        partition: function() {
+        partition: function () {
             var parts = [],
                 options = [],
                 re = /\(([^}]+?)\)/g,
@@ -504,7 +504,7 @@
             }
             return options;
         },
-        run: function() {
+        run: function () {
             var halt_execution = false,
                 i, result, previous;
             if (Path.routes.defined[this.path].hasOwnProperty("do_enter")) {
@@ -527,7 +527,7 @@
     /**
      * 获取url参数的值
      */
-    var GetParameterByName = function(name) {
+    var GetParameterByName = function (name) {
         var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.href);
         return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
     }
@@ -535,66 +535,66 @@
     /**
      * 下拉菜单
      */
-    var MenuDown = function(){
+    var MenuDown = function () {
         this.setings = {
             timer: null,
             node: '',
             showNode: '',
-            callBack: function(){}
+            callBack: function () { }
         }
     };
     MenuDown.prototype = {
-        init:function(opts){
+        init: function (opts) {
             $.extend(this.setings, opts || {});
-            var _this  = this;
+            var _this = this;
             var node = this.setings.node;
             var showNode = this.setings.showNode;
             var callBack = this.setings.callBack;
-            
-            node.each(function(idx,elm){
-                $(elm).hover(function(){
-                    if( !$(showNode).length ) return;
-                    if(showNode.selector=="#non_competition"){
-						_this.autoSeat(elm);
+
+            node.each(function (idx, elm) {
+                $(elm).hover(function () {
+                    if (!$(showNode).length) return;
+                    if (showNode.selector == "#non_competition") {
+                        _this.autoSeat(elm);
                     }
                     _this.show(showNode);
-                },function(){
-                    if( !$(showNode).length ) return;
+                }, function () {
+                    if (!$(showNode).length) return;
                     _this.hide(showNode);
                 });
             });
-            showNode.hover(function(){
+            showNode.hover(function () {
                 _this.show(showNode);
-            },function(){
+            }, function () {
                 _this.hide(showNode);
             });
         },
-        show:function(elm,callBack){
+        show: function (elm, callBack) {
             this.setings.node.addClass('on');
             this.setings.showNode.addClass('on');
-            this.timer&&clearTimeout(this.timer); elm.stop(true,true).show();
-            this.setings.callBack&&this.setings.callBack();
+            this.timer && clearTimeout(this.timer); elm.stop(true, true).show();
+            this.setings.callBack && this.setings.callBack();
         },
-        hide:function(elm){
+        hide: function (elm) {
             var _this = this;
-            this.timer = setTimeout(function(){ elm.stop(true,true).hide(); _this.setings.node.removeClass('on'); _this.setings.showNode.removeClass('on'); clearTimeout(this.timer) },200);
+            this.timer = setTimeout(function () { elm.stop(true, true).hide(); _this.setings.node.removeClass('on'); _this.setings.showNode.removeClass('on'); clearTimeout(this.timer) }, 200);
         },
         /*对于竞价模块进行特殊处理*/
-       autoSeat:function(elm){
-       		var disY = $(elm).position().top;  
-			var oH=$(elm).height();
-			var disX = $(elm).position().left;
-			$('#non_competition').css({
-				'top':disY-oH+'px',
-				'left':disX+'px'
-			})
-       }
+        autoSeat: function (elm) {
+            var disY = $(elm).position().top;
+            var oH = $(elm).height();
+            var disX = $(elm).position().left;
+            $('#non_competition').css({
+                'top': disY - oH + 'px',
+                'left': disX + 'px'
+            })
+        }
     };
 
     /**
      * 选项卡
      */
-    var tab = function() {
+    var tab = function () {
         this.setings = {
             tabId: "",
             contents: "",
@@ -602,9 +602,9 @@
         }
         if (this.setings.tabId == "") return;
     }
-    tab.prototype.init = function(opts,ind) {
+    tab.prototype.init = function (opts, ind) {
         var _this = this;
-        var ind= ind || 0;
+        var ind = ind || 0;
         $.extend(this.setings, opts || {});
         this.setings.index = ind || 0;
         if (!$(this.setings.tabId)) {
@@ -612,9 +612,9 @@
         }
         this.childNode = $(this.setings.tabId).children();
         this.childPanel = $(this.setings.contents).children();
-        $(this.childNode).each(function(idx, elm) {
+        $(this.childNode).each(function (idx, elm) {
             $(elm).attr('data-id', idx);
-            $(elm).unbind().bind('click', function() {
+            $(elm).unbind().bind('click', function () {
                 _this.changeTab($(this), idx, $(this).text());
             });
         });
@@ -629,7 +629,7 @@
         this.setings.text = $(this.childNode).eq(ind).text();
         return this.setings;
     };
-    tab.prototype.changeTab = function(obj, index, text) {
+    tab.prototype.changeTab = function (obj, index, text) {
         var _this = this;
         $(this.childNode).removeClass('active');
         $(obj).addClass('active');
@@ -647,55 +647,53 @@
 	 * 倒计时
 	 * 
 	 */
-	function _timer() {};
-	_timer.prototype = {
-	    _init: function (obj, iNum) {
-	        this.oSecond = $(obj);
-	        this.timer = null;
-	        this.iSecond = 60;
-	        if (!this.oSecond.length) return;
-	        this._interval(iNum);
-	    },
-	    _interval: function (iNum) {
-	        var _this = this;
-	        var isec = iNum ? iNum : _this.iSecond;
-	        _this.oSecond.addClass("disable");
-	        this.timer = setInterval(function () {
-	            _this.oSecond.text(isec <= 10 ? "0" + --isec + "S" : --isec + "S");
-	            if (isec <= 0) {
-	                clearInterval(_this.timer);
-	                _this.oSecond.removeClass("disable").text("获取验证码");
-	            }
-	        }, 1000);
-	    }
-	};
-	/*上传图片(单张操作)*/
-	
+    function _timer() { };
+    _timer.prototype = {
+        _init: function (obj, iNum) {
+            this.oSecond = $(obj);
+            this.timer = null;
+            this.iSecond = 60;
+            if (!this.oSecond.length) return;
+            this._interval(iNum);
+        },
+        _interval: function (iNum) {
+            var _this = this;
+            var isec = iNum ? iNum : _this.iSecond;
+            _this.oSecond.addClass("disable");
+            this.timer = setInterval(function () {
+                _this.oSecond.text(isec <= 10 ? "0" + --isec + "S" : --isec + "S");
+                if (isec <= 0) {
+                    clearInterval(_this.timer);
+                    _this.oSecond.removeClass("disable").text("获取验证码");
+                }
+            }, 1000);
+        }
+    };
 
     /**
      * 主体内容部分滚动条
      */
-    yf.mainScroll = function() {
+    yf.mainScroll = function () {
         var mainHei = '';
         return {
-            init: function() {
+            init: function () {
                 this.oContentBody = $("div[show-view]");
                 this.oScrollWamp = $("#scrollWamp");
                 this.resize();
                 this.scroll();
                 return this;
             },
-            resize: function() {
+            resize: function () {
                 var _this = this;
                 mainHei = $(window).height() - $('.header').height();
                 _this.oContentBody.css({
                     height: mainHei
                 });
-                if( $(window).width() <= 1200 ){
-                    _this.oContentBody.css('width','990px');
+                if ($(window).width() <= 1200) {
+                    _this.oContentBody.css('width', '990px');
                     $('body').addClass('hidden');
                 }
-                $(window).resize(function() {
+                $(window).resize(function () {
                     yf.autopromptingAlign(); // 控制下拉框的位置
                     mainHei = $(window).height() - $('.header').height();
                     _this.oContentBody.css({
@@ -706,66 +704,66 @@
                         height: mainHei
                     });
                     $('body').removeClass('hidden');
-                    if( $(window).width() <= 1200 ){
-                        _this.oContentBody.css('width','990px');
+                    if ($(window).width() <= 1200) {
+                        _this.oContentBody.css('width', '990px');
                         $('body').addClass('hidden');
                     }
                 });
             },
-            scroll: function() {
-                if(!this.oScrollWamp.length) return;
+            scroll: function () {
+                if (!this.oScrollWamp.length) return;
                 this.oScrollWamp.mCustomScrollbar({
                     setHeight: mainHei,
                     scrollInertia: 180,
                     theme: "minimal-dark",
-                    axis:"y",
+                    axis: "y",
                     alwaysShowScrollbar: 2,
-                    callbacks:{
-                        whileScrolling:function() {
+                    callbacks: {
+                        whileScrolling: function () {
                             // 检测是否有下拉检索框显示
                             yf.autopromptingAlign();
                             // 检测是否有loading状态
-                            if( $('div[data-type="loading"]').is(':visible') ) {
-                                var ld = function() {
+                            if ($('div[data-type="loading"]').is(':visible')) {
+                                var ld = function () {
                                     var loading_div = $('div[data-type="loading"]');
-                                    loading_div.each(function(idx,elm) {
+                                    loading_div.each(function (idx, elm) {
                                         var loading_id = $(elm).attr('data-id'),
-                                        e = $('#'+loading_id);
-                                        $(elm).css({top: e.offset().top,left:e.offset().left,width: e.outerWidth(),height: e.outerHeight()});
+                                            e = $('#' + loading_id);
+                                        $(elm).css({ top: e.offset().top, left: e.offset().left, width: e.outerWidth(), height: e.outerHeight() });
                                     });
                                 }
-                                ld(),$(window).resize(ld);
+                                ld(), $(window).resize(ld);
                             }
                             //滚动的时候 竞价模块的提示 隐藏
-                            if($('#non_competition').length){
-                            	$('#non_competition').hide();
+                            if ($('#non_competition').length) {
+                                $('#non_competition').hide();
                             }
                         }
                     }
                 });
             },
             // 停止滚动
-            stopMainScroll: function() {
+            stopMainScroll: function () {
                 this.oScrollWamp.mCustomScrollbar("disable");
             },
             // 开始或更新滚动
-            updateMainScroll: function() {
+            updateMainScroll: function () {
                 this.oScrollWamp.mCustomScrollbar("update");
             }
         }
     }();
 
     // 窗体改变时将下拉检索框对齐
-    yf.autopromptingAlign = function() {
-        if( !$('div[data-type="autoprompting"]').is(':visible') ) return;
+    yf.autopromptingAlign = function () {
+        if (!$('div[data-type="autoprompting"]').is(':visible')) return;
         var autoprompting = $('div[data-type="autoprompting"]'),
-            inputElm = $('#'+autoprompting.data().elmid);
-            autoprompting.css({top: inputElm.offset().top+inputElm.height()+5+'px',left:inputElm.offset().left});
+            inputElm = $('#' + autoprompting.data().elmid);
+        autoprompting.css({ top: inputElm.offset().top + inputElm.height() + 5 + 'px', left: inputElm.offset().left });
     }
 
 
     // 生成(适合)选项卡模块容器生成
-    yf.tabInit = function(id,json) {
+    yf.tabInit = function (id, json) {
         var oHouseReference = $(id),
             oTabTitle = oHouseReference.find('.layui-tab-title'),
             oTabContent = oHouseReference.find('.layui-tab-content'),
@@ -773,24 +771,24 @@
             bHtml = '',
             tClass = 'layui-this',
             bClass = 'layui-tab-item layui-show';
-        for( var i=0; i<json.length; i++ ) {
-            if( i==0 ){
+        for (var i = 0; i < json.length; i++) {
+            if (i == 0) {
                 // 默认选中第一条
-                tHtml += '<li data-module="'+json[i].nameEn+'" class="'+tClass+'">'+json[i].nameZn+'</li>';
-                bHtml += '<div id="'+json[i].nameEn+'" class="'+bClass+'"><div class="loading"><img src="src/content/js/third/layer/css/modules/layer/default/loading-2.gif">正在加载...</div></div>';
-            }else{
-                tHtml += '<li data-module="'+json[i].nameEn+'">'+json[i].nameZn+'</li>';
-                bHtml += '<div id="'+json[i].nameEn+'" class="layui-tab-item"><div class="loading"><img src="src/content/js/third/layer/css/modules/layer/default/loading-2.gif">正在加载...</div></div>';
+                tHtml += '<li data-module="' + json[i].nameEn + '" class="' + tClass + '">' + json[i].nameZn + '</li>';
+                bHtml += '<div id="' + json[i].nameEn + '" class="' + bClass + '"><div class="loading"><img src="src/content/js/third/layer/css/modules/layer/default/loading-2.gif">正在加载...</div></div>';
+            } else {
+                tHtml += '<li data-module="' + json[i].nameEn + '">' + json[i].nameZn + '</li>';
+                bHtml += '<div id="' + json[i].nameEn + '" class="layui-tab-item"><div class="loading"><img src="src/content/js/third/layer/css/modules/layer/default/loading-2.gif">正在加载...</div></div>';
             }
         }
-        oTabTitle.html( tHtml );
-        oTabContent.html( bHtml );
+        oTabTitle.html(tHtml);
+        oTabContent.html(bHtml);
     }
 
     // loading加载
-    yf.loading = function(elm) {
-        if( $('div[data-id="'+$(elm).attr('id')+'"]').length ) return;
-        var elm = $(elm),loading = $('<div class="loading" data-type="loading" data-id="'+elm.attr('id')+'" style="position:absolute;width:100%;height:100%;left:0;top:0;line-height:100%;background-color:#fff;background-color:rgba(255,255,255,.5);filter:alpha(opacity=50);z-index: 99999999;">\
+    yf.loading = function (elm) {
+        if ($('div[data-id="' + $(elm).attr('id') + '"]').length) return;
+        var elm = $(elm), loading = $('<div class="loading" data-type="loading" data-id="' + elm.attr('id') + '" style="position:absolute;width:100%;height:100%;left:0;top:0;line-height:100%;background-color:#fff;background-color:rgba(255,255,255,.5);filter:alpha(opacity=50);z-index: 99999999;">\
         <div style="position:absolute;top:50%;width: 100%;line-height: 25px;color:#333">\
         <img src="src/content/js/third/layer/css/modules/layer/default/loading-2.gif" class="mCS_img_loaded">正在加载...</div></div>');
         loading.css({
@@ -803,30 +801,30 @@
     }
 
     // loading移除
-    yf.removeLoading = function(elm) {
+    yf.removeLoading = function (elm) {
         $(elm).removeClass('pv');
-        $('div[data-id="'+$(elm).attr('id')+'"]').remove();
+        $('div[data-id="' + $(elm).attr('id') + '"]').remove();
     };
 
     // 错误信息提示
-    yf.msg = function(data) {
-        return data.code!='200'?!layer.msg(data.msg):1;
+    yf.msg = function (data) {
+        return data.code != '200' ? !layer.msg(data.msg) : 1;
     }
 
     /**
      * 匹配权限模块
      */
-    yf.matchModule = function(moduleNames,callBack) {
-        try{
+    yf.matchModule = function (moduleNames, callBack) {
+        try {
             var arr = [];
-            for( var i=0; i<moduleNames.length; i++ ) {
-                for( var j=0; j<yf.layoutData.length; j++ ) {
-                    if( moduleNames[i].indexOf( yf.layoutData[j].nameEn ) != -1 && yf.layoutData[j].cityAuthority == yf.userInfo.city ) {
-                        arr.push( yf.layoutData[j] );
+            for (var i = 0; i < moduleNames.length; i++) {
+                for (var j = 0; j < yf.layoutData.length; j++) {
+                    if (moduleNames[i].indexOf(yf.layoutData[j].nameEn) != -1 && yf.layoutData[j].cityAuthority == yf.userInfo.city) {
+                        arr.push(yf.layoutData[j]);
                     }
                 }
             }
-        }catch(e){
+        } catch (e) {
             //console.log(e)
         }
         return callBack ? callBack(arr) : arr;
@@ -836,7 +834,7 @@
     /**
      * 美化滚动条
      */
-    var Scroll = function(config) {
+    var Scroll = function (config) {
         var elm = $(config.elmId);
         elm.mCustomScrollbar("destroy"); // 先销毁
         elm.mCustomScrollbar({
@@ -850,59 +848,59 @@
     /**
      * 替换特殊字符
      */
-    var ReplaceHtml = function(value) {
-        return value.replace(/<.[^<>]*?>|\s/g,"");
+    var ReplaceHtml = function (value) {
+        return value.replace(/<.[^<>]*?>|\s/g, "");
     }
-    
+
     /**
      * 处理空字符
      */
-    var FilterStr = function(str) {
-    	if(str=="0"){
-    		return str;
-    	}
-    	if(str==undefined||str==null||str==""||str=="请选择"){
-    		str='--'
-    	};
-    	return str;
+    var FilterStr = function (str) {
+        if (str == "0") {
+            return str;
+        }
+        if (str == undefined || str == null || str == "" || str == "请选择") {
+            str = '--'
+        };
+        return str;
     }
-    
+
     /**
      * 时间戳转为标准时间
      */
-    var DateStampFn = function(tm){
-    	if(tm=="--") return tm;
+    var DateStampFn = function (tm) {
+        if (tm == "--") return tm;
         var tt = new Date(parseInt(tm)),
             year = tt.getFullYear(),
-            month = tt.getMonth()+ 1,
+            month = tt.getMonth() + 1,
             day = tt.getDate();
-	    return year + "-" + month + "-" + day;
+        return year + "-" + month + "-" + day;
     };
     /**
 	 * 限制文本框出入长度(例:'<input class="input" length='60' onkeyup="limitLength(this)" name="keHuDanWei" type="text" placeholder="请输入所属单位"/>')
 	 * 须有 length说明长度
 	 **/
-	var limitLength = function(obj){
-		var text = $(obj).parent().siblings().text();
-	    if (text.indexOf('：') > 0) {
-	        text = text.substr(0, text.indexOf('：'));
-	    }
-	    var length = $(obj).attr('length');
-	    var val = $(obj).val();
-	    var size = val.length;
-	    if (size > length) {
-	        val = val.substr(0, length);
-	        $(obj).val(val);
-	        layer.tips(text + "不能超过" + length + "个字符", obj, {tips: [1, '#666'], time: 4000});
-	    }			
-	};
-	
-	
-	
+    var limitLength = function (obj) {
+        var text = $(obj).parent().siblings().text();
+        if (text.indexOf('：') > 0) {
+            text = text.substr(0, text.indexOf('：'));
+        }
+        var length = $(obj).attr('length');
+        var val = $(obj).val();
+        var size = val.length;
+        if (size > length) {
+            val = val.substr(0, length);
+            $(obj).val(val);
+            layer.tips(text + "不能超过" + length + "个字符", obj, { tips: [1, '#666'], time: 4000 });
+        }
+    };
 
-    // 切换城市时更新用户切换的城市
-    yf.updataCity = function(cityName) {
-        yf.setItem('userInfo',{
+
+    /**
+     * 切换城市时更新用户切换的城市
+     */
+    yf.updataCity = function (cityName) {
+        yf.setItem('userInfo', {
             city: cityName,
             userName: yf.userInfo.userName,
         });
@@ -914,49 +912,50 @@
     /**
      * 限制字符数
      */
-    yf.limitStr = function(textId,hintId,len){
+    yf.limitStr = function (textId, hintId, len) {
         var oTextId = $(textId),
             oHintId = $(hintId),
             textVal;
-            oHintId.text(len - oTextId.val().length);
-        oTextId.on('keyup',function(){
+        oHintId.text(len - oTextId.val().length);
+        oTextId.on('keyup', function () {
             textVal = $(this).val();
             rLen = len - textVal.length;
-            if( rLen<=0 ){
-                oTextId.val( oTextId.val().substring(0,len) );
+            if (rLen <= 0) {
+                oTextId.val(oTextId.val().substring(0, len));
                 rLen = 0;
             }
-            oHintId.text( rLen );
+            oHintId.text(rLen);
         });
     };
 
     /**
      * 截取字符数
      */
-    yf.subStr = function(strs, len) {
-        return strs!=null?(strs.length <= len ? strs : strs.substring(0, len) + "..."):'';
+    yf.subStr = function (strs, len) {
+        return strs != null ? (strs.length <= len ? strs : strs.substring(0, len) + "...") : '';
     };
-    
+
     /**
      *估值结果展示
      */
     yf.priceTypeShow = {
-    	'0':'市场评估价',
-		'1':'抵押评估价',
-		'2':'自定义抵押评估价'
+        '0': '市场评估价',
+        '1': '抵押评估价',
+        '2': '自定义抵押评估价'
     };
+
 	/**
 	 *一般的正则校验 
 	 */
-	yf.REGS = {
-		PASS_WORLD:/(?!.*[\u4E00-\u9FA5\s])(?!^[a-zA-Z]+$)(?!^[\d]+$)(?!^[^a-zA-Z\d]+$)^.{8,16}$/ //密码长度8-16位,须为字母、数字和符号两种及以上的组合
-	};
-	
-	
+    yf.REGS = {
+        PASS_WORLD: /(?!.*[\u4E00-\u9FA5\s])(?!^[a-zA-Z]+$)(?!^[\d]+$)(?!^[^a-zA-Z\d]+$)^.{8,16}$/ //密码长度8-16位,须为字母、数字和符号两种及以上的组合
+    };
+
+
     /**
      * 默认初始化方法
      */
-    w.onload = function(){
+    w.onload = function () {
         // 统一下拉菜单
         //yf.menuDown({node:$('#userCenter'),showNode:$('.drop-nav').find('.drop-nav-child')});
     }
@@ -964,58 +963,57 @@
     var oTab,
         oLoadFile,
         oMenuDown;
-        // 路由
-        yf.path = Path;
-        // 选项卡
-        yf.tab = function(obj,ind) {
-            return oTab ? oTab.init(obj,ind) : (oTab = new tab).init(obj,ind);
-        }
-        // 加载css/js
-        yf.loadFile = function(url, type) {
-            return oLoadFile ? oLoadFile.init(url, type) : (oLoadFile = new loadFile).init(url, type);
-        };
-        // 下拉菜单
-        yf.menuDown = function(opts) {
-            return oMenuDown ? oMenuDown.init(opts) : (oMenuDown = new MenuDown).init(opts);
-        };
-        // 获取url参数的值
-        yf.param = function(name) {
-            return GetParameterByName(name);
-        };
-        // 导航切换状态改变
-        yf.runNavActive = function() {
-            return runNavActive();
-        };
-        // 停止滚动
-        yf.stopMainScroll = function() {
-            return yf.mainScroll.stopMainScroll();
-        }
-        // 更新滚动
-        yf.updateMainScroll = function(){
-            return yf.mainScroll.updateMainScroll();
-        }
-        // 美化滚动条
-        yf.scroll = function(config) {
-            return Scroll(config);
-        };
-        yf.replaceHtml = function(val) {
-            return ReplaceHtml(val);
-        };
-        //字符串
-        yf.filterStr = function(val){
-            return FilterStr(val);
-        };
-        //时间戳转化
-        yf.dateStampFn = function(tm,mon){
-            return DateStampFn(tm,mon);
-        };
-        //倒计时
-        yf._timer = function(obj,num) {
-        	 return new _timer()._init(obj,num);
-        };
-        yf.limitLength = function(obj){
-        	return limitLength(obj);
-        }
-       
+    // 路由
+    yf.path = Path;
+    // 选项卡
+    yf.tab = function (obj, ind) {
+        return oTab ? oTab.init(obj, ind) : (oTab = new tab).init(obj, ind);
+    }
+    // 加载css/js
+    yf.loadFile = function (url, type) {
+        return oLoadFile ? oLoadFile.init(url, type) : (oLoadFile = new loadFile).init(url, type);
+    };
+    // 下拉菜单
+    yf.menuDown = function (opts) {
+        return oMenuDown ? oMenuDown.init(opts) : (oMenuDown = new MenuDown).init(opts);
+    };
+    // 获取url参数的值
+    yf.param = function (name) {
+        return GetParameterByName(name);
+    };
+    // 导航切换状态改变
+    yf.runNavActive = function () {
+        return runNavActive();
+    };
+    // 停止滚动
+    yf.stopMainScroll = function () {
+        return yf.mainScroll.stopMainScroll();
+    }
+    // 更新滚动
+    yf.updateMainScroll = function () {
+        return yf.mainScroll.updateMainScroll();
+    }
+    // 美化滚动条
+    yf.scroll = function (config) {
+        return Scroll(config);
+    };
+    yf.replaceHtml = function (val) {
+        return ReplaceHtml(val);
+    };
+    //字符串
+    yf.filterStr = function (val) {
+        return FilterStr(val);
+    };
+    //时间戳转化
+    yf.dateStampFn = function (tm, mon) {
+        return DateStampFn(tm, mon);
+    };
+    //倒计时
+    yf._timer = function (obj, num) {
+        return new _timer()._init(obj, num);
+    };
+    yf.limitLength = function (obj) {
+        return limitLength(obj);
+    }
     return yf;
 }(window);
